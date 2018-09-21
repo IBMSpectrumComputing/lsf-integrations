@@ -1,0 +1,70 @@
+#! /bin/sh
+#
+# Licensed Materials - Property of IBM
+# 5725-G82
+# @ Copyright IBM Corp. 2009, 2018 All Rights Reserved
+# US Government Users Restricted Rights - Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+
+convert()
+{
+ # echo "Converting $1"
+  RESULT_FILE=$1.graph
+
+  echo "Time Ux Uy Epsilon P K" 
+
+  awk 'BEGIN{
+        time=0;
+        Ux=0; 
+        Uy=0;
+        epsilon=0;
+        pValue=0;
+        kValue=0;
+        fmt="%d %f %f %f %f %f\n";
+    }{
+       #found a new section start with Time = 
+       if ($1 == "Time" && $2 == "=" ){
+           if(time != 0 ){
+           # this is not the first line, print out previous line
+                printf(fmt, time, Ux, Uy, epsilon,pValue, kValue); 
+                Ux=0;
+                Uy=0;
+                epsilon=0;
+                pValue=0;
+                kValue=0;
+           }
+           time=$3;
+       } else if ($2 == "Solving" && $3 == "for") {
+               if($4 == "Ux,") { 
+                   Ux = $8 + 0;
+               }else if ($4 == "Uy,"){
+                   Uy = $8 + 0;
+               }else if ($4 == "epsilon,"){
+                   epsilon = $8 + 0;
+               }else if ($4 == "p,"){
+                   pValue = $8 + 0;
+               }else if ($4 == "k,"){
+                   kValue = $8 + 0;
+               }
+
+       }
+    } END {
+       printf(fmt, time, Ux, Uy, epsilon,pValue, kValue);
+    }' $1  #>> $RESULT_FILE
+
+
+}
+
+if [ "x$1" = "x"  ]; then
+   echo "Need to specify  a file."
+   exit
+fi
+if [ ! -f $1 ]; then
+   echo "Need to specify a valid file."
+   exit
+fi
+if [ -f system/decomposeParDict ];then
+  echo "convertData: Exit since this is a parallel openfoam result."
+  exit
+fi
+convert  $1 

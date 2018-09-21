@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<agent resources="resources" application="openfoam" type="OpenFOAM" category="Job Submission"> 
+  <info>Submit a job: OpenFOAM</info>  
+  <lastmodified>2018-09-21 10:51:25</lastmodified>  
+  <modifier>georgeg</modifier>  
+  <action id="submit" label="submit" result="text/xml">OpenFOAM.cmd</action>  
+  <repository> 
+    <application id="application" state="expandEnable" info="Job Identification" helpText="Asterisk (*) = required field."> 
+      <option defaultValue="myOpenFoam_run" id="JOB_NAME" label="Job Name" required="false" hidden="false" type="text" editable="true">myOpenFoam_run</option>  
+      <option defaultValue="change to your description of this run" id="DESCRIPTION" label="Description" required="false" hidden="false" type="text" editable="true">change to your description of this run</option> 
+    </application>  
+    <application id="cluster" state="expandEnable" info="Application Input" helpText="Asterisk (*) = required field."> 
+      <option defaultValue="" id="CASE_DIR" label="Case Directory" required="true" hidden="false" type="simpleFile" editable="true" helpText="directory full path for the input case top directory. expect the case directory locate on server side." defaultFileType="folder"/>  
+      <option defaultValue="" id="MESH" label="Mesh" required="false" hidden="false" type="text" editable="true" helpText="read from case system file, cannot be changed"> 
+        <dependency> 
+          <id>CASE_DIR</id>  
+          <script>MESH_mesh.sh</script>  
+          <linkType>content</linkType>  
+          <enabled>true</enabled> 
+        </dependency> 
+      </option>  
+      <option defaultValue="simpleFoam" id="APP_CMD" label="App Command" required="false" hidden="false" type="list" editable="true" helpText="read from case system file:  decomposeParDict.  allow to switch to other command"> 
+        <dependency> 
+          <id>CASE_DIR</id>  
+          <script>APP_CMD_app.sh</script>  
+          <linkType>content,visibility</linkType>  
+          <enabled>true</enabled> 
+        </dependency>  
+        <option id="simpleFoam" required="false" hidden="false" selected="true">simpleFoam</option>  
+        <option id="icoFoam" required="false" hidden="false">icoFoam</option>  
+        <option id="boundaryFoam" required="false" hidden="false">boundaryFoam</option>  
+        <option id="pimpleFoam" required="false" hidden="false">pimpleFoam</option>  
+        <option id="pimpleDyMFoam" required="false" hidden="false">pimpleDyMFoam</option>  
+        <option id="pisoFoam" required="false" hidden="false">pisoFoam</option>  
+        <option id="porousSimpleFoam" required="false" hidden="false">porousSimpleFoam</option>  
+        <option id="shallowWaterFoam" required="false" hidden="false">shallowWaterFoam</option>  
+        <option id="SRFPimpleFoam" required="false" hidden="false">SRFPimpleFoam</option>  
+        <option id="SRFSimpleFoam" required="false" hidden="false">SRFSimpleFoam</option>  
+        <option id="nonNewtonianIcoFoam" required="false" hidden="false">nonNewtonianIcoFoam</option>  
+        <option id="adjointShapeOptimizationFoam" required="false" hidden="false">adjointShapeOptimizationFoam</option> 
+      </option>  
+      <option defaultValue="1" id="NCPU" label="CPUs" required="false" hidden="true" type="list" editable="true" helpText="only apply to parallel job."> 
+        <dependency> 
+          <id>CASE_DIR</id>  
+          <script>NCPU_cpu.sh</script>  
+          <linkType/>  
+          <enabled>true</enabled> 
+        </dependency>  
+        <option id="1" required="false" hidden="false" selected="true">1</option>  
+        <option id="2" required="false" hidden="false">2</option>  
+        <option id="4" required="false" hidden="false">4</option>  
+        <option id="6" required="false" hidden="false">6</option>  
+        <option id="8" required="false" hidden="false">8</option>  
+        <option id="10" required="false" hidden="false">10</option>  
+        <option id="12" required="false" hidden="false">12</option>  
+        <option id="16" required="false" hidden="false">16</option>  
+        <option id="32" required="false" hidden="false">32</option>  
+        <option id="" required="false" hidden="false"/> 
+      </option>  
+      <option defaultValue="simple" id="METHOD" label="Parallel Method" required="false" hidden="true" type="list" editable="true" helpText="Only apply to parallel job."> 
+        <dependency> 
+          <id>CASE_DIR</id>  
+          <script>METHOD_method.sh</script>  
+          <linkType>content,visibility</linkType>  
+          <enabled>true</enabled> 
+        </dependency>  
+        <option id="simple" required="false" hidden="false" selected="true">simple</option>  
+        <option id="hierarchical" required="false" hidden="false">hierarchical</option>  
+        <option id="scotch" required="false" hidden="false">scotch</option>  
+        <option id="manual" required="false" hidden="false">manual</option>  
+        <option id="" required="false" hidden="false"/> 
+      </option> 
+    </application>  
+    <application id="result" state="collapseEnable" optionFor="client" info="Download Result"> 
+      <option defaultValue="" id="RESULT_LABEL" required="false" hidden="false" type="label" editable="true" optionFor="client" helpText="This section is for the Desktop Client"/>  
+      <option defaultValue="*.txt" id="DOWNLOAD_MATCH_FILES" label="Download files that match" required="false" hidden="false" type="text" width="30" editable="true" optionFor="client" helpText="Define file names with shell's wildcard, multiple match expression can be used, and separated by comma(,). For example: abc*123.jou, *xyz.dat">*.txt</option>  
+      <option defaultValue="zip" id="COMPRESSION" label="Compression" required="false" hidden="false" type="list" width="20" editable="true" optionFor="client"> 
+        <option id="NONE" required="false" hidden="false">NONE</option>  
+        <option id="zip" required="false" hidden="false" selected="true">zip</option>  
+        <option id="gzip" required="false" hidden="false">gzip</option>  
+        <option id="tar.gz" required="false" hidden="false">tar.gz</option>  
+        <option id="tar.bz2" required="false" hidden="false">tar.bz2</option> 
+      </option> 
+    </application> 
+  </repository>  
+  <description>submission form for user to submit jobs to openfoam6</description> 
+</agent>
