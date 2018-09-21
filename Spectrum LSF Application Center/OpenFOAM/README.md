@@ -3,9 +3,11 @@ OpenFOAM directory include all files required for integrating openfoam 6 with IB
 This integration is based on public docker image: openfoam/openfoam6-paraview54, there is no need to install openfoam application.
 
 ## Prerequisites
-1). IBM Spectrum LSF 10.1 or above version is installed
-2). IBM Spectrum Application Center 10.2 or above version is installed
-3). LSF Compute Server support docker engine 1.12 or above version
+1). IBM Spectrum LSF 10.1 or above version is installed.
+
+2). IBM Spectrum Application Center 10.2 or above version is installed.
+
+3). LSF Compute Server support docker engine 1.12 or above version.
 
 ## Deployment Steps
 Step 1: download all the files under this directory OpenFOAM/,   and copy over to IBM Spectrum LSF Application Center configuration 
@@ -31,7 +33,8 @@ Step 3: Configure LSF Docker Application profile for openfoam 6 by adding the fo
                   ) starter(root) ]
         End Application
 
-        Notes: 1).find a shared directory cross all computer nodes for JOB_REPOSITORY_TOP, and replace the real path in above content
+        Notes: 1).find a shared directory for all computer nodes, and replace JOB_REPOSITORY_TOP with 
+	          the real path in above content.
                2). copy OpenFOAM/dockerPasswd.sh  to  JOB_REPOSITORY_TOP/dockerPasswd.sh
         for more details, reference: 
 	https://www.ibm.com/support/knowledgecenter/en/SSWRJV_10.1.0/lsf_docker/lsf_docker_prepare.html
