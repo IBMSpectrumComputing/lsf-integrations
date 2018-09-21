@@ -14,10 +14,7 @@ Step 1: download all the files under this directory OpenFOAM/,   and copy over t
         directory, for example:  /opt/ibm/lsfsuite/ext/gui/conf/application/draft/OpenFOAM, make sure files owner are administrator, 
         all files have excutable permission.
         
-Step 2: Prepare IBM Spectrum LSF to run jobs in Docker container by following instruction: 
-        https://www.ibm.com/support/knowledgecenter/en/SSWRJV_10.1.0/lsf_docker/lsf_docker_prepare.html 
-	
-        make sure the selected computer server have Docker engine installed  and enabled
+Step 2: Prepare IBM Spectrum LSF to run jobs in Docker container by following [LSF docker integration instruction]( https://www.ibm.com/support/knowledgecenter/en/SSWRJV_10.1.0/lsf_docker/lsf_docker_prepare.html). make sure the selected computer server have Docker engine installed  and enabled
         
 Step 3: Configure LSF Docker Application profile for openfoam 6 by adding the following lines into end of lsb.applications:
         	
@@ -35,12 +32,14 @@ Step 3: Configure LSF Docker Application profile for openfoam 6 by adding the fo
         End Application
 
 
- Notes: 1).find a shared directory for all computer nodes, and replace JOB_REPOSITORY_TOP with the real path in above content.
+ Notes: 
  
-        2).copy OpenFOAM/dockerPasswd.sh  to  JOB_REPOSITORY_TOP/dockerPasswd.sh
+ 1).find a shared directory for all computer nodes, and replace JOB_REPOSITORY_TOP with the real path in above content       
+ 
+ 2).copy OpenFOAM/dockerPasswd.sh  to  JOB_REPOSITORY_TOP/dockerPasswd.sh
 	
-        for more details, reference: 
-	https://www.ibm.com/support/knowledgecenter/en/SSWRJV_10.1.0/lsf_docker/lsf_docker_prepare.html
+ for more details, reference [LSF docker application configuration](https://www.ibm.com/support/knowledgecenter/en/SSWRJV_10.1.0/lsf_docker/lsf_docker_config.html). 
+
         
 Step 4: restart LSF:   
         #lsfrestart
