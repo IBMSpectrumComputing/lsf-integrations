@@ -2,12 +2,12 @@
 OpenFOAM directory include all files required for integrating openfoam 6 with IBM Spectrum LSF and IBM Spectrum LSF Application Center.
 This integration is based on public docker image: openfoam/openfoam6-paraview54, there is no need to install openfoam application.
 
-# Prerequisites
+## Prerequisites
 1). IBM Spectrum LSF 10.1 or above version is installed
 2). IBM Spectrum Application Center 10.2 or above version is installed
 3). LSF Compute Server support docker engine 1.12 or above version
 
-# Deployment Steps
+## Deployment Steps
 Step 1: download all the files under this directory OpenFOAM/,   and copy over to IBM Spectrum LSF Application Center configuration 
         directory, for example:  /opt/ibm/lsfsuite/ext/gui/conf/application/draft/OpenFOAM, make sure files owner are administrator, 
         all files have excutable permission.
@@ -16,7 +16,8 @@ Step 2: Prepare IBM Spectrum LSF to run jobs in Docker container by following in
         https://www.ibm.com/support/knowledgecenter/en/SSWRJV_10.1.0/lsf_docker/lsf_docker_prepare.html 
         make sure the selected computer server have Docker engine installed  and enabled
         
-Step 3: Configure LSF Docker Application profile for openfoam 6 by adding the following lines into end of lsb.applications
+Step 3: Configure LSF Docker Application profile for openfoam 6 by adding the following lines into end of lsb.applications:
+        	
         Begin Application
         NAME         = openfoam
         DESCRIPTION  = Enables running jobs in docker container --openFoam
@@ -32,7 +33,8 @@ Step 3: Configure LSF Docker Application profile for openfoam 6 by adding the fo
 
         Notes: 1).find a shared directory cross all computer nodes for JOB_REPOSITORY_TOP, and replace the real path in above content
                2). copy OpenFOAM/dockerPasswd.sh  to  JOB_REPOSITORY_TOP/dockerPasswd.sh
-        for more details, reference: https://www.ibm.com/support/knowledgecenter/en/SSWRJV_10.1.0/lsf_docker/lsf_docker_prepare.html
+        for more details, reference: 
+	https://www.ibm.com/support/knowledgecenter/en/SSWRJV_10.1.0/lsf_docker/lsf_docker_prepare.html
         
 Step 4: restart LSF:   
         #lsfrestart
