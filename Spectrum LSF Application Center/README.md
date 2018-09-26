@@ -4,7 +4,7 @@ This repository is where LSF Application Center sample templates can be found.  
 
 All Spectrum LSF Application Center Templates published here are covered under the Apache License, Version 2.0.
 
-If you plan or would like to contribute sample templates, you must follow the DCO process in the attached [DCO Readme file](https://github.com/lsf-integrations/Spectrum-LSF-Application-Center/master/IBMDCO.md) in the root of this repository.  It essentially requires you to provide a Sign Off line in the notes of your pull request stating that the work is clear of infinging work by others.  Again, for more details, please see the DCO Readme file.
+If you plan or would like to contribute sample templates, you must follow the DCO process in the attached [DCO Readme file](https://github.com/IBMSpectrumComputing/lsf-integrations/blob/master/Spectrum%20LSF%20Application%20Center/IBMDCO.md) in the root of this repository.  It essentially requires you to provide a Sign Off line in the notes of your pull request stating that the work is clear of infinging work by others.  Again, for more details, please see the DCO Readme file.
 
 ## Community Contribution Requirements
 
