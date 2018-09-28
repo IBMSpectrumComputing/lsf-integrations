@@ -4,15 +4,13 @@ IBM Spectrum LSF Application Center.  This integration is based on a public dock
 there is no need to install Tensorflow.
 
 ## Background
-1). Where to find Tensorflow Tutorials information
+1). Tensorflow Tutorials information is availabe here:
 
-https://www.tensorflow.org/tutorials/image_recognition
-https://www.tensorflow.org/tutorials/image_retraining
+[Image Recognition]( https://www.tensorflow.org/tutorials/image_recognition)
+[Flower Image Retraining]( https://www.tensorflow.org/tutorials/image_retraining)
 
-2). An 8 minute demonstration of the LSF Application Center submitting the Tensorflow tasks is viewable at
-
-  https://www.youtube.com/watch?v=wxeiPBEItJ4&feature=youtu.be
-
+2). Here is a short demonstration of the [LSF Application Center submiting the Tensorflow examples]( https://www.youtube.com/watch?v=wxeiPBEItJ4&feature=youtu.be)
+  
 ## Prerequisites
 1). IBM Spectrum LSF 10.1 or above version is installed.
 
@@ -41,7 +39,7 @@ MLDL_TOP/submission_templates/*/
 
 ## Setting up LSF with Docker
 
-Step 1: Prepare IBM Spectrum LSF to run jobs in Docker container by following [LSF docker integration instruction]( https://www.ibm.com/support/knowledgecenter/en/SSWRJV_10.1.0/lsf_docker/lsf_docker_prepare.html). make sure the selected computer server have Docker engine installed  and enabled
+Step 1: Prepare IBM Spectrum LSF to run jobs in Docker container by following [LSF docker integration instruction]( https://www.ibm.com/support/knowledgecenter/en/SSWRJV_10.1.0/lsf_docker/lsf_docker_prepare.html). Make sure the selected computer server have Docker engine installed and enabled
         
 Step 2: Configure LSF Docker Application profile for Tensorflow by adding the following lines into end of lsb.applications:
  
