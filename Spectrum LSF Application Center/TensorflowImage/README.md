@@ -6,8 +6,9 @@ there is no need to install Tensorflow.
 ## Background
 1). Tensorflow Tutorials information is availabe here:
 
-a). [Image Recognition]( https://www.tensorflow.org/tutorials/image_recognition)
-b). [Flower Image Retraining]( https://www.tensorflow.org/tutorials/image_retraining)
+[Image Recognition]( https://www.tensorflow.org/tutorials/image_recognition)
+
+[Flower Image Retraining]( https://www.tensorflow.org/tutorials/image_retraining)
 
 2). Here is a short demonstration of the [LSF Application Center submiting the Tensorflow examples]( https://www.youtube.com/watch?v=wxeiPBEItJ4&feature=youtu.be)
   
