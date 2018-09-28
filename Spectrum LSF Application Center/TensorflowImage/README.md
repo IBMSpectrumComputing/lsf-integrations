@@ -20,15 +20,21 @@ there is no need to install Tensorflow.
 3). LSF Compute Server support docker engine 1.12 or above version.
 
 ## Assumptions
-a) You are familiar with using and administrating LSF and LSF Application Center
-b) All computes nodes have access to a shared file system to act as the MLDL_TOP directory
+a). You are familiar with using and administrating LSF and LSF Application Center
+
+b). All computes nodes have access to a shared file system to act as the MLDL_TOP directory
    for scripts, images and model files.  Change MLDL_TOP to the appropriate shared directory
    in your environment.
-c) Docker is installed and working on LSF compute nodes
-d) You want learn about Tensorflow Tutorials and use Tensorflow with LSF
-e) The docker tensorflow container specified in this readme uses CPU and not GPU
-f) Some effort may be needed to get the Tensorflow python scripts to run on GPUs
-g) Scripts were tested on Tensorflow 1.10.0.  Results may vary on newer or older version of Tensorflow
+
+c). Docker is installed and working on LSF compute nodes
+
+d). You want learn about Tensorflow Tutorials and use Tensorflow with LSF
+
+e). The docker tensorflow container specified in this readme uses CPU and not GPU
+
+f). Some effort may be needed to get the Tensorflow python scripts to run on GPUs
+
+g). Scripts were tested on Tensorflow 1.10.0.  Results may vary on newer or older version of Tensorflow
 
 ## Shared Directory Structure
 
