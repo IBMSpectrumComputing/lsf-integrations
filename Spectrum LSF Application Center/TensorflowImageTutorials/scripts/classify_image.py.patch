@@ -1,0 +1,12 @@
+0a1
+> #!/usr/bin/python
+49d49
+< 
+190c190
+<   maybe_download_and_extract()
+---
+>   #maybe_download_and_extract()
+207c207
+<       default='/tmp/imagenet',
+---
+>       default='#MLDL_TOP#/imagenet',

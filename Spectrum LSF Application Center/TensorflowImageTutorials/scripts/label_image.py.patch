@@ -1,0 +1,14 @@
+0a1
+> #!/usr/bin/python
+60c61
+<     required=True,
+---
+>     #required=True,
+61a63
+>     default="#MLDL_TOP#/imagenet/output_graph.pb",
+65c67
+<     required=True,
+---
+>     #required=True,
+66a69
+>     default="#MLDL_TOP#/imagenet/output_labels.txt",

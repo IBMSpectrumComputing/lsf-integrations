@@ -1,0 +1,26 @@
+0a1
+> #!/usr/bin/python
+164,165c165,166
+<     embed.metadata_path = os.path.join(FLAGS.log_dir + '/projector/metadata.tsv')
+<     embed.sprite.image_path = os.path.join(FLAGS.data_dir + '/mnist_10k_sprite.png')
+---
+>     embed.metadata_path = os.path.join('metadata.tsv')
+>     #embed.sprite.image_path = os.path.join(FLAGS.data_dir + '/mnist_10k_sprite.png')
+167c168
+<     embed.sprite.single_image_dim.extend([28, 28])
+---
+>     #embed.sprite.single_image_dim.extend([28, 28])
+231c232
+<         tf.gfile.MkDir(FLAGS.log_dir + '/projector')
+---
+>         #tf.gfile.MkDir(FLAGS.log_dir + '/projector')
+232a234
+>     tf.gfile.MkDir(FLAGS.log_dir + '/projector')
+247c249
+<     parser.add_argument('--data_dir', type=str, default='/Users/norman/Documents/workspace/mnist-tensorboard-embeddings/mnist_data',
+---
+>     parser.add_argument('--data_dir', type=str, default='./mnist_data',
+249c251
+<     parser.add_argument('--log_dir', type=str, default='/Users/norman/Documents/workspace/mnist-tensorboard-embeddings/logs',
+---
+>     parser.add_argument('--log_dir', type=str, default='./logs',

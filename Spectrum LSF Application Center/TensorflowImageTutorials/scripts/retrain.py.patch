@@ -1,0 +1,42 @@
+0a1
+> #!/usr/bin/python
+97c98
+< By default, this script will log summaries to /tmp/retrain_logs directory
+---
+> By default, this script will log summaries to ./logs directory
+101c102
+< tensorboard --logdir /tmp/retrain_logs
+---
+> tensorboard --logdir ./logs
+141c142
+< CHECKPOINT_NAME = '/tmp/_retrain_checkpoint'
+---
+> CHECKPOINT_NAME = './_retrain_checkpoint'
+1302c1303
+<       default='',
+---
+>       default='#MLDL_TOP#/images/flower_photos',
+1308c1309
+<       default='/tmp/output_graph.pb',
+---
+>       default='./output_graph.pb',
+1314c1315
+<       default='/tmp/intermediate_graph/',
+---
+>       default='./intermediate_graph/',
+1329c1330
+<       default='/tmp/output_labels.txt',
+---
+>       default='./output_labels.txt',
+1335c1336
+<       default='/tmp/retrain_logs',
+---
+>       default='./logs',
+1409c1410
+<       default='/tmp/imagenet',
+---
+>       default='#MLDL_TOP#/imagenet',
+1419c1420
+<       default='/tmp/bottleneck',
+---
+>       default='#MLDL_TOP#/retrain/bottleneck',
