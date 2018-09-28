@@ -4,13 +4,13 @@ IBM Spectrum LSF Application Center.  This integration is based on a public dock
 there is no need to install Tensorflow.
 
 ## Background
-1) Tensorflow Tutorials information is availabe here:
+1). Tensorflow Tutorials information is availabe here:
 
 [Image Recognition]( https://www.tensorflow.org/tutorials/image_recognition)
 
 [Flower Image Retraining]( https://www.tensorflow.org/tutorials/image_retraining)
 
-2) Here is a short demonstration of the [LSF Application Center submiting the Tensorflow examples]( https://www.youtube.com/watch?v=wxeiPBEItJ4&feature=youtu.be)
+2). Here is a short demonstration of the [LSF Application Center submiting the Tensorflow examples]( https://www.youtube.com/watch?v=wxeiPBEItJ4&feature=youtu.be)
   
 ## Prerequisites
 1). IBM Spectrum LSF 10.1 or above version is installed.
