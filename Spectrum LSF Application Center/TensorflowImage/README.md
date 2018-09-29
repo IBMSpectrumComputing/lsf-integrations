@@ -4,13 +4,13 @@ IBM Spectrum LSF Application Center.  This integration is based on a public dock
 there is no need to install Tensorflow.
 
 ## Background
-1). Tensorflow Tutorials information is availabe here:
+1). Tensorflow Tutorials information is available here:
 
 [Image Recognition]( https://www.tensorflow.org/tutorials/image_recognition)
 
 [Flower Image Retraining]( https://www.tensorflow.org/tutorials/image_retraining)
 
-2). Here is a short demonstration of the [LSF Application Center submiting the Tensorflow examples]( https://www.youtube.com/watch?v=wxeiPBEItJ4&feature=youtu.be)
+2). Here is a short demonstration of the [LSF Application Center and the Tensorflow examples]( https://www.youtube.com/watch?v=wxeiPBEItJ4&feature=youtu.be)
   
 ## Prerequisites
 1). IBM Spectrum LSF 10.1 or above version is installed.
@@ -28,7 +28,7 @@ there is no need to install Tensorflow.
 
 3). Docker is installed and working on LSF compute nodes
 
-4). You want learn about Tensorflow Tutorials and use Tensorflow with LSF
+4). You want to learn about Tensorflow Tutorials and use Tensorflow with LSF
 
 5). The docker tensorflow container specified in this readme uses CPU and not GPU
 
@@ -46,7 +46,7 @@ there is no need to install Tensorflow.
 
 ## Setting up LSF with Docker
 
-1). Prepare IBM Spectrum LSF to run jobs in Docker container by following [LSF docker integration instruction]( https://www.ibm.com/support/knowledgecenter/en/SSWRJV_10.1.0/lsf_docker/lsf_docker_prepare.html). Make sure the selected computer server have Docker engine installed and enabled
+1). Prepare IBM Spectrum LSF to run jobs in Docker container by following [LSF docker integration instruction]( https://www.ibm.com/support/knowledgecenter/en/SSWRJV_10.1.0/lsf_docker/lsf_docker_prepare.html). Make sure the selected computer servers have Docker engine installed and enabled
         
 2). Configure LSF Docker Application profile for Tensorflow by adding the following lines into end of lsb.applications:
  
@@ -61,7 +61,7 @@ there is no need to install Tensorflow.
                   ) starter(root) ]
         End Application
 
- Change MLDL_TOP in the above application profile to the actuall share directory location in your environment
+ Change MLDL_TOP in the above application profile to the share directory location in your environment
 
  Restart LSF daemons on the LSF Master and Master Candidate hosts
  Verify job submission with a docker container is working.  For example,
