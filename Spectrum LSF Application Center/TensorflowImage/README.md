@@ -46,7 +46,7 @@ there is no need to install Tensorflow.
 
 ## Setting up LSF with Docker
 
-1). Prepare IBM Spectrum LSF to run jobs in Docker container by following [LSF docker integration instruction]( https://www.ibm.com/support/knowledgecenter/en/SSWRJV_10.1.0/lsf_docker/lsf_docker_prepare.html). Make sure the selected computer servers have Docker engine installed and enabled
+1). Prepare IBM Spectrum LSF to run jobs in Docker container by following [LSF docker integration instruction]( https://www.ibm.com/support/knowledgecenter/en/SSWRJV_10.1.0/lsf_docker/lsf_docker_prepare.html). Make sure the selected compute servers have Docker engine installed and enabled
         
 2). Configure LSF Docker Application profile for Tensorflow by adding the following lines into end of lsb.applications:
  
@@ -176,7 +176,7 @@ Then, run these commands:
     Publish the template
     
 12). netstat is not currently in the Docker Tensorflow Containers and is used in tensorboard.sh script to fine a free port.
-    A quick workaround copy /bin/netstat to MLDL_TOP/scripts.  So, MLDL scripts calling netstat in the container
+    A quick workaround copy /bin/netstat to MLDL_TOP/scripts and make sure MLDL_TOP/scripts/netstat is executable (chmod +r netstat).  So, MLDL scripts calling netstat in the container
     will call the netstat under MLDL_TOP/scripts.
 
 13). Each Retrain or MNIST training job can generate several 100s MB of data under the logs directory.  Clean up as necessary.
