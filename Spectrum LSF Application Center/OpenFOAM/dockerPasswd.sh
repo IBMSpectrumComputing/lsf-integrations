@@ -1,14 +1,23 @@
 #!/bin/sh
+#**************************************************************************
+#  Copyright International Business Machines Corp, 2018. 
 #
-# Licensed Materials - Property of IBM
-# 5725-G82
-# @ Copyright IBM Corp. 2009, 2018 All Rights Reserved
-# US Government Users Restricted Rights - Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
 #
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#**************************************************************************
 
-# This utility creates passwd and group file in job's CWD/OUTPUT_FILE_LOCATION for container to use.
-# Administrator have to define the path in lsb.applications file for each LSF application profile, i
-# for example:  @/opt/ibm/lsfsuite/ext/gui/conf/application/dockerPasswd.sh in docker option 
+# This utility creates passwd and group file in job's CWD/OUTPUT_FILE_LOCATION before docker start 
+# the container, the script must locate in the shared diretory for all LSF server hosts. 
+# for example:  @/scratch/shared_job_directory/dockerPasswd.sh 
 
 
 JOBTMPDIR=$LS_EXECCWD # Assume the job's current working directory is shared for parallel jobs
