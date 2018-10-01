@@ -42,8 +42,9 @@ Step 3: Configure LSF Docker Application profile for openfoam 6 by adding the fo
  LSF top directory.
         
 Step 4: restart LSF:   
-        #lsfrestart
         
-Step 5: logon LSF Application Center as administrator,  find and publish the template "OpenFOAM"
+	lsfrestart
+        
+Step 5: logon LSF Application Center as administrator,  find and publish template "OpenFOAM". Then  Go to "System&Setting"-> "User Role& Permission", assign view and Control permission of OpenFOAM to "Normal User".
 
 Step 6: Submit OpenFOAM job from LSF Application Center as a normal user.  check the job result with 3D graphic.
