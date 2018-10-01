@@ -46,7 +46,7 @@ Step 5: restart LSF:
         
 Step 6: logon LSF Application Center as administrator,  find and edit the template "ParaView", replace JOB_REPOSITORY_TOP with the real 
         directory introduced in Step 2 for input: "Application Command" and "Application Command to open an input file",  save and 
-        publish the template.  Go to "System&Setting"-> User Role& Permission -> assign view permission of ParaView to "Normal User"
+        publish the template.  Go to "System&Setting"-> User Role& Permission, assign view permission of ParaView to "Normal User"
 
 Step 7: Test-- open a new tab in browser used in step6, type URL: https://<AC_SERVER>:6080/, accept this site. then run cases:
 
