@@ -29,6 +29,10 @@ Step 3: Configure LSF to define LSF Resource "ParaView" and assign the available
 	
 	ib22b04 !       !       1       (docker ParaView)
 	
+  3). Enable lsrun function in $LSF_ENDIR/lsf.conf:
+  
+        LSF_DISABLE_LSRUN=N 
+	
 Step 4: Prepare hosts to run TigerVnc.  for Application center host and all hosts selected in Step 3, run the following steps:
    
     yum -y install tigervnc*
