@@ -37,7 +37,7 @@ Step 4: Prepare hosts to run TigerVnc.  for Application center host and all host
    
     yum install gnome-screensaver*
       
-   for more details, reference:[Configure Application Center to start remote application](https://www.ibm.com/support/knowledgecenter/SSZRJV_10.2.0/admin_guide/remote_apps_configure_intro.html)
+   for more details, reference [Configure Application Center to start remote application](https://www.ibm.com/support/knowledgecenter/SSZRJV_10.2.0/admin_guide/remote_apps_configure_intro.html)
   
 
 Step 5: restart LSF:   
