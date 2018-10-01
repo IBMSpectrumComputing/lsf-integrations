@@ -19,17 +19,39 @@ Step 1: download all the files under this directory ParaView/,   and copy over t
 Step 2: copy ParaView/startParaView  to  JOB_REPOSITORY_TOP/startParaView, make sure it is executable.  JOB_REPOSITORY_TOP is the same
         directory with template OpenFOAM,  it must be shared by all LSF servers.
 	
-Step 3: Configure LSF to define LSF Resource "ParaView" and assign the available Hosts to this resource
+Step 3: Configure LSF to define LSF Resource "ParaView" and assign the available Hosts to this resource.
+   
+  1). define LSF resource "ParaView"-- add a line into $LSF_ENVDIR/lsf.shared inside "Begine Resource" and "End Resource":
+	
+	ParaView   Boolean ()       ()          (openfoam GUI)
         
-Step 4: restart LSF:   
+  2). define ParaView running hosts-- edit file $LSF_ENVDIR/lsf.cluster.CLUSTER_NAME, add resource name for selected hosts:
+	
+	ib22b04 !       !       1       (docker ParaView)
+	
+Step 4: Prepare hosts to run TigerVnc.  for Application center host and all hosts selected in Step 3, run the following steps:
+   
+    yum -y install tigervnc*
+   
+    yum group install "Server with GUI"
+   
+    yum install gnome-screensaver*
+      
+   for more details, reference:[Configure Application Center to start remote application] (https://www.ibm.com/support/knowledgecenter/SSZRJV_10.2.0/admin_guide/remote_apps_configure_intro.html)
+  
+
+Step 5: restart LSF:   
         #lsfrestart
         
-Step 5: logon LSF Application Center as administrator,  find and edit the template "ParaView", replace JOB_REPOSITORY_TOP with the real 
+Step 6: logon LSF Application Center as administrator,  find and edit the template "ParaView", replace JOB_REPOSITORY_TOP with the real 
         directory introduced in Step 2 for input: "Application Command" and "Application Command to open an input file",  save and 
         publish the template.  Go to "System&Setting"-> User Role& Permission -> assign view permission of ParaView to "Normal User"
 
-Step 6: Test case 1:  logon Application Center as a normal user, go to "+ New Workload", click on "Paraview",  a new browser window
+Step 6: Test
+
+Case 1:  logon Application Center as a normal user, go to "+ New Workload", click on "Paraview",  a new browser window
         should show up with Paraview console running inside.
-        Test case 2: logon Application Center as a normal user, submit a OpenFOAM job,  in the workload list, click on the job ID to open
+	
+Case 2: logon Application Center as a normal user, submit a OpenFOAM job,  in the workload list, click on the job ID to open
         this job's details, click on "Data" tab, search and select  XXX.foam file, then click on the menu: Open with application, select
         ParaView.   an new browser window should be opened, and Paraview console is running with the current job's data opened.
