@@ -1,5 +1,5 @@
 # ParaView Template
-ParaView directory include all files required for integrating openfoam 6 Paraview with IBM Spectrum LSF and IBM Spectrum LSF Application Center.
+ParaView directory include all files required for integrating openfoam 6 Paraview with IBM Spectrum LSF and IBM Spectrum LSF Application Center. Users can manage openfoam data in paraview console inside Spectrum LSF application Center.
 This integration is based on public docker image: openfoam/openfoam6-paraview54, there is no need to install openfoam application.
 
 ## Prerequisites
@@ -41,7 +41,8 @@ Step 4: Prepare hosts to run TigerVnc.  for Application center host and all host
   
 
 Step 5: restart LSF:   
-        #lsfrestart
+        
+	lsfrestart
         
 Step 6: logon LSF Application Center as administrator,  find and edit the template "ParaView", replace JOB_REPOSITORY_TOP with the real 
         directory introduced in Step 2 for input: "Application Command" and "Application Command to open an input file",  save and 
