@@ -40,3 +40,7 @@
 <       default='/tmp/bottleneck',
 ---
 >       default='#MLDL_TOP#/retrain/bottleneck',
+1483c1484
+<       default='/tmp/saved_models/1/',
+---
+>       default='./saved_models/1/',
