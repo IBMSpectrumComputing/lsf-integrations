@@ -1,6 +1,6 @@
 # Spectrum LSF Application Center
 
-This repository is where LSF Application Center sample templates can be found.  Each template requires it's own directory and will be copied to the /opt/ibm/lsfsuite/ext/gui/conf/application/draft directory.  Once they are copied there, they can be published.
+This repository is where LSF Application Center sample templates can be found.  Each template requires it's own directory and will be copied to the /opt/ibm/lsfsuite/ext/gui/conf/application/draft directory.  Once they are copied there, they can be published. Some templates require addtional set up steps, follow the steps in the individual template's readme.
 
 All Spectrum LSF Application Center Templates published here are covered under the Apache License, Version 2.0.
 
