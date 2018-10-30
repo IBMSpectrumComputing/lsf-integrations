@@ -34,11 +34,14 @@ Step 3: Configure LSF Docker Application profile for openfoam 6 by adding the fo
  
  1).find a shared directory for all computer nodes, and replace JOB_REPOSITORY_TOP with the real path in above content       
  
- 2).copy OpenFOAM/dockerPasswd.sh  to  JOB_REPOSITORY_TOP/dockerPasswd.sh
+ 2).edit OpenFOAM/dockerPasswd.sh, replace the <JOB_REPOSITORY_TOP> with real value in the following line:
+    JOBTMPDIR=<JOB_REPOSITORY_TOP>
+ 
+ 3).copy dockerPasswd.sh to  JOB_REPOSITORY_TOP/dockerPasswd.sh
 	
  for more details, reference [LSF docker application configuration](https://www.ibm.com/support/knowledgecenter/en/SSWRJV_10.1.0/lsf_docker/lsf_docker_config.html). 
  
- 3). assume LSF is installed under /opt/ibm,  if it is not, replace "/opt/ibm" in above openfoam application profile to the real
+ 4). assume LSF is installed under /opt/ibm,  if it is not, replace "/opt/ibm" in above openfoam application profile to the real
  LSF top directory.
         
 Step 4: restart LSF:   
