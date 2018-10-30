@@ -35,6 +35,7 @@ Step 3: Configure LSF Docker Application profile for openfoam 6 by adding the fo
  1).find a shared directory for all computer nodes, and replace JOB_REPOSITORY_TOP with the real path in above content       
  
  2).edit OpenFOAM/dockerPasswd.sh, replace the <JOB_REPOSITORY_TOP> with real value in the following line:
+ 
     JOBTMPDIR=<JOB_REPOSITORY_TOP>
  
  3).copy dockerPasswd.sh to  JOB_REPOSITORY_TOP/dockerPasswd.sh
