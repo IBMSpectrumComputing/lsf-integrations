@@ -20,7 +20,7 @@
 # for example:  @/scratch/shared_job_directory/dockerPasswd.sh 
 
 
-JOBTMPDIR=$LS_EXECCWD # Assume the job's current working directory is shared for parallel jobs
+JOBTMPDIR=<JOB_REPOSITORY_TOP> # replace the value with real shared directory, AC admin must have write permission on this directory
 if [ "x$JOBTMPDIR" = "x" ] ; then
 echo "Are you testing outside of an LSF job?"
 JOBTMPDIR=/tmp/$USER
