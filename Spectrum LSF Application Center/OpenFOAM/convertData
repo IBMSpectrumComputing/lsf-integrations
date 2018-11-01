@@ -35,7 +35,9 @@ convert()
        if ($1 == "Time" && $2 == "=" ){
            if(time != 0 ){
            # this is not the first line, print out previous line
-                printf(fmt, time, Ux, Uy, epsilon,pValue, kValue); 
+                if(Ux > 0){
+                    printf(fmt, time, Ux, Uy, epsilon,pValue, kValue); 
+                }
                 Ux=0;
                 Uy=0;
                 epsilon=0;
@@ -58,7 +60,9 @@ convert()
 
        }
     } END {
-       printf(fmt, time, Ux, Uy, epsilon,pValue, kValue);
+       if(Ux > 0){
+           printf(fmt, time, Ux, Uy, epsilon,pValue, kValue);
+       }
     }' $1  #>> $RESULT_FILE
 
 
@@ -72,8 +76,7 @@ if [ ! -f $1 ]; then
    echo "Need to specify a valid file."
    exit
 fi
-if [ -f system/decomposeParDict ];then
-  echo "convertData: Exit since this is a parallel openfoam result."
-  exit
-fi
+#if [ -f system/decomposeParDict ];then
+#  echo "convertData: Processing parallel openfoam result."
+#fi
 convert  $1 
