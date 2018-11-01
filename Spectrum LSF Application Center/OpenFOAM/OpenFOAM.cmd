@@ -59,8 +59,10 @@ if [ -f system/decomposeParDict ]; then
     NON_PARALLEL="boundaryFoam|cfx4ToFoam|chemFoam|datToFoam|mshToFoam"
     echo $APP_CMD | egrep $NON_PARALLEL > /dev/null
     if [ $? -ne 0 ]; then   # add parallel option
-       MPIRUN_CMD="mpirun -tcp -mca plm lsf" # set appropriate mpirun options
-       APP_OPT="-parallel"
+       #MPIRUN_CMD="mpirun -tcp -mca plm lsf" # set appropriate mpirun options
+       #APP_OPT="-parallel"
+       MPIRUN_CMD="mpirun -np $NCPU -mca plm ^rsh" # use container mpirun
+       APP_OPT=""
        RECON_CMD="reconstructPar"
     else
        MPIRUN_CMD=""
@@ -102,9 +104,9 @@ echo "function on_error_exit {"
 echo "RT=\$?;if [ \$RT -ne 0 ]; then exit \$RT;fi"
 echo "}"
 echo
-echo "if [ -f /opt/ibm/spectrum_mpi/smpi.sh ]; then "
-echo "source /opt/ibm/spectrum_mpi/smpi.sh"
-echo "fi"
+#echo "if [ -f /opt/ibm/spectrum_mpi/smpi.sh ]; then "
+#echo "source /opt/ibm/spectrum_mpi/smpi.sh"
+#echo "fi"
 echo "source /opt/openfoam6/etc/bashrc"
 echo "$MAKE_MESH"
 echo "on_error_exit"
@@ -116,8 +118,8 @@ echo "$DECOMPOSER_CMD"
 echo "on_error_exit"
 echo "$FOAM_CMD"
 echo "on_error_exit"
-echo "$RECON_CMD"
-echo "on_error_exit"
+#echo "$RECON_CMD"
+#echo "on_error_exit"
 #echo "convertData output.${EXECUTIONUSER}.txt"
 #echo "on_error_exit"
   
