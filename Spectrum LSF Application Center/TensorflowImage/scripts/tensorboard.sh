@@ -84,7 +84,8 @@ echo "</body>" >> $htmlf
 echo "</html>" >> $htmlf
 
 # Use new PAC 10.2.0.6 joblink capabilitiy
-echo "http://%H:$PORT" > .joblink
+#echo "http://%H:$PORT" > .joblink
+echo "http://$EXE_HOST:$PORT" > .joblink
 
 /usr/local/bin/tensorboard --logdir $LOGDIR --port $PORT
 
