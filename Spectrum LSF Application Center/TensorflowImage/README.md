@@ -1,6 +1,6 @@
 # Tensorflow Image Submission Templates
 TensorflowImage folder includes the submission templates and scripts to run several Tensorflow Image Tutorials with IBM Spectrum LSF and 
-IBM Spectrum LSF Application Center.  This integration is based on the public docker image: tensorflow/tensorflow:1.10.0, ibmcom/tensorflow-ppc64le:1.13.1
+IBM Spectrum LSF Application Center.  This integration is based on the public docker image: tensorflow/tensorflow:1.10.0, ibmcom/tensorflow-ppc64le:1.13.1,
 there is no need to install Tensorflow.
 
 ## Background
