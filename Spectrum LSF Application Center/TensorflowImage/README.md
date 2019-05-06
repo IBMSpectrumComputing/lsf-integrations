@@ -1,6 +1,6 @@
 # Tensorflow Image Submission Templates
 TensorflowImage folder includes the submission templates and scripts to run several Tensorflow Image Tutorials with IBM Spectrum LSF and 
-IBM Spectrum LSF Application Center.  This integration is based on a public docker image: tensorflow/tensorflow:1.10.0, 
+IBM Spectrum LSF Application Center.  This integration is based on the public docker image: tensorflow/tensorflow:1.10.0, ibmcom/tensorflow-ppc64le:1.13.1,
 there is no need to install Tensorflow.
 
 ## Background
@@ -34,7 +34,7 @@ there is no need to install Tensorflow.
 
 6). Some effort may be needed to get the Tensorflow python scripts to run on GPUs
 
-7). Scripts were tested on Tensorflow 1.10.0.  Results may vary on newer or older version of Tensorflow
+7). Scripts were tested on Tensorflow 1.10.0 and tensorflow-ppc64le 1.13.1. Results may vary on newer or older version of Tensorflow
 
 ## Shared Directory Structure
 
@@ -62,6 +62,7 @@ there is no need to install Tensorflow.
         End Application
 
  Change MLDL_TOP in the above application profile to the share directory location in your environment
+ Notes: Change "image(tensorflow/tensorflow:1.10.0)" to "image(ibmcom/tensorflow-ppc64le:1.13.1)" if your environment is IBM Power Linux.
 
  Restart LSF daemons on the LSF Master and Master Candidate hosts
  Verify job submission with a docker container is working.  For example,
