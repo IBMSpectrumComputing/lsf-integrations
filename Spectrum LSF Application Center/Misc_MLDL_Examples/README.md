@@ -80,7 +80,7 @@ Note, /opt/share/mldl is an example and you can change to an appropriate shared 
 
 3). Using the LSF Application Center to publish the submission templates
 
-### Download Example scripts and make minor changes
+### Download Example files and make minor changes
 
 4). Download these examples python scripts:
 
@@ -107,6 +107,19 @@ Alternatively
 
     #!/usr/bin/python
 
+7). Download the data file
+
+    cd MLDL_TOP/data
+    https://raw.githubusercontent.com/hzy46/Char-RNN-TensorFlow/master/data/shakespeare.txt
+   
+    Optionally, a smaller version of the data file is available with PowerAI under
+    
+        /opt/anaconda2/caffe2/examples/shakespeare.txt
+
+8). Make the file readable by all
+
+    chmod +r shakespeare.txt
+        
 ### Miscellaneous tasks and thoughts
 
 7). Future changes to *.py scripts from their original github location might cause deployment problems.
