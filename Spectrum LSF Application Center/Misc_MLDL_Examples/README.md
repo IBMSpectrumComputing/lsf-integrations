@@ -101,7 +101,11 @@ Note, /opt/share/mldl is an example and you can change to an appropriate shared 
 
 For PowerAI
 
-    !/opt/anaconda2/bin/python
+    #!/opt/anaconda2/bin/python
+
+Alternatively
+
+    #!/usr/bin/python
 
 ### Miscellaneous tasks and thoughts
 
