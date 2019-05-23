@@ -99,6 +99,8 @@ Note, /opt/share/mldl is an example and you can change to an appropriate shared 
 
 6). Add this line below as the first line to each of the above python scripts (char_rnn.py and main.py)
 
+For PowerAI
+
     !/opt/anaconda2/bin/python
 
 ### Miscellaneous tasks and thoughts
