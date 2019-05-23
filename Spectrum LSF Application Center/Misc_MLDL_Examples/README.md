@@ -28,6 +28,7 @@ Here is a short demonstration of the [LSF Application Center with Tensorflow exa
 
 ## Shared Directory Structure
 
+       MLDL_TOP/data
        MLDL_TOP/scripts
        MLDL_TOP/submission_templates/*/
 
@@ -69,10 +70,10 @@ Here is a short demonstration of the [LSF Application Center with Tensorflow exa
 
 ### Setup the Submission Templates
 
-1). Change the MLDL_TOP value in the submission template *.cmd files
+1). Change the MLDL_TOP value in the submission template files
 
     cd MLDL_TOP/submission_templates
-    sed -i -e 's/\#MLDL_TOP\#/\/opt\/share\/mldl/g' */*.cmd
+    sed -i -e 's/\#MLDL_TOP\#/\/opt\/share\/mldl/g' */*
 
 Note, /opt/share/mldl is an example and you can change to an appropriate shared directory structure in your environment.
 
