@@ -11,7 +11,7 @@ Here is a short demonstration of the [LSF Application Center and the Tensorflow 
 
 2). IBM Spectrum Application Center 10.2 or above version is installed.
 
-3). Optional, LSF Compute Server support docker engine 1.12 or above version.
+3). PowerAI 1.6 is installed on your LSF compute nodes.  If not using Power, LSF compute nodes support docker engine 1.12 or above version.
 
 ## Assumptions
 1). You are familiar with using and administrating LSF and LSF Application Center
@@ -20,7 +20,7 @@ Here is a short demonstration of the [LSF Application Center and the Tensorflow 
    for scripts, images and model files.  Change MLDL_TOP to the appropriate shared directory
    in your environment.
 
-3). Optional, Docker is installed and working on LSF compute nodes
+3). If not using Power, Docker is installed and working on LSF compute nodes
 
 4). You want to learn about MLDL and use MLDL with LSF
 
@@ -31,7 +31,7 @@ Here is a short demonstration of the [LSF Application Center and the Tensorflow 
        MLDL_TOP/scripts
        MLDL_TOP/submission_templates/*/
 
-## Optional, Setting up LSF with Docker
+## Setting up LSF with Docker (only required if not using PowerAI)
 
 1). Prepare IBM Spectrum LSF to run jobs in Docker container by following [LSF docker integration instruction]( https://www.ibm.com/support/knowledgecenter/en/SSWRJV_10.1.0/lsf_docker/lsf_docker_prepare.html). Make sure the selected compute servers have Docker engine installed and enabled
         
