@@ -4,7 +4,7 @@ IBM Spectrum LSF Application Center.  This integration assumes PowerAI 1.6 is in
 extra effort these examples can be setup to run inside of publicly available docker images.
 
 ## Background
-Here is a short demonstration of the [LSF Application Center and the Tensorflow examples]( https://www.youtube.com/watch?v=wxeiPBEItJ4&feature=youtu.be)
+Here is a short demonstration of the [LSF Application Center with Tensorflow examples]( https://www.youtube.com/watch?v=wxeiPBEItJ4&feature=youtu.be)
   
 ## Prerequisites
 1). IBM Spectrum LSF 10.1 or above version is installed.  It is recommened to apply the latest LSF Service Pack.
