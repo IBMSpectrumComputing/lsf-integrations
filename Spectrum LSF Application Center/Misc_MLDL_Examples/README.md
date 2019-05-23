@@ -122,4 +122,4 @@ Alternatively
         
 ### Miscellaneous tasks and thoughts
 
-7). Future changes to *.py scripts from their original github location might cause deployment problems.
+9). Future changes to *.py scripts from their original github location might cause deployment problems.
