@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<agent resources="resources" application="Tensorflow" type="MLDL" category="Job Submission"> 
+  <info>Submit a job: CAFFE2_CHAR_RNN</info>  
+  <lastmodified>2019-05-23 21:12:34</lastmodified>  
+  <modifier>lsfadmin</modifier>  
+  <action id="submit" label="submit" result="text/xml">CAFFE2_CHAR_RNN.cmd</action>  
+  <repository> 
+    <application id="application" state="expandEnable" info="Basic Job Options"> 
+      <option defaultValue="" id="JOB_NAME" label="Job Name" required="false" hidden="false" type="text" editable="true"/>  
+      <option defaultValue="16" id="BATCH_SIZE" label="Batch Size" required="false" hidden="false" type="list" editable="true"> 
+        <option id="8" required="false" hidden="false">8</option>  
+        <option id="16" required="false" hidden="false" selected="true">16</option>  
+        <option id="32" required="false" hidden="false">32</option>  
+        <option id="64" required="false" hidden="false">64</option> 
+      </option>  
+      <option defaultValue="128" id="HIDDEN_SIZE" label="Hidden Size" required="false" hidden="false" type="list" editable="true" helpText="This is the size of the neural network&amp;rsquo;s hidden layer"> 
+        <option id="32" required="false" hidden="false">32</option>  
+        <option id="64" required="false" hidden="false">64</option>  
+        <option id="128" required="false" hidden="false" selected="true">128</option>  
+        <option id="256" required="false" hidden="false">256</option> 
+      </option>  
+      <option defaultValue="32" id="SEQ_LENGTH" label="Sequence Length" required="false" hidden="false" type="list" editable="true" helpText="This is the number of characters in one continuous sequence that are grabbed from the training data"> 
+        <option id="16" required="false" hidden="false">16</option>  
+        <option id="32" required="false" hidden="false" selected="true">32</option>  
+        <option id="64" required="false" hidden="false">64</option>  
+        <option id="128" required="false" hidden="false">128</option> 
+      </option>  
+      <option defaultValue="500" id="ITERS_TO_REPORT" label="Iterations To Report" required="false" hidden="false" type="list" editable="true" helpText="This is how often the scripts provides a little output to show it&amp;rsquo;s current status"> 
+        <option id="500" required="false" hidden="false" selected="true">500</option>  
+        <option id="1000" required="false" hidden="false">1000</option>  
+        <option id="2000" required="false" hidden="false">2000</option> 
+      </option>  
+      <option defaultValue="#MLDL_TOP#/data/shakespeare.txt" id="TRAIN_DATA_FILE" label="Train Data File" required="true" hidden="false" type="simpleFile" editable="true" defaultFileType="*.txt,*.dat">#MLDL_TOP#/data/shakespeare.txt</option>  
+      <option defaultValue="yes" id="GPU" label="Use GPU" required="false" hidden="false" type="checkbox" editable="true" helpText="Utilize GPU resource to massively increasing the speed of training" labelPosition="left">Yes</option> 
+    </application>  
+    <application id="cluster" state="collapseEnable" info="Advanced"> 
+      <option defaultValue="" id="label1" required="false" hidden="false" type="label" editable="true" helpText="Requirements"/>  
+      <option defaultValue="rusage[mem=2400] span[hosts=1]" id="EXTRA_RES" label="Resource Requirement string" required="false" hidden="false" type="text" editable="true" helpText="Example: swp &gt; 15 &amp;&amp; maxmem &gt; 100">rusage[mem=2400] span[hosts=1]</option>  
+      <option defaultValue="" id="label5" required="false" hidden="false" type="label" editable="true" helpText="Additional Job Options"/>  
+      <option defaultValue="normal" id="QUEUE" label="Submit to this Queue" required="false" hidden="false" type="list" editable="true"> 
+        <action id="queues">$GUI_CONFDIR/application/options/queue.sh normal</action> 
+      </option>  
+      <option defaultValue="caffe2_char_rnn" id="PRJ_NAME" label="Project" required="false" hidden="false" type="text" editable="true">caffe2_rnn</option>  
+      <option defaultValue="" id="EXTRA_PARAMS" label="Other bsub options" required="false" hidden="false" type="text" editable="true" helpText="Example: -m myhost.&lt;br/&gt;Not all bsub options are supported. The following bsub options are not supported: -I, -Ip, -Is, -IS, -ISP, -ISs.">-n 2 </option> 
+    </application>  
+    <application id="file" state="collapseEnable" info="Data"> 
+      <option defaultValue="stdout%J.txt" id="OUTPUT_FILE" label="Output file" required="false" hidden="false" type="simpleFile" editable="true">stdout%J.txt</option>  
+      <option defaultValue="stderr%J.txt" id="ERROR_FILE" label="Error file" required="false" hidden="false" type="simpleFile" editable="true">stderr%J.txt</option> 
+    </application>  
+    <application id="result" state="collapseEnable" optionFor="client" info="Download Result"> 
+      <option defaultValue="" id="RESULT_LABEL" required="false" hidden="false" type="label" editable="true" optionFor="client" helpText="This section of the form is only visible to users in IBM Spectrum LSF Application Center Desktop Client"/>  
+      <option defaultValue="" id="DOWNLOAD_MATCH_FILES" label="Download files that match" required="false" hidden="false" type="text" width="30" editable="true" optionFor="client" helpText="Use a wildcard character(*) to specify file names to match. Separate multiple expressions with a comma(,). For example: abc*123.jou, *xyz.dat"/>  
+      <option defaultValue="NONE" id="COMPRESSION" label="Compression" required="true" hidden="false" type="list" width="20" editable="true" optionFor="client"> 
+        <option id="NONE" required="false" hidden="false" selected="true">NONE</option>  
+        <option id="zip" required="false" hidden="false">zip</option>  
+        <option id="tar.gz" required="false" hidden="false">tar.gz</option>  
+        <option id="tar.bz2" required="false" hidden="false">tar.bz2</option> 
+      </option> 
+    </application> 
+  </repository>  
+  <description/> 
+</agent>
