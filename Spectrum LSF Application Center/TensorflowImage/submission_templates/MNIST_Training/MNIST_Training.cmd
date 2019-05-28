@@ -187,6 +187,7 @@ elif [ "x$RUNLIMITMINUTE" != "x" ]; then
 fi
 
 CWD_OPT="-cwd \"$OUTPUT_FILE_LOCATION\""
+chmod a+w+r $OUTPUT_FILE_LOCATION
 
 #echo "bsub ${LSF_OPT} ${ADVANCED_OPT} ${LIMITS_OPT} ${CUSTOMIZE_OPT} ${JOB_COMMAND}" >> /tmp/aaa
 JOB_RESULT=`/bin/sh -c "bsub ${CWD_OPT} ${LSF_OPT} ${ADVANCED_OPT} ${LIMITS_OPT} ${CUSTOMIZE_OPT} ${JOB_COMMAND} ${OTHER_OPT} 2>&1"`
