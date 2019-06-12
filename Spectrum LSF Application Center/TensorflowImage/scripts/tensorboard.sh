@@ -87,5 +87,7 @@ echo "</html>" >> $htmlf
 #echo "http://%H:$PORT" > .joblink
 echo "http://$EXE_HOST:$PORT" > .joblink
 
-/usr/local/bin/tensorboard --logdir $LOGDIR --port $PORT
+# support Tensorboard in different paths
+PATH=$PATH:/usr/local/bin:/opt/anaconda2/bin
+tensorboard --logdir $LOGDIR --port $PORT
 
