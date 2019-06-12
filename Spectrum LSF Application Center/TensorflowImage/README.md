@@ -209,8 +209,9 @@ When using the the container image docker.io/ibmcom/powerai:1.6.0-all-ubuntu18.0
         End Application
 
  In the above powerai application profile change: 
-  a) MLDL_TOP to the share directory location in your environment
-  b) $LSF_SERVERDIR to your environmental value.  For example, /opt/ibm/lsfsuite/lsf/10.1/linux3.10-glibc2.17-ppc64le/etc
+ a). MLDL_TOP to the share directory location in your environment
+ b). $LSF_SERVERDIR to your environmental value.  For example, /opt/ibm/lsfsuite/lsf/10.1/linux3.10-glibc2.17-ppc64le/etc
+ 
  Next change the APP_PROFILE value in the *.cmd files provided
  
  	#APP_PROFILE=docker_tensorflow
