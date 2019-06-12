@@ -112,11 +112,11 @@ Alternatively
 
 From
          datasets.MNIST('../data', train=True, download=True,
-To
+---To
          datasets.MNIST('./data', train=True, download=True,
 From
          datasets.MNIST('../data', train=False, transform=transforms.Compose([
-To
+---To
          datasets.MNIST('./data', train=False, transform=transforms.Compose([
 
 
