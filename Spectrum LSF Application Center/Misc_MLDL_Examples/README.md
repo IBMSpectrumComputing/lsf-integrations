@@ -108,7 +108,18 @@ Alternatively
 
     #!/usr/bin/python
 
-7). Download the data file
+7). Additional changes to main.py script
+
+92c91
+<         datasets.MNIST('./data', train=True, download=True,
+---
+>         datasets.MNIST('../data', train=True, download=True,
+99c98
+<         datasets.MNIST('./data', train=False, transform=transforms.Compose([
+---
+>         datasets.MNIST('../data', train=False, transform=transforms.Compose([
+
+8). Download the data file
 
     cd MLDL_TOP/data
     https://raw.githubusercontent.com/hzy46/Char-RNN-TensorFlow/master/data/shakespeare.txt
@@ -117,10 +128,10 @@ Alternatively
     
         /opt/anaconda2/caffe2/examples/shakespeare.txt
 
-8). Make the file readable by all
+9). Make the file readable by all
 
     chmod +r shakespeare.txt
         
 ### Miscellaneous tasks and thoughts
 
-9). Future changes to *.py scripts from their original github location might cause deployment problems.
+10). Future changes to *.py scripts from their original github location might cause deployment problems.
