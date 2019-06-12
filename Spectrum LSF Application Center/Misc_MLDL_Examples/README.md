@@ -110,11 +110,10 @@ Alternatively
 
 7). Additional changes to main.py script
 
-92c91
 <         datasets.MNIST('./data', train=True, download=True,
 ---
 >         datasets.MNIST('../data', train=True, download=True,
-99c98
+
 <         datasets.MNIST('./data', train=False, transform=transforms.Compose([
 ---
 >         datasets.MNIST('../data', train=False, transform=transforms.Compose([
