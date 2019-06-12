@@ -111,13 +111,13 @@ Alternatively
 7). Additional changes to main.py script
 
 From
-         datasets.MNIST('../data', train=True, download=True,
----To
-         datasets.MNIST('./data', train=True, download=True,
+    datasets.MNIST('../data', train=True, download=True,
+To---
+    datasets.MNIST('./data', train=True, download=True,
 From
-         datasets.MNIST('../data', train=False, transform=transforms.Compose([
----To
-         datasets.MNIST('./data', train=False, transform=transforms.Compose([
+    datasets.MNIST('../data', train=False, transform=transforms.Compose([
+To---
+    datasets.MNIST('./data', train=False, transform=transforms.Compose([
 
 
 8). Download the data file
