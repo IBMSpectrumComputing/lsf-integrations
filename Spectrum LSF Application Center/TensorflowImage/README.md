@@ -183,3 +183,36 @@ Then, run these commands:
 13). Each Retrain or MNIST training job can generate several 100s MB of data under the logs directory.  Clean up as necessary.
 
 14). Future changes to *.py scripts in from their original github location might cause deployment problems.
+
+### Supporting IBM Power Linux Tensorflow container
+
+When using the the container image ibmcom/tensorflow-ppc64le:1.13.1, change the location of python executable in the Python script files (scripts/*.py) to point from #!/usr/bin/pyton to #!/usr/local/bin/python
+
+### Supporting IBM Power AI 1.6 container
+
+When using the the container image docker.io/ibmcom/powerai:1.6.0-all-ubuntu18.04, change the location of python executable in the Python script files (scripts/*.py) to point from #!/usr/bin/pyton to #!/opt/anaconda2/bin/python.   Add a new application profile called powerai at the end of lsb.applcations.  For example,
+
+        Begin Application
+        NAME         = powerai
+        DESCRIPTION  = Example Power AI 1.6
+        CONTAINER = docker[image(docker.io/ibmcom/powerai:1.6.0-all-ubuntu18.04)  \
+                    options(--rm --net=host --ipc=host --env ACTIVATE=base --env LICENSE=yes \
+                            -v MLDL_TOP:MLDL_TOP \
+                            -v /opt/ibm:/opt/ibm \
+	                    @MLDL_TOP/scripts/dockerPasswd.sh  \
+                  ) starter(root) ]
+	EXEC_DRIVER: 
+	    context[user(lsfadmin)]
+	    starter[$LSF_SERVERDIR/docker-starter.py]
+	    controller[$LSF_SERVERDIR/docker-control.py]
+	    monitor[$LSF_SERVERDIR/docker-monitor.py]
+        End Application
+
+ In the above powerai application profile change: 
+  a) MLDL_TOP to the share directory location in your environment
+  b) $LSF_SERVERDIR to your environmental value.  For example, /opt/ibm/lsfsuite/lsf/10.1/linux3.10-glibc2.17-ppc64le/etc
+ Next change the APP_PROFILE value in the *.cmd files provided
+ 
+ 	#APP_PROFILE=docker_tensorflow
+	APP_PROFILE=powerai
+  
