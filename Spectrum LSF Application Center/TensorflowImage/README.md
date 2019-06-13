@@ -184,10 +184,6 @@ Then, run these commands:
 
 14). Future changes to *.py scripts in from their original github location might cause deployment problems.
 
-### Supporting IBM Power Linux Tensorflow container
-
-When using the the container image ibmcom/tensorflow-ppc64le:1.13.1, change the location of python executable in the Python script files (scripts/*.py) to point from #!/usr/bin/pyton to #!/usr/local/bin/python
-
 ### Supporting IBM Power AI 1.6 container
 
 When using the the container image docker.io/ibmcom/powerai:1.6.0-all-ubuntu18.04, change the location of python executable in the Python script files (scripts/*.py) to point from #!/usr/bin/pyton to #!/opt/anaconda2/bin/python.   Add a new application profile called powerai at the end of lsb.applcations.  For example,
