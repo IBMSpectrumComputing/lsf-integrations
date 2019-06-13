@@ -22,9 +22,11 @@
 
 JOBTMPDIR=$LS_EXECCWD # Assume the job's current working directory is shared for parallel jobs
 if [ "x$JOBTMPDIR" = "x" ] ; then
-echo "Are you testing outside of an LSF job?"
-JOBTMPDIR=/tmp/$USER
-mkdir $JOBTMPDIR
+    echo "Are you testing outside of an LSF job?"
+    JOBTMPDIR=/tmp/$USER
+    if [ ! -d "$JOBTMPDIR" ]; then
+        mkdir $JOBTMPDIR
+    fi
 fi
  
 UFILE=$JOBTMPDIR/.passwd.$LSB_JOBID.$LSB_JOBINDEX
