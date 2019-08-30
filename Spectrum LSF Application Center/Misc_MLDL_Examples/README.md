@@ -15,7 +15,7 @@ Here is a short demonstration of the [LSF Application Center with Tensorflow exa
 
 4). NVIDIA CUDA is installed on your LSF Compute nodes.
 
-5). To use Docker and CUDA togethre install Nvidia-docker 2.0 on your LSF compute nodes.  See this article [Using nvidia-docker 2.0 with RHEL 7] ( https://developer.ibm.com/linuxonpower/2018/09/19/using-nvidia-docker-2-0-rhel-7/)
+5). To use Docker and CUDA together install Nvidia-docker 2.0 on your LSF compute nodes.  See this article [Using nvidia-docker 2.0 with RHEL 7]( https://developer.ibm.com/linuxonpower/2018/09/19/using-nvidia-docker-2-0-rhel-7/)
 
 ## Assumptions
 1). You are familiar with using and administrating LSF and LSF Application Center
