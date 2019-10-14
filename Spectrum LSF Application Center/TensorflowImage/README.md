@@ -30,11 +30,9 @@ there is no need to install Tensorflow.
 
 4). You want to learn about Tensorflow Tutorials and use Tensorflow with LSF
 
-5). The docker tensorflow container specified in this readme uses CPU and not GPU
+5). The docker tensorflow container specified in this readme uses only CPU although the "-gpu" tag can be added to Tensorflow docker image.
 
-6). Some effort may be needed to get the Tensorflow python scripts to run on GPUs
-
-7). Scripts were tested on Tensorflow 1.10.0 and tensorflow-ppc64le 1.13.1. Results may vary on newer or older version of Tensorflow
+6). Scripts were tested on Tensorflow 1.10.0 and tensorflow-ppc64le 1.13.1. Results may vary on newer or older version of Tensorflow
 
 ## Shared Directory Structure
 
