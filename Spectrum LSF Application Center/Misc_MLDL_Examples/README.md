@@ -36,12 +36,14 @@ Here is a short demonstration of the [LSF Application Center with Tensorflow exa
        MLDL_TOP/scripts
        MLDL_TOP/submission_templates/*/
 
-## Setting up LSF with Docker (only required if not using PowerAI)
+## Setting up LSF with Docker (only required if PowerAI is not installed locally on LSF compute nodes)
 
 1). Prepare IBM Spectrum LSF to run jobs in Docker container by following [LSF docker integration instruction]( https://www.ibm.com/support/knowledgecenter/en/SSWRJV_10.1.0/lsf_docker/lsf_docker_prepare.html). Make sure the selected compute servers have Docker engine installed and enabled
         
-2). Configure LSF Docker Application profile for Tensorflow by adding the following lines into end of lsb.applications:
- 
+2). Configure LSF Docker Application profile for PowerAI image by adding the following lines into end of lsb.applications:
+
+For IBM Power
+
         Begin Application
         NAME         = powerai
         DESCRIPTION  = Example PowerAI application
@@ -51,10 +53,30 @@ Here is a short demonstration of the [LSF Application Center with Tensorflow exa
                             -v /opt/ibm:/opt/ibm \
 	                    @MLDL_TOP/scripts/dockerPasswd.sh  \
                   ) starter(root) ]
+	EXEC_DRIVER = context[user(lsfadmin)] \
+    		starter[/gpfs/demo2fs/work/ibm/lsf/10.1/linux3.10-glibc2.17-ppc64le/etc/docker-starter.py] \
+    		controller[/gpfs/demo2fs/work/ibm/lsf/10.1/linux3.10-glibc2.17-ppc64le/etc/docker-control.py] \
+    		monitor[/gpfs/demo2fs/work/ibm/lsf/10.1/linux3.10-glibc2.17-ppc64le/etc/docker-monitor.py]
+        End Application
+
+For X86_64 systems
+
+        Begin Application
+        NAME         = powerai
+        DESCRIPTION  = Example PowerAI application
+        CONTAINER = docker[image(docker.io/ibmcom/powerai:1.6.1-all-ubuntu18.04-py3-x86_64)  \
+                    options(--rm --net=host --ipc=host  \
+                            -v MLDL_TOP:MLDL_TOP \
+                            -v /opt/ibm:/opt/ibm \
+	                    @MLDL_TOP/scripts/dockerPasswd.sh  \
+                  ) starter(root) ]
+	EXEC_DRIVER = context[user(lsfadmin)] \
+    		starter[/gpfs/demo2fs/work/ibm/lsf/10.1/linux3.10-glibc2.17-x86_64/etc/docker-starter.py] \
+    		controller[/gpfs/demo2fs/work/ibm/lsf/10.1/linux3.10-glibc2.17-x86_64/etc/docker-control.py] \
+    		monitor[/gpfs/demo2fs/work/ibm/lsf/10.1/linux3.10-glibc2.17-x86_64/etc/docker-monitor.py]
         End Application
 
  Change MLDL_TOP in the above application profile to the share directory location in your environment
- Notes: Change "image(docker.io/ibmcom/powerai:1.6.1-all-ubuntu18.04-py3)" to "image(docker.io/ibmcom/powerai:1.6.1-all-ubuntu18.04-py3-x86_64)" if your environment is x86_64 instead of IBM Power.
 
  Restart LSF daemons on the LSF Master and Master Candidate hosts
  Verify job submission with a docker container is working.  For example,
@@ -69,6 +91,8 @@ Here is a short demonstration of the [LSF Application Center with Tensorflow exa
         $
 
   Before exiting from the above interactive job, run "docker ps -a" on compute1 to verify a docker container is running tensorflow.
+  
+  3). Uncomment the "APP_PROFILE=powerai" line in the *.cmd files.
 
 ## Deployment Steps
 
