@@ -30,6 +30,7 @@ export PATH=$MLDL_SCRIPTS:$PATH
 
 # Set the command to run
 COMMANDTORUN="char_rnn.py"
+#APP_PROFILE=powerai
 
 LSF_OPT=""
 ADVANCED_OPT=""
