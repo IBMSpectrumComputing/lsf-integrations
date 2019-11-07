@@ -116,11 +116,6 @@ Note, /opt/share/mldl is an example and you can change to an appropriate shared 
     cd MLDL_TOP/scripts
     wget https://raw.githubusercontent.com/pytorch/pytorch/master/caffe2/python/examples/char_rnn.py
     wget https://raw.githubusercontent.com/pytorch/examples/master/mnist/main.py
-    
-    Optionally, these scripts are also available with PowerAI under
-    
-        /opt/anaconda3/caffe2/examples/char_rnn.py
-        /opt/anaconda3/pytorch/examples/mnist/main.py
              
 5). Make the python scripts readable and executable by all
 
@@ -154,9 +149,6 @@ To
     cd MLDL_TOP/data
     https://raw.githubusercontent.com/hzy46/Char-RNN-TensorFlow/master/data/shakespeare.txt
    
-    Optionally, a smaller version of the data file is available with PowerAI under
-    
-        /opt/anaconda2/caffe2/examples/shakespeare.txt
 
 9). Make the file readable by all
 
