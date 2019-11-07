@@ -1,7 +1,7 @@
 # Miscellaneous Machine/Deep Learning Submission Templates
 Misc_MLDL_Examples folder includes the submission templates and scripts to run several Machine or Deep Learning examples with IBM Spectrum LSF and 
-IBM Spectrum LSF Application Center.  This integration assumes PowerAI 1.6 is installed on your LSF compute nodes.  However, with some
-extra effort these examples can be setup to run inside of publicly available docker images.
+IBM Spectrum LSF Application Center.  This integration assumes PowerAI 1.6.1 is installed on your LSF compute nodes.  However, with some
+extra effort these examples can be setup to run inside of publicly available docker images for both Power and X86_64.
 
 ## Background
 Here is a short demonstration of the [LSF Application Center with Tensorflow examples]( https://www.youtube.com/watch?v=wxeiPBEItJ4&feature=youtu.be)
@@ -11,9 +11,9 @@ Here is a short demonstration of the [LSF Application Center with Tensorflow exa
 
 2). IBM Spectrum Application Center 10.2 or above version is installed.
 
-3). PowerAI 1.6 is installed on your LSF compute nodes.  If not using Power, LSF compute nodes support docker engine 1.12 or above version.
+3). PowerAI 1.6.1 is installed on your LSF compute nodes.  If not installed, LSF compute nodes support docker engine 1.12 or above version.
 
-4). NVIDIA CUDA is installed on your LSF Compute nodes.
+4). NVIDIA CUDA is installed on your LSF Compute nodes.  [Check here to match the CUDA version required]( https://hub.docker.com/r/ibmcom/powerai/) under Installed Packages and check the CUDA line.
 
 5). To use Docker and CUDA together install Nvidia-docker 2.0 on your LSF compute nodes.  See this article [Using nvidia-docker 2.0 with RHEL 7]( https://developer.ibm.com/linuxonpower/2018/09/19/using-nvidia-docker-2-0-rhel-7/)
 
@@ -24,11 +24,11 @@ Here is a short demonstration of the [LSF Application Center with Tensorflow exa
    for scripts, images and model files.  Change MLDL_TOP to the appropriate shared directory
    in your environment.
 
-3). If not using Power, Docker is installed and working on LSF compute nodes
+3). If PowerAI is not installed locally, Docker and NVIDIA Docker is installed and working on LSF compute nodes
 
 4). You want to learn about MLDL and use MLDL with LSF
 
-5). Scripts were tested on PowerAI 1.6. Results may vary on newer or older version of the related MLDL framework
+5). Scripts were tested on PowerAI 1.6.1. Results may vary on newer or older version of the related MLDL framework
 
 ## Shared Directory Structure
 
@@ -43,9 +43,9 @@ Here is a short demonstration of the [LSF Application Center with Tensorflow exa
 2). Configure LSF Docker Application profile for Tensorflow by adding the following lines into end of lsb.applications:
  
         Begin Application
-        NAME         = docker_tensorflow
-        DESCRIPTION  = Example Docker Tensorflow application
-        CONTAINER = docker[image(tensorflow/tensorflow:1.10.0)  \
+        NAME         = powerai
+        DESCRIPTION  = Example PowerAI application
+        CONTAINER = docker[image(docker.io/ibmcom/powerai:1.6.1-all-ubuntu18.04-py3)  \
                     options(--rm --net=host --ipc=host  \
                             -v MLDL_TOP:MLDL_TOP \
                             -v /opt/ibm:/opt/ibm \
@@ -54,12 +54,12 @@ Here is a short demonstration of the [LSF Application Center with Tensorflow exa
         End Application
 
  Change MLDL_TOP in the above application profile to the share directory location in your environment
- Notes: Change "image(tensorflow/tensorflow:1.10.0)" to "image(ibmcom/tensorflow-ppc64le:1.13.1)" if your environment is IBM Power Linux.
+ Notes: Change "image(docker.io/ibmcom/powerai:1.6.1-all-ubuntu18.04-py3)" to "image(docker.io/ibmcom/powerai:1.6.1-all-ubuntu18.04-py3-x86_64)" if your environment is x86_64 instead of IBM Power.
 
  Restart LSF daemons on the LSF Master and Master Candidate hosts
  Verify job submission with a docker container is working.  For example,
 
-        $  bsub -Is -app docker_tensorflow /bin/bash
+        $  bsub -Is -app powerai /bin/bash
         Job <2742> is submitted to default queue <interactive>.
         <<Waiting for dispatch ...>>
         <<Starting on compute1>>
@@ -95,8 +95,8 @@ Note, /opt/share/mldl is an example and you can change to an appropriate shared 
     
     Optionally, these scripts are also available with PowerAI under
     
-        /opt/anaconda2/caffe2/examples/char_rnn.py
-        /opt/anaconda2/pytorch/examples/mnist/main.py
+        /opt/anaconda3/caffe2/examples/char_rnn.py
+        /opt/anaconda3/pytorch/examples/mnist/main.py
              
 5). Make the python scripts readable and executable by all
 
@@ -106,7 +106,7 @@ Note, /opt/share/mldl is an example and you can change to an appropriate shared 
 
 For PowerAI
 
-    #!/opt/anaconda2/bin/python
+    #!/opt/anaconda3/bin/python
 
 Alternatively
 
