@@ -1,7 +1,7 @@
 # Miscellaneous Machine/Deep Learning Submission Templates
 Misc_MLDL_Examples folder includes the submission templates and scripts to run several Machine or Deep Learning examples with IBM Spectrum LSF and 
 IBM Spectrum LSF Application Center.  This integration assumes PowerAI 1.6.1 is installed on your LSF compute nodes.  However, with some
-extra effort these examples can be setup to run inside of publicly available docker images for both Power and X86_64.
+extra effort these examples can be setup to run inside of publicly available docker images for both IBM Power and X86_64.
 
 ## Background
 Here is a short demonstration of the [LSF Application Center with Tensorflow examples]( https://www.youtube.com/watch?v=wxeiPBEItJ4&feature=youtu.be)
