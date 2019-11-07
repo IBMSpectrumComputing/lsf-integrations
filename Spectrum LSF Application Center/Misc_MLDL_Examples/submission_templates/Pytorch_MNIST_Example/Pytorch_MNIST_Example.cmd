@@ -205,7 +205,7 @@ echo "function on_error_exit {"
 echo "RT=\$?;if [ \$RT -ne 0 ]; then exit \$RT;fi"
 echo "}"
 echo
-echo "source /opt/anaconda2/etc/profile.d/conda.sh"
+echo "source /opt/anaconda3/etc/profile.d/conda.sh"
 echo "on_error_exit"
 echo "conda activate base"
 echo "on_error_exit"
