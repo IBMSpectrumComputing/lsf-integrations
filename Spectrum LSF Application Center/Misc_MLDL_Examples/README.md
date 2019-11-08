@@ -48,7 +48,7 @@ For IBM Power
         NAME         = powerai
         DESCRIPTION  = Example PowerAI application
         CONTAINER = docker[image(docker.io/ibmcom/powerai:1.6.1-all-ubuntu18.04-py3)  \
-                    options(--rm --net=host --ipc=host  \
+                    options(--rm --net=host --ipc=host --env LICENSE=yes \
                             -v MLDL_TOP:MLDL_TOP \
                             -v /opt/ibm:/opt/ibm \
 	                    @MLDL_TOP/scripts/dockerPasswd.sh  \
@@ -65,7 +65,7 @@ For X86_64 systems
         NAME         = powerai
         DESCRIPTION  = Example PowerAI application
         CONTAINER = docker[image(docker.io/ibmcom/powerai:1.6.1-all-ubuntu18.04-py3-x86_64)  \
-                    options(--rm --net=host --ipc=host  \
+                    options(--rm --net=host --ipc=host --env LICENSE=yes \
                             -v MLDL_TOP:MLDL_TOP \
                             -v /opt/ibm:/opt/ibm \
 	                    @MLDL_TOP/scripts/dockerPasswd.sh  \
