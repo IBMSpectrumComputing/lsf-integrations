@@ -1,6 +1,6 @@
 # Miscellaneous Machine/Deep Learning Submission Templates
 Misc_MLDL_Examples folder includes the submission templates and scripts to run several Machine or Deep Learning examples with IBM Spectrum LSF and 
-IBM Spectrum LSF Application Center.  This integration assumes [IBM Watson Machine Learning Community Edition (formerly PowerAI]( https://developer.ibm.com/linuxonpower/deep-learning-powerai/releases) is installed on your LSF compute nodes.  However, with some
+IBM Spectrum LSF Application Center.  This integration assumes [IBM Watson Machine Learning Community Edition (formerly PowerAI)]( https://developer.ibm.com/linuxonpower/deep-learning-powerai/releases) is installed on your LSF compute nodes.  However, with some
 extra effort these examples can be setup to run inside of publicly available [PowerAI Docker images](https://hub.docker.com/r/ibmcom/powerai) for both IBM Power and X86_64 servers.
 
 ## Background
