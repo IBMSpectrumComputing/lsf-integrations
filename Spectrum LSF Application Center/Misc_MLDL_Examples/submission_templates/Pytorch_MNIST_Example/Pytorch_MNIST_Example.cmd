@@ -29,7 +29,7 @@ MLDL_SCRIPTS="$MLDL_TOP/scripts"
 export PATH=$MLDL_SCRIPTS:$PATH
 
 # Set the command to run
-COMMANDTORUN="$MLDL_TOP/main.py" 
+COMMANDTORUN="$MLDL_SCRIPTS/main.py" 
 OTHER_OPT="" 
 #APP_PROFILE=powerai
 
