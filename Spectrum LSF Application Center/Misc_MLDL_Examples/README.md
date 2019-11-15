@@ -1,7 +1,7 @@
 # Miscellaneous Machine/Deep Learning Submission Templates
 Misc_MLDL_Examples folder includes the submission templates and scripts to run several Machine or Deep Learning examples with IBM Spectrum LSF and 
-IBM Spectrum LSF Application Center.  This integration assumes PowerAI 1.6.1 is installed on your LSF compute nodes.  However, with some
-extra effort these examples can be setup to run inside of publicly available docker images for both IBM Power and X86_64.
+IBM Spectrum LSF Application Center.  This integration assumes [IBM Watson Machine Learning Community Edition (formerly PowerAI]( https://developer.ibm.com/linuxonpower/deep-learning-powerai/releases) is installed on your LSF compute nodes.  However, with some
+extra effort these examples can be setup to run inside of publicly available [PowerAI Docker images](https://hub.docker.com/r/ibmcom/powerai) for both IBM Power and X86_64 servers.
 
 ## Background
 Here is a short demonstration of the [LSF Application Center with Tensorflow examples]( https://www.youtube.com/watch?v=wxeiPBEItJ4&feature=youtu.be)
@@ -11,7 +11,7 @@ Here is a short demonstration of the [LSF Application Center with Tensorflow exa
 
 2). IBM Spectrum Application Center 10.2 or above version is installed.
 
-3). PowerAI 1.6.1 is installed on your LSF compute nodes.  If not installed, LSF compute nodes support docker engine 1.12 or above version.
+3). IBM PowerAI 1.6.1 is installed on your LSF compute nodes.  If not installed, LSF compute nodes support docker engine 1.12 or above version.
 
 4). NVIDIA CUDA is installed on your LSF Compute nodes.  [Check here to match the CUDA version required]( https://hub.docker.com/r/ibmcom/powerai/) under Installed Packages and check the CUDA line.
 
@@ -24,11 +24,11 @@ Here is a short demonstration of the [LSF Application Center with Tensorflow exa
    for scripts, images and model files.  Change MLDL_TOP to the appropriate shared directory
    in your environment.
 
-3). If PowerAI is not installed locally, Docker and NVIDIA Docker is installed and working on LSF compute nodes
+3). If IBM PowerAI is not installed locally, Docker and NVIDIA Docker is installed and working on LSF compute nodes
 
 4). You want to learn about MLDL and use MLDL with LSF
 
-5). Scripts were tested on PowerAI 1.6.1. Results may vary on newer or older version of the related MLDL framework
+5). Scripts were tested on IBM PowerAI 1.6.1. Results may vary on newer or older version of the related MLDL framework
 
 ## Shared Directory Structure
 
@@ -36,11 +36,11 @@ Here is a short demonstration of the [LSF Application Center with Tensorflow exa
        MLDL_TOP/scripts
        MLDL_TOP/submission_templates/*/
 
-## Setting up LSF with Docker (only required if PowerAI is not installed locally on LSF compute nodes)
+## Setting up LSF with Docker (only required if IBM PowerAI is not installed locally on LSF compute nodes)
 
 1). Prepare IBM Spectrum LSF to run jobs in Docker container by following [LSF docker integration instruction]( https://www.ibm.com/support/knowledgecenter/en/SSWRJV_10.1.0/lsf_docker/lsf_docker_prepare.html). Make sure the selected compute servers have Docker engine installed and enabled
         
-2). Configure LSF Docker Application profile for PowerAI image by adding the following lines into end of lsb.applications:
+2). Configure LSF Docker Application profile for IBM PowerAI image by adding the following lines into end of lsb.applications:
 
 For IBM Power
 
@@ -123,11 +123,11 @@ Note, /opt/share/mldl is an example and you can change to an appropriate shared 
 
 6). Add this line below as the first line to each of the above python scripts (char_rnn.py and main.py)
 
-For PowerAI 1.6.1-all-ubuntu18.04-py3,
+For IBM PowerAI 1.6.1-all-ubuntu18.04-py3,
 
     #!/opt/anaconda3/bin/python
 
-For PowerAI 1.6.2-all-ubuntu18.04-py36,
+For IBM PowerAI 1.6.2-all-ubuntu18.04-py36,
 
     #!/opt/anaconda/envs/wmlce/bin/python
 
