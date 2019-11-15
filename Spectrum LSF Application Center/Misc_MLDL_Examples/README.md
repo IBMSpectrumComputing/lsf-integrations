@@ -90,7 +90,7 @@ For X86_64 systems
         $ exit
         $
 
-  Before exiting from the above interactive job, run "docker ps -a" on compute1 to verify a docker container is running tensorflow.
+  Before exiting from the above interactive job, run "docker ps -a" on compute1 to verify a docker container is running.
   
   3). Uncomment the "APP_PROFILE=powerai" line in the *.cmd files.
 
