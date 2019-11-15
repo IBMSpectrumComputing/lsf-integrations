@@ -29,7 +29,7 @@ MLDL_SCRIPTS="$MLDL_TOP/scripts"
 export PATH=$MLDL_SCRIPTS:$PATH
 
 # Set the command to run
-COMMANDTORUN="char_rnn.py"
+COMMANDTORUN="$MLDL_SCRIPTS/char_rnn.py"
 #APP_PROFILE=powerai
 
 LSF_OPT=""
@@ -105,7 +105,7 @@ fi
 # Remove double quote firstly
 JOB_COMMAND=`echo $JOB_COMMAND | sed 's/^"\|"$//g'`
 # Add double quote
-JOB_COMMAND="\"$JOB_COMMAND\""
+#JOB_COMMAND="\"$JOB_COMMAND\""
 
 JOB_PATH=`echo "$COMMANDTORUN" | awk -F":" '{ gsub("\"",""); print $2}'`
 if [ "x$JOB_PATH" != "x" ] ; then
@@ -219,12 +219,24 @@ echo "function on_error_exit {"
 echo "RT=\$?;if [ \$RT -ne 0 ]; then exit \$RT;fi"
 echo "}"
 echo
-echo "source /opt/anaconda3/etc/profile.d/conda.sh"
+echo "if [ \"x\$CONDA_INSTALL_DIR\" = \"x\" ] ; then"
+echo "   CONDA_INSTALL_DIR=\`ls -d /opt/anaconda* | head -1\`"
+echo "fi"
+echo "source \$CONDA_INSTALL_DIR/etc/profile.d/conda.sh"
 echo "on_error_exit"
-echo "conda activate base"
-echo "on_error_exit"
+echo
+echo "if [ \"\$CONDA_ENV\" = \"wmlce\" ] ; then"
+echo "   conda activate wmlce"
+echo "   on_error_exit"
+echo "   WMLCE_PYTHON_EXE=python"
+echo "else"
+echo "   conda activate base"
+echo "   on_error_exit"
+echo "   WMLCE_PYTHON_EXE=\$CONDA_PYTHON_EXE"
+echo "fi"
 echo "echo GPU Requested=$GPU"
-echo "$JOB_COMMAND $OTHER_OPT"
+echo
+echo "\$WMLCE_PYTHON_EXE $JOB_COMMAND $OTHER_OPT"
 echo "on_error_exit"
 
 exec 1>&3 3>&-  # Restore stdout and close file descriptor #3.
