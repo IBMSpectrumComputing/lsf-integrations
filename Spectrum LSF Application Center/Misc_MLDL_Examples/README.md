@@ -54,9 +54,9 @@ For IBM Power
 	                    @MLDL_TOP/scripts/dockerPasswd.sh  \
                   ) starter(root) ]
 	EXEC_DRIVER = context[user(lsfadmin)] \
-    		starter[/gpfs/demo2fs/work/ibm/lsf/10.1/linux3.10-glibc2.17-ppc64le/etc/docker-starter.py] \
-    		controller[/gpfs/demo2fs/work/ibm/lsf/10.1/linux3.10-glibc2.17-ppc64le/etc/docker-control.py] \
-    		monitor[/gpfs/demo2fs/work/ibm/lsf/10.1/linux3.10-glibc2.17-ppc64le/etc/docker-monitor.py]
+    		starter[LSF_TOP/10.1/linux3.10-glibc2.17-ppc64le/etc/docker-starter.py] \
+    		controller[LSF_TOP/10.1/linux3.10-glibc2.17-ppc64le/etc/docker-control.py] \
+    		monitor[LSF_TOP/10.1/linux3.10-glibc2.17-ppc64le/etc/docker-monitor.py]
         End Application
 
 For X86_64 systems
@@ -71,12 +71,12 @@ For X86_64 systems
 	                    @MLDL_TOP/scripts/dockerPasswd.sh  \
                   ) starter(root) ]
 	EXEC_DRIVER = context[user(lsfadmin)] \
-    		starter[/gpfs/demo2fs/work/ibm/lsf/10.1/linux3.10-glibc2.17-x86_64/etc/docker-starter.py] \
-    		controller[/gpfs/demo2fs/work/ibm/lsf/10.1/linux3.10-glibc2.17-x86_64/etc/docker-control.py] \
-    		monitor[/gpfs/demo2fs/work/ibm/lsf/10.1/linux3.10-glibc2.17-x86_64/etc/docker-monitor.py]
+    		starter[LSF_TOP/10.1/linux3.10-glibc2.17-x86_64/etc/docker-starter.py] \
+    		controller[LSF_TOP/10.1/linux3.10-glibc2.17-x86_64/etc/docker-control.py] \
+    		monitor[LSF_TOP//10.1/linux3.10-glibc2.17-x86_64/etc/docker-monitor.py]
         End Application
 
- Change MLDL_TOP in the above application profile to the share directory location in your environment
+ Change MLDL_TOP in the above application profile to the share directory location in your environment and change LSF_TOP to your LSF TOP directory location.
 
  Restart LSF daemons on the LSF Master and Master Candidate hosts
  Verify job submission with a docker container is working.  For example,
