@@ -11,7 +11,7 @@ Here is a short demonstration of the [LSF Application Center with Tensorflow exa
 
 2). IBM Spectrum Application Center 10.2 or above version is installed.
 
-3). IBM PowerAI 1.6.1 is installed on your LSF compute nodes.  If not installed, LSF compute nodes support docker engine 1.12 or above version.
+3). IBM PowerAI 1.6.2 is installed on your LSF compute nodes.  If not installed, LSF compute nodes support docker engine 1.12 or above version.
 
 4). NVIDIA CUDA is installed on your LSF Compute nodes.  [Check here to match the CUDA version required]( https://hub.docker.com/r/ibmcom/powerai/) under Installed Packages and check the CUDA line.
 
@@ -28,7 +28,7 @@ Here is a short demonstration of the [LSF Application Center with Tensorflow exa
 
 4). You want to learn about MLDL and use MLDL with LSF
 
-5). Scripts were tested on IBM PowerAI 1.6.1. Results may vary on newer or older version of the related MLDL framework
+5). Scripts were tested on IBM PowerAI 1.6.2. Results may vary on newer or older version of the related MLDL framework
 
 ## Shared Directory Structure
 
@@ -47,7 +47,7 @@ For IBM Power
         Begin Application
         NAME         = powerai
         DESCRIPTION  = Example PowerAI application
-        CONTAINER = docker[image(docker.io/ibmcom/powerai:1.6.1-all-ubuntu18.04-py3)  \
+        CONTAINER = docker[image(docker.io/ibmcom/powerai:1.6.2-all-ubuntu18.04-py36)  \
                     options(--rm --net=host --ipc=host --env LICENSE=yes \
                             -v MLDL_TOP:MLDL_TOP \
                             -v /opt/ibm:/opt/ibm \
@@ -64,7 +64,7 @@ For X86_64 systems
         Begin Application
         NAME         = powerai
         DESCRIPTION  = Example PowerAI application
-        CONTAINER = docker[image(docker.io/ibmcom/powerai:1.6.1-all-ubuntu18.04-py3-x86_64)  \
+        CONTAINER = docker[image(docker.io/ibmcom/powerai:1.6.2-all-ubuntu18.04-py36-x86_64)  \
                     options(--rm --net=host --ipc=host --env LICENSE=yes \
                             -v MLDL_TOP:MLDL_TOP \
                             -v /opt/ibm:/opt/ibm \
