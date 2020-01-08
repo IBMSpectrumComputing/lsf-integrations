@@ -141,9 +141,10 @@ Then, run these commands:
     do
       mv $SCRIPT $SCRIPT.orig
       patch $SCRIPT.orig -i $SCRIPT.patch -o $SCRIPT
-      chmod +rx $SCRIPT
+      chmod a+rx $SCRIPT
       sed -i -e 's/\#MLDL_TOP\#/\/opt\/share\/mldl/g' $SCRIPT
     done
+    chmod a+rx *.sh
 
 7). classify_image.py changes are noted in classify_image.py.patch file
 
