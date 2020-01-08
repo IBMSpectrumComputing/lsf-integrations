@@ -117,9 +117,10 @@ Note, /opt/share/mldl is an example and you can change to an appropriate shared 
     wget https://raw.githubusercontent.com/pytorch/pytorch/master/caffe2/python/examples/char_rnn.py
     wget https://raw.githubusercontent.com/pytorch/examples/master/mnist/main.py
              
-5). Make the python scripts readable and executable by all
+5). Make the python and shell scripts readable and executable by all
 
     chmod +rx *.py
+    chmod +rx *.sh
 
 6). Add this line below as the first line to each of the above python scripts (char_rnn.py and main.py)
 
