@@ -119,8 +119,8 @@ Note, /opt/share/mldl is an example and you can change to an appropriate shared 
              
 5). Make the python and shell scripts readable and executable by all
 
-    chmod +rx *.py
-    chmod +rx *.sh
+    chmod a+rx *.py
+    chmod a+rx *.sh
 
 6). Add this line below as the first line to each of the above python scripts (char_rnn.py and main.py)
 
@@ -157,7 +157,7 @@ To
 
 9). Make the file readable by all
 
-    chmod +r shakespeare.txt
+    chmod a+r shakespeare.txt
         
 ### Miscellaneous tasks and thoughts
 
