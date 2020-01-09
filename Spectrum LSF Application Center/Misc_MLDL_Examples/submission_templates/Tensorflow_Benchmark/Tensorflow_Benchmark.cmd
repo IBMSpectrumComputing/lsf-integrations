@@ -6,7 +6,7 @@
 #BatchConstants.CLUSTER_NAME = cluster_name
 
 #==========BEGIN MANDATORY-PARAMETERS(INTERNAL USE ONLY, DO NOT CHANGE)===============================
-#PUBLISH_NOTES This template allows users to run Tensorflow Benchmarks. It is required to follow the instrutions at  <a href="https://community.ibm.com/community/user/imwuc/blogs/john-welch/2019/12/20/running-tensorflow-benchmark-with-horovod-across-i"> Running Tensorflow benchmark with Horovod... article </a> prior to using this template. This Template currently only supports IBM Power servers with NVIDIA GPUs.
+#PUBLISH_NOTES This template allows users to run Tensorflow Benchmarks. It is required to follow the instructions at  <a href="https://community.ibm.com/community/user/imwuc/blogs/john-welch/2019/12/20/running-tensorflow-benchmark-with-horovod-across-i"> Running Tensorflow benchmark with Horovod... article </a> prior to using this template. This Template currently only supports IBM Power servers with NVIDIA GPUs.
 #MANDATORY  MPI_INTERFACE(Network interface for MPI traffic) MPI_INTERFACE: Use ifconfig to get the highest speed network interface available on your LSF servers with GPUs.
 
 if [ -z "$MPI_INTERFACE" ]; then
