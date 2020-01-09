@@ -7,9 +7,9 @@
 
 #==========BEGIN MANDATORY-PARAMETERS(INTERNAL USE ONLY, DO NOT CHANGE)===============================
 #PUBLISH_NOTES This template allows users to run Tensorflow Benchmarks. It is required to follow the instrutions at  <a href="https://community.ibm.com/community/user/imwuc/blogs/john-welch/2019/12/20/running-tensorflow-benchmark-with-horovod-across-i"> Running Tensorflow benchmark with Horovod... article </a> prior to using this template. This Template currently only supports IBM Power servers with NVIDIA GPUs.
-#MANDATORY  IFACE(High speed network interface) IFACE: Use ifconfig to get the highest speed network interface available on your LSF servers with GPUs.
+#MANDATORY  MPI_INTERFACE(High speed network interface for MPI traffic) MPI_INTERFACE: Use ifconfig to get the highest speed network interface available on your LSF servers with GPUs.
 
-if [ -z "$IFACE" ]; then
+if [ -z "$MPI_INTERFACE" ]; then
     echo "Required parameters have not been set."  1>&2
     exit 1
 
@@ -60,7 +60,7 @@ if [ "$NUM_HOST" != "1" ] ; then
 
 	# testing mpirun with powerai container
 	COMMANDTORUN="mpirun" 
-        COMMANDTORUN="$COMMANDTORUN -mca btl_tcp_if_include $IFACE -x HOROVOD_GLOO_IFACE=$IFACE"	# only use $IFACE network 
+        COMMANDTORUN="$COMMANDTORUN -mca btl_tcp_if_include $MPI_INTERFACE -x HOROVOD_GLOO_IFACE=$MPI_INTERFACE" # only use $MPI_INTERFACE network 
         COMMANDTORUN="$COMMANDTORUN -mca btl ^openib -mca pml ob1 -x NCCL_IB_DISABLE=1" 		# exclude infiniband
         COMMANDTORUN="$COMMANDTORUN -mca plm_base_verbose 10 -x NCCL_DEBUG=WARN" 			# debug options
 
