@@ -33,10 +33,12 @@ Step 3: Configure LSF to define LSF Resource "ParaView" and assign the available
   
         LSF_DISABLE_LSRUN=N 
 	
-Step 4: Prepare hosts to run TigerVnc.  For Application center host and all hosts selected in Step 3, run the following steps:
+Step 4: Prepare hosts to run TigerVnc.  For Application center host and all hosts selected in Step 3, run the following steps for RHEL 7:
    
     yum -y install tigervnc*
     yum group install "Server with GUI"
+    yum group install "X Window System"
+    systemctl set-default graphical.target
     yum install gnome-screensaver*
       
    for more details, refer to [Preparing Linux IBM Spectrum LSF Application Center servers to remotely launch](https://www.ibm.com/support/knowledgecenter/en/SSZRJV_10.2.0/admin_guide/remote_vncserver_config.html)
