@@ -1,33 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
 
-<agent resources="resources" application="ParaView" category="application" type="RealVNC">
-  <info>Submit a job: ParaView</info>
-  <lastmodified>2018-10-01 12:25:48</lastmodified>
-  <modifier>georgeg</modifier>
-  <action id="submit" label="submit" result="text/xml">ParaView.cmd</action>
-  <repository>
-    <application id="application" state="collapseEnable" info="General Settings" helpText="Asterisk (*) = required field.">
-      <option defaultValue="ParaView GUI interface for OpenFOAM" id="TITLE" label="Application Description" required="true" hidden="false" type="text" width="50" editable="true">ParaView GUI interface for OpenFOAM</option>
-      <option defaultValue="*.foam,*.vtk,*.cvs" id="FILE_EXTENSIONS" label="File Types" required="true" hidden="false" type="text" width="50" editable="true" helpText="File types associated with the application. Use a comma(,) to separate file types. For example: *.txt,*.dat">*.foam,*.vtk,*.cvs</option>
-      <option defaultValue="Linux" id="RUNNING_OS" label="Running on" required="true" hidden="false" type="list" width="20" editable="true" helpText="The operating system on which the application runs.">
-        <option id="Windows" required="false" hidden="false">Windows</option>
-        <option id="Linux" required="false" hidden="false" selected="true">Linux</option>
-      </option>
-      <option defaultValue="RealVNC" id="DISPLAY_GROUP" label="Display Group" required="true" hidden="false" type="list" width="20" editable="true" helpText="Group in which to include this application when displayed in IBM Spectrum LSF Application Center Desktop Client. All applications with the same group name are displayed in the same section.">
-        <option id="RealVNC" required="false" hidden="false" selected="true">RealVNC</option>
-      </option>
-      <option defaultValue="no" id="LOCAL_APP" label="Local Application" required="false" hidden="false" type="checkbox" width="20" editable="true" helpText="Indicate if this application is located locally on the user’s machine. If the application is on the user’s machine, it will be invoked locally. If the application is not on the user’s machine, it will be invoked from another host." labelPosition="left">no</option>
-    </application>
-    <application id="winParams" state="collapseEnable" info="Windows Settings" helpText="Asterisk (*) = required field.">
-      <option defaultValue="no" id="WIN_CONSOLE_REQUIRED" label="Windows Console" required="false" hidden="false" type="checkbox" width="20" editable="true" helpText="Specify whether to use a Windows console to display the application or Windows Remote Desktop Connection. If you check Windows Console, only one user at a time can use the Windows execution host remote console. If you do not check Windows console, the maximum number of sessions is configured in the file $GUI_CONFDIR/host_session.conf." labelPosition="left">no</option>
-      <option defaultValue="" id="WIN_APP_CMD" label="Application Command" required="false" hidden="false" type="text" width="60" editable="true" helpText="Windows command to start this application, with additional required parameters. If your path contains spaces, enclose the path in double-quotes(&amp;quot; &amp;quot;). &lt;br/&gt; For example: &amp;quot;C:\Program Files\ANSYS Inc\v150\fluent\ntbin\win64\fluent.exe&amp;quot; 3d -g"></option>
-      <option defaultValue="" id="WIN_PRE_POST_CMD" label="Application Command to open an input file" required="false" hidden="false" type="text" width="60" editable="true" helpText="Windows command to open a file with this application. If your path contains spaces, enclose the path in double-quotes(&amp;quot; &amp;quot;). &lt;br/&gt; For example: &amp;quot;C:\Program Files\ANSYS Inc\v150\fluent\ntbin\win64\fluent.exe&amp;quot; 3d -g -i &amp;quot;@FILE@&amp;quot;"></option>
-      <option defaultValue="" id="SMB_SHARED_PATH" label="Shared Disk" required="false" hidden="false" type="text" width="30" editable="true" helpText="UNC path from the Windows host on which the application resides to access the user’s shared directory on Linux. Specify @USER@ to automatically replace the name of the logged in user in the path. For example: \\SERVER\@USER@"></option>
-    </application>
-    <application id="linParams" state="expandEnable" info="Linux Settings" helpText="Asterisk (*) = required field.">
-      <option defaultValue="no" id="RUN_ON_PAC_MASTER" label="Installed on the LSF Application Center Server" required="false" hidden="false" type="checkbox" width="20" editable="true" helpText="Indicate if the application is locally installed on the IBM Spectrum LSF Application Center Server. If checked, indicates the application is locally installed on the IBM Spectrum LSF Application Center Server and will run on the IBM Spectrum LSF Application Center Server. If unchecked, it indicates the application is installed on another LSF server host and LSF will be used to select the host on which to run the application." labelPosition="left">no</option>
-      <option defaultValue="JOB_REPOSITORY_TOP/startParaView" id="LINUX_APP_CMD" label="Application Command" required="false" hidden="false" type="text" width="60" editable="true" helpText="Linux command to start this application, with additional required parameters. If your path contains spaces, enclose the path in double-quotes(&amp;quot; &amp;quot;). &lt;br/&gt; For example: /usr/bin/fluent 2d -g">JOB_REPOSITORY_TOP/startParaView</option>
-      <option defaultValue="JOB_REPOSITORY_TOP/startParaView @FILE@" id="LINUX_PRE_POST_CMD" label="Application Command to open an input file" required="false" hidden="false" type="text" width="60" editable="true" helpText=" Linux command to start this application, with additional required parameters. If your path contains spaces, enclose the path in double-quotes(&amp;quot; &amp;quot;). &lt;br/&gt; For example: /usr/bin/fluent 3d -g -i &amp;quot;@FILE@&amp;quot;">JOB_REPOSITORY_TOP/startParaView @FILE@</option>
-    </application>
-  </repository>
-  <description>Launch ParaView to do pre-post processing for openfoam job.</description>
+<agent resources="resources" application="ParaView" category="application" type="RealVNC"> 
+  <info>Submit a job: ParaView</info>  
+  <lastmodified>2019-05-13 16:31:25</lastmodified>  
+  <modifier>georgeg</modifier>  
+  <action id="submit" label="submit" result="text/xml">ParaView.cmd</action>  
+  <repository> 
+    <application id="application" state="collapseEnable" info="General Settings" helpText="Asterisk (*) = required field."> 
+      <option defaultValue="ParaView GUI interface for OpenFOAM" id="TITLE" label="Application Description" required="true" hidden="false" type="text" width="50" editable="true">ParaView GUI interface for OpenFOAM</option>  
+      <option defaultValue="*.foam,*.vtk,*.cvs" id="FILE_EXTENSIONS" label="File Types" required="true" hidden="false" type="text" width="50" editable="true" helpText="File types associated with the application. Use a comma(,) to separate file types. For example: *.txt,*.dat">*.foam,*.vtk,*.cvs</option>  
+      <option defaultValue="Linux" id="RUNNING_OS" label="Running on" required="true" hidden="false" type="list" width="20" editable="true" helpText="The operating system on which the application runs."> 
+        <option id="Windows" required="false" hidden="false">Windows</option>  
+        <option id="Linux" required="false" hidden="false" selected="true">Linux</option> 
+      </option>  
+      <option defaultValue="RealVNC" id="DISPLAY_GROUP" label="Display Group" required="true" hidden="false" type="list" width="20" editable="true" helpText="Group in which to include this application when displayed in IBM Spectrum LSF Application Center Desktop Client. All applications with the same group name are displayed in the same section."> 
+        <option id="RealVNC" required="false" hidden="false" selected="true">RealVNC</option> 
+      </option>  
+      <option defaultValue="no" id="LOCAL_APP" label="Local Application" required="false" hidden="false" type="checkbox" width="20" editable="true" helpText="Indicate if this application is located locally on the user’s machine. If the application is on the user’s machine, it will be invoked locally. If the application is not on the user’s machine, it will be invoked from another host." labelPosition="left">No</option> 
+    </application>  
+    <application id="winParams" state="collapseEnable" info="Windows Settings" helpText="Asterisk (*) = required field."> 
+      <option defaultValue="no" id="WIN_CONSOLE_REQUIRED" label="Windows Console" required="false" hidden="false" type="checkbox" width="20" editable="true" helpText="Specify whether to use a Windows console to display the application or Windows Remote Desktop Connection. If you check Windows Console, only one user at a time can use the Windows execution host remote console. If you do not check Windows console, the maximum number of sessions is configured in the file $GUI_CONFDIR/host_session.conf." labelPosition="left">No</option>  
+      <option defaultValue="" id="WIN_APP_CMD" label="Application Command" required="false" hidden="false" type="text" width="60" editable="true" helpText="Windows command to start this application, with additional required parameters. If your path contains spaces, enclose the path in double-quotes(&amp;quot; &amp;quot;). &lt;br/&gt; For example: &amp;quot;C:\Program Files\ANSYS Inc\v150\fluent\ntbin\win64\fluent.exe&amp;quot; 3d -g"/>  
+      <option defaultValue="" id="WIN_PRE_POST_CMD" label="Application Command to open an input file" required="false" hidden="false" type="text" width="60" editable="true" helpText="Windows command to open a file with this application. If your path contains spaces, enclose the path in double-quotes(&amp;quot; &amp;quot;). &lt;br/&gt; For example: &amp;quot;C:\Program Files\ANSYS Inc\v150\fluent\ntbin\win64\fluent.exe&amp;quot; 3d -g -i &amp;quot;@FILE@&amp;quot;"/>  
+      <option defaultValue="" id="SMB_SHARED_PATH" label="Shared Disk" required="false" hidden="false" type="text" width="30" editable="true" helpText="UNC path from the Windows host on which the application resides to access the user’s shared directory on Linux. Specify @USER@ to automatically replace the name of the logged in user in the path. For example: \\SERVER\@USER@"/> 
+    </application>  
+    <application id="linParams" state="expandEnable" info="Linux Settings" helpText="Asterisk (*) = required field."> 
+      <option defaultValue="no" id="RUN_ON_PAC_MASTER" label="Installed on the LSF Application Center Server" required="false" hidden="false" type="checkbox" width="20" editable="true" helpText="Indicate if the application is locally installed on the IBM Spectrum LSF Application Center Server. If checked, indicates the application is locally installed on the IBM Spectrum LSF Application Center Server and will run on the IBM Spectrum LSF Application Center Server. If unchecked, it indicates the application is installed on another LSF server host and LSF will be used to select the host on which to run the application." labelPosition="left">No</option>  
+      <option defaultValue="/nfs/openfoam/startParaView" id="LINUX_APP_CMD" label="Application Command" required="false" hidden="false" type="text" width="60" editable="true" helpText="Linux command to start this application, with additional required parameters. If your path contains spaces, enclose the path in double-quotes(&amp;quot; &amp;quot;). &lt;br/&gt; For example: /usr/bin/fluent 2d -g">JOB_REPOSITORY_TOP/startParaView</option>  
+      <option defaultValue="/nfs/openfoam/startParaView @FILE@" id="LINUX_PRE_POST_CMD" label="Application Command to open an input file" required="false" hidden="false" type="text" width="60" editable="true" helpText=" Linux command to start this application, with additional required parameters. If your path contains spaces, enclose the path in double-quotes(&amp;quot; &amp;quot;). &lt;br/&gt; For example: /usr/bin/fluent 3d -g -i &amp;quot;@FILE@&amp;quot;">JOB_REPOSITORY_TOP/startParaView @FILE@</option> 
+    </application> 
+  </repository>  
+  <description>Launch ParaView to do pre-post processing for openfoam job.</description>  
+  <icon>paraview_logo.png</icon> 
 </agent>
