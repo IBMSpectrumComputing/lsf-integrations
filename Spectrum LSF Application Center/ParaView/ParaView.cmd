@@ -15,63 +15,14 @@
 #  limitations under the License.
 #**************************************************************************
 
-
-################### User defined variables ######################
-LOG_LEVEL=3   # 0 - ERROR, 1 - WARN, 2 - INFO, 3 - DEBUG
 #VNCGeomerty=1024x768   # Uncomment this option to overwrite the same value which is user defined in pmc.conf 
 
-################### Log function ######################
-LOG_FOLDER="$GUI_LOGDIR/remote_app"
-LOG_FILE="$LOG_FOLDER/${app_name}.log"
+################### Log function ################################
+#define the log file, overwrite the default, see ${GUI_CONFDIR}/application/LOG_FUNC
+. ${GUI_CONFDIR}/application/COMMON
+. ${GUI_CONFDIR}/application/LOG_FUNC
 
-if [ ! -d "$LOG_FOLDER" ]; then
-    mkdir "$LOG_FOLDER"
-fi
-if [ ! -f "$LOG_FILE" ]; then
-    touch "$LOG_FILE"
-    chmod 666 "$LOG_FILE"
-fi
-
-function LOG() {
-    echo `date` "$1" [${user_name}] "$2" >> "$LOG_FILE"
-}
-function LOG_ERROR() {
-    if [ $LOG_LEVEL -ge 0 ]; then
-        echo "$1" >&2
-        LOG ERROR "$1"
-    fi
-}
-
-function LOG_ERROR_NOECHO() {
-    if [ $LOG_LEVEL -ge 0 ]; then
-        LOG ERROR "$1"
-    fi
-}
-function LOG_WARN() {
-    if [ $LOG_LEVEL -ge 1 ]; then
-        LOG WARN "$1"
-    fi
-}
-function LOG_INFO() {
-    if [ $LOG_LEVEL -ge 2 ]; then
-        LOG INFO "$1"
-    fi
-}
-function LOG_DEBUG() {
-    if [ $LOG_LEVEL -ge 3 ]; then
-        LOG DEBUG "$1"
-    fi
-}
-
-export LOG_LEVEL=$LOG_LEVEL
-export LOG_FOLDER="$LOG_FOLDER"
-export LOG_FILE="$LOG_FILE"
-export -f LOG
-export -f LOG_DEBUG
-export -f LOG_INFO
-export -f LOG_WARN
-export -f LOG_ERROR
-export -f LOG_ERROR_NOECHO
+LOG_LEVEL=2   # 0 - ERROR, 1 - WARN, 2 - INFO, 3 - DEBUG
 
 ################### Environment variables ######################
 # Env variables section
@@ -127,17 +78,19 @@ platform_linux_arch="X86_64"
 function linux_run_app() {
     if [ x"$cmd_file" != "x" ]; then
         # Check if this file exist in the remote Linux host
-        result=`su ${user_name} -s /bin/sh -c "lsrun -m $exe_host ls \"$cmd_file\"" 2>&1`
+        result=`lsrun -m $exe_host ls "$cmd_file" 2>&1`
         if [ $? -ne 0 ]; then
             LOG_ERROR "File \"$cmd_file\" verify failed on host \"$exe_host\", cause: $result."
             exit 1
         fi
         
-        if [ "$linux_app_pre_post_cmd" = "undefined" -o x"$linux_app_pre_post_cmd" = "x" ]; then
+        #if [ "$linux_app_pre_post_cmd" = "undefined" -o x"$linux_app_pre_post_cmd" = "x" ]; then
+        if [ "$linux_app_cmd" = "undefined" -o x"$linux_app_cmd" = "x" ]; then
             LOG_ERROR "Linux application command is not defined for opening an input File."
             exit 1;
         fi
-        linux_app_cmd="$linux_app_pre_post_cmd"
+        #linux_app_cmd="$linux_app_pre_post_cmd"
+        LOG_DEBUG "linux_app_cmd is ready: $linux_app_cmd"
     else
         if [ "$linux_app_cmd" = "undefined" -o x"$linux_app_cmd" = "x" ]; then
             LOG_ERROR "Linux application command is not defined."
@@ -146,20 +99,64 @@ function linux_run_app() {
     fi    
     
     linux_app_cmd=`echo $linux_app_cmd | sed "s#\"#\'#g"`
-        
-    vnc_info_file=${job_repo}/"$user_name"_vncsession;
-	vnc_info=`su ${user_name} -s /bin/sh -c "$linux_startVNC_script \"$vnc_info_file\" \"$user_name\" \"$exe_host\" \"$keep_user_vnc_session\" \"$VNCGeomerty\""`
-    if [ $? != 0 ]; then
-        LOG_ERROR "Failed to start VNC server on Linux host \"$exe_host\"."
-        exit 1
+    
+    vnc_info_file_dir="${job_repo}/.vnc/$exe_host/$app_name"
+    LOG_DEBUG "Creating $vnc_info_file_dir"
+    if [ ! -d "$vnc_info_file_dir" ]; then
+        mkdir -p "$vnc_info_file_dir"
+        LOG_DEBUG "Created "
+    else    
+        LOG_DEBUG "Directory exists"
     fi
-	
-	LOG_DEBUG "The vnc_info value is $vnc_info"
-    echo "$platform;$user_name;$vnc_info"
+    
+    chmod 777 $vnc_info_file_dir > /dev/null 2>&1
 
+    vnc_info_file="$vnc_info_file_dir/vnc.session";
+
+    reuse=0
+
+    if [ -f "${vnc_info_file}" ]; then
+        
+        SID=`grep "^[   ]*SID=" $vnc_info_file | sed -e "s/^.*=//g"`
+        PID=`grep "PID=" ${vnc_info_file} |cut -d "=" -f2`
+
+        if [ "${exe_host}" = "" ]; then
+            vinfo=$(ps -q ${PID} -o pid=)
+        else
+            vinfo=$( lsrun -m ${exe_host} ps -q ${PID} -o pid= )
+        fi
+        
+        if [ -n "$vinfo" ]; then
+            LOG_DEBUG "$vnc_info_file exists and it's alive, return this session info for reuse"
+            vncPort=`cat ${vnc_info_file} | grep port= | awk -F = '{print $2}'`
+            vncPassword=`cat ${vnc_info_file} | grep password= | awk -F = '{print $2}'`
+            repository=`dirname ${vnc_info_file}`
+            screen_width=`cat ${vnc_info_file} | grep width= | awk -F = '{print $2}'`
+            screen_height=`cat ${vnc_info_file} | grep height= | awk -F = '{print $2}'`
+            encryptPwd=`xxd -ps ${repository}/.vnc.passwd`
+            LOG_DEBUG "VNC Session info: $platform;$user_name;${exe_host};${vncPort};${encryptPwd};${vncPassword};${screen_width};${screen_height};${SID};${PID};${vnc_info_file}"
+            vnc_info="${exe_host};${vncPort};${encryptPwd};${vncPassword};${screen_width};${screen_height};${SID};${PID};${vnc_info_file}"
+            echo "$platform;$user_name;${exe_host};${vncPort};${encryptPwd};${vncPassword};${screen_width};${screen_height};${SID};${PID};${vnc_info_file}"
+            reuse=1
+        fi
+    fi
+
+    if [ $reuse -eq 0 ]; then
+        LOG_DEBUG "No exsiting vnc session available, creating new session..."
+        vnc_info=$( $linux_startVNC_script $vnc_info_file $user_name $exe_host $keep_user_vnc_session $VNCGeomerty )
+        if [ $? -ne 0 -o -z "$vnc_info" ]; then
+            LOG_ERROR "Failed to start VNC server on Linux host \"$exe_host\": $vnc_info"
+            exit 203
+        fi
+        LOG_DEBUG "VNC session created: $platform;$user_name;$vnc_info"
+        echo "$platform;$user_name;$vnc_info"
+    fi
+
+    LOG_DEBUG "Starting application $linux_app_cmd ..."
     linux_app_cmd="`echo $linux_app_cmd | sed 's#\\"#\\\\\\"#g'`"
     display_settings=`echo $vnc_info | awk -F";" '{print $7}'`
-    su ${user_name} -s /bin/sh -c "nohup $linux_open_app_script \"$user_name\" \"$linux_app_cmd\" \"$exe_host\" \"$display_settings\" \"$cmd_file\" &" >/dev/null 2>&1
+    LOG_DEBUG "Calling [$linux_open_app_script $user_name $linux_app_cmd $exe_host $display_settings $vnc_info_file $cmd_file"
+    nohup $linux_open_app_script $user_name $linux_app_cmd $exe_host $display_settings $vnc_info_file $cmd_file > /dev/null 2>&1 &
 }
 
 function win_run_app() {
@@ -215,14 +212,14 @@ function checkWinMaxSession() {
          fi
          
          # If the current user session is active, if yes, it means this user can reuse this session
-         my_rdp=`su ${user_name} -s /bin/sh -c "lsrun -m ${host} \"query session ${user_name}\" | sed 's/\r$//' | grep -c \" Active \""`
+         my_rdp=`lsrun -m ${host} "query session ${user_name}" | sed 's/\r$//' | grep -c \" Active \"`
          if [ $my_rdp -gt 0 ]; then
              LOG_DEBUG "The current user \"${user_name}\" session is active on host \"${host}\", reuse it."
              echo "Y"
              return
          fi
          
-         activeCount=`su ${user_name} -s /bin/sh -c "lsrun -m ${host} \"query session\" | sed 's/\r$//' | grep -c \" Active \""`
+         activeCount=`lsrun -m ${host} "query session" | sed 's/\r$//' | grep -c \" Active \"`
          LOG_DEBUG "maxRDPCount:$maxRDPCount, host:$host, activeCount:$activeCount"
          if [ $activeCount -ge $maxRDPCount ]; then
              LOG_WARN "Active RDP session count has exceeded the maximum number of allowed connections \"$maxRDPCount\" on Windows host \"${host}\", contact Administrator to reduce the active RDP sessions."
@@ -240,7 +237,7 @@ function checkWinMaxSession() {
 function select_exehost() {
     # select a Windows host
     if [ "$platform" = "$platform_windows" ]; then
-        exe_host=`su ${user_name} -s /bin/sh -c "lsrun -R \"type=NTX64 && defined(${app_name})\" hostname | sed 's/\r$//'" 2>error.log.tmp`
+        exe_host=`lsrun -R "type=NTX64 && defined(${app_name})" hostname | sed 's/\r$//' 2>error.log.tmp`
         if [ x"${exe_host}" = "x" ]; then
             err=`cat error.log.tmp`
             if [ x"$err" != "x" ]; then
@@ -286,7 +283,7 @@ function select_exehost() {
         
     # select a Linux host    
     elif [ "$platform" = "$platform_linux" ]; then
-        exe_host=`su ${user_name} -s /bin/sh -c "lsrun -R \"type=X86_64 && defined(${app_name})\" hostname | sed 's/\r$//'" 2>error.log.tmp`
+        exe_host=`lsrun -R "type=X86_64 && defined(${app_name})" hostname | sed 's/\r$//' 2>error.log.tmp`
         if [ x"${exe_host}" = "x" ]; then
             err=`cat error.log.tmp`
             if [ x"$err" != "x" ]; then
@@ -300,6 +297,7 @@ function select_exehost() {
             rm -f error.log.tmp
             exit 1
         fi
+        LOG_DEBUG "find remote host: $exe_host "
     else
         LOG_ERROR "The ($platform) operating system is not supported. Supported operating systems are: \"$platform_windows [$platform_windows_arch], $platform_linux [$platform_linux_arch]\"" >&2
         exit 1
@@ -308,8 +306,8 @@ function select_exehost() {
 
 function is_windows_console_used() {
     local host=$1
-    local win_user=`su ${user_name} -s /bin/sh -c "lsrun -m ${host} 'query session' | grep '^ console.* Active'"| awk '{print $2}'`
-    local session_exist=`su ${win_user} -s /bin/sh -c "lsrun -m ${host} 'query process ${win_user} | findstr vncserver.exe'" | grep '^ ${win_user}.* console.* vncserver.exe'`
+    local win_user=`lsrun -m ${host} "query session" | grep '^ console.* Active'| awk '{print $2}'`
+    local session_exist=`lsrun -m ${host} 'query process ${win_user} | findstr vncserver.exe' | grep '^ ${win_user}.* console.* vncserver.exe'`
     if [ x"$session_exist" != "x" ]; then 
         echo "Yes"
     else
@@ -327,5 +325,6 @@ fi
 if [ "$platform" = "$platform_windows" ]; then
     win_run_app
 else
+    LOG_DEBUG "To start on linux host: $exe_host"
     linux_run_app
 fi
