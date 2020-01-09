@@ -3,9 +3,9 @@ ParaView directory include all files required for integrating openfoam 6 Paravie
 This integration is based on public docker image: openfoam/openfoam6-paraview54, there is no need to install openfoam application.
 
 ## Prerequisites
-1). IBM Spectrum LSF 10.1 or above version is installed.
+1). IBM Spectrum LSF 10.1.0.9 or above version is installed.
 
-2). IBM Spectrum Application Center 10.2 or above version is installed.
+2). IBM Spectrum Application Center 10.2.0.9 or above version is installed.
 
 3). LSF Compute Server support docker engine 1.12 or above version.
 
