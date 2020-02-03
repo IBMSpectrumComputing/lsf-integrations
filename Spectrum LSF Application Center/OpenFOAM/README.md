@@ -1,6 +1,15 @@
 # OpenFOAM Template
 OpenFOAM directory include all files required for integrating openfoam 6 with IBM Spectrum LSF and IBM Spectrum LSF Application Center.
-This integration is based on public docker image: openfoam/openfoam6-paraview54, there is no need to install openfoam application.
+This integration is based on a public docker image or buld your own OpenFOAM docker image, there is no need to install openfoam application. These are the benefits of building your own OpenFOAM docker image
+ 1) OpenMPI is compiled with LSF.  This makes LSF OpenMPI aware.
+ 2) Pstream is compiled
+ 3) MPI Hello World is added to the container for testing OpenMPI
+ 4) The above improvements allow for running some OpenFOAM commands in parallel and potentially across nodes
+ 5) Ability to run OpenFOAM on POWER processors
+ 
+ Note, the steps below do not describe how to build a Docker image from the Dockerfile included.  However, this article describes the overall steps albeit for a non-OpenFOAM container image: 
+ 
+ [Running TensorFlow benchmark with Horovod across IBM Power servers in containers in an LSF cluster](https://community.ibm.com/community/user/imwuc/blogs/john-welch/2019/12/20/running-tensorflow-benchmark-with-horovod-across-i)
 
 ## Prerequisites
 1). IBM Spectrum LSF 10.1 or above version is installed.
@@ -23,6 +32,7 @@ Step 3: Configure LSF Docker Application profile for openfoam 6 by adding the fo
         DESCRIPTION  = Enables running jobs in docker container --openFoam
         CONTAINER = docker[image(openfoam/openfoam6-paraview54)  \
                     options(--rm --net=host --ipc=host --entrypoint=  \
+		            --cap-add=SYS_PTRACE \
                             -v JOB_REPOSITORY_TOP:JOB_REPOSITORY_TOP \
                             -v /opt/ibm:/opt/ibm \
 	                    @JOB_REPOSITORY_TOP/dockerPasswd.sh  \
