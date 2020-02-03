@@ -15,16 +15,44 @@
 #  limitations under the License.
 #**************************************************************************
 #
-# version: 10.2.0.1
+# version: 10.2.0.9
+
+#==========BEGIN MANDATORY-PARAMETERS(INTERNAL USE ONLY, DO NOT CHANGE)===============================
+#PUBLISH_NOTES This template allows users to run OpenFOAM. It is required to follow the instructions at  <a href="https://github.com/IBMSpectrumComputing/lsf-integrations/tree/master/Spectrum%20LSF%20Application%20Center/OpenFOAM"> OpenFOAM README.md </a> prior to using this template. 
+#MANDATORY  OF_VER(OpenFOAM Version) OF_VER: Support for openfoam6 or OpenFOAM-v1912.
+#MANDATORY  MPI_INTERFACE(Network interface for MPI traffic) MPI_INTERFACE: Use ifconfig to get the highest speed network interface available on your LSF servers.
+
+if [ -z "$OF_VER" ] || [ -z "$MPI_INTERFACE" ]; then
+    echo "Required parameters have not been set."  1>&2
+    exit 1
+fi
+#==========END MANDATORY-PARAMETERS=================================
+
+# Only supporting openfoam6 or OpenFOAM-v1912
+if [ "$OF_VER" != "openfoam6" ] && [ "$OF_VER" != "OpenFOAM-v1912" ]; then
+    echo "Set OF_VER to either openfoam6 or OpenFOAM-v1912 in $0."  1>&2
+    exit 1
+fi
 
 #Source COMMON functions
 . ${GUI_CONFDIR}/application/COMMON
 
+function script_echo {
+    string1=$1
+    if [ -n "$string1" ]; then # not blank
+        echo "$string1"
+        echo "on_error_exit" 
+        echo
+    fi
+}
+
 export LANG=C
 export LC_ALL=C
 
+OF_DIR="/opt/$OF_VER"
+DEBUG_MPI=0
   
-if [ "x$CASE_DIR" = "x" ]; then
+if [ -z "$CASE_DIR" ]; then
         echo "You must specify an OpenFOAM case directory to submit an OpenFOAM job." 1>&2
         exit 1
 else
@@ -39,7 +67,7 @@ if [ ! -d $CASE_NAME ]; then
 fi
 cd $CASE_NAME
   
-if [ "x$NCPU" != "x" ]; then
+if [ -n "x$NCPU" ]; then
         NCPU_OPT="-n $NCPU"
 else
         NCPU_OPT=""
@@ -55,23 +83,42 @@ if [ -f system/decomposeParDict ]; then
     MESH_CMD="$MESH"
     DECOMPOSER_CMD="decomposePar"
 
+    MPIRUN_CMD=""
+    APP_OPT=""
+    RECON_CMD=""
+
     # list of apps that do not support -parallel 
     NON_PARALLEL="boundaryFoam|cfx4ToFoam|chemFoam|datToFoam|mshToFoam"
     echo $APP_CMD | egrep $NON_PARALLEL > /dev/null
     if [ $? -ne 0 ]; then   # add parallel option
-       #MPIRUN_CMD="mpirun -tcp -mca plm lsf" # set appropriate mpirun options
-       #APP_OPT="-parallel"
-       MPIRUN_CMD="mpirun -np $NCPU -mca plm ^rsh" # use container mpirun
-       APP_OPT=""
-       RECON_CMD="reconstructPar"
+       if [ "$OF_VER" = "OpenFOAM-v1912" ]; then   # add LSF & openMPI support
+          MPIRUN_CMD="mpirun"                                                # use container mpirun
+          MPIRUN_CMD="$MPIRUN_CMD -mca btl_tcp_if_include $MPI_INTERFACE"    # only use MPI_INTERFACE 
+          MPIRUN_CMD="$MPIRUN_CMD -mca btl ^openib -mca pml ob1"             # exclude infiniband
+          MPIRUN_CMD="$MPIRUN_CMD -mca plm ^rsh"                             # exclude rsh 
+          if [ $DEBUG_MPI -eq 1 ]; then
+             MPIRUN_CMD="$MPIRUN_CMD -mca plm_base_verbose 10"               # debug 
+          fi
+          APP_OPT="-parallel"
+          RECON_CMD="reconstructPar"
+       else
+          #MPIRUN_CMD="mpirun -np $NCPU -mca plm ^rsh" # use container mpirun
+          NHOST=1
+       fi
     else
-       MPIRUN_CMD=""
-       APP_OPT=""
-       RECON_CMD=""
+       NHOST=1
     fi
 
+    ADVANCED_OPT="-R \"span[hosts=1]\""  # default to using 1 host
     if [ $NCPU -gt 1 ]; then
-       FOAM_CMD="$MPIRUN_CMD $APP_CMD $APP_OPT"
+       if [ $NHOST -gt 1 2>/dev/null ]; then
+          # must source the OpenFOAM bashrc on each node when running across multiple nodes
+          FOAM_CMD="$MPIRUN_CMD /bin/bash -c 'source $OF_DIR/etc/bashrc && $APP_CMD $APP_OPT'"
+          PTILE=$(($NCPU/$NHOST))
+          ADVANCED_OPT="-R \"span[ptile=$PTILE]\""
+       else
+          FOAM_CMD="$MPIRUN_CMD $APP_CMD $APP_OPT"
+       fi
     else
        DECOMPOSER_CMD=""
        FOAM_CMD="$APP_CMD"  # no need for MPI
@@ -104,25 +151,17 @@ echo "function on_error_exit {"
 echo "RT=\$?;if [ \$RT -ne 0 ]; then exit \$RT;fi"
 echo "}"
 echo
-#echo "if [ -f /opt/ibm/spectrum_mpi/smpi.sh ]; then "
-#echo "source /opt/ibm/spectrum_mpi/smpi.sh"
-#echo "fi"
-echo "source /opt/openfoam6/etc/bashrc"
-echo "$MAKE_MESH"
-echo "on_error_exit"
-echo "$MESH_CMD"
-echo "on_error_exit"
+
+script_echo "source $OF_DIR/etc/bashrc"
+script_echo "$MAKE_MESH"
+script_echo "$MESH_CMD"
 # add "a" before case name to make it easier for user to spot the .foam file
-echo "touch a${CASE_NAME}.foam"
-echo "$DECOMPOSER_CMD"
-echo "on_error_exit"
-echo "$FOAM_CMD"
-echo "on_error_exit"
-#echo "$RECON_CMD"
-#echo "on_error_exit"
-#echo "convertData output.${EXECUTIONUSER}.txt"
-#echo "on_error_exit"
-  
+script_echo "touch a${CASE_NAME}.foam"
+script_echo "$DECOMPOSER_CMD"
+script_echo "$FOAM_CMD"
+#script_echo "$RECON_CMD"
+#script_echo "convertData output.${EXECUTIONUSER}.txt"
+
 exec 1>&3 3>&-  # Restore stdout and close file descriptor #3.
 
 if [ "x$JOB_NAME" != "x" ]; then
@@ -138,7 +177,7 @@ CWD_DIR="-cwd \"$OUTPUT_FILE_LOCATION/$CASE_NAME\""
 
 chmod a+x $BSUB_SCRIPT
   
-JOB_RESULT=`/bin/sh -c "bsub -B -N -R "span[hosts=1]" -app openfoam ${NCPU_OPT} ${OUT_OPT} ${ERR_OPT} ${CWD_DIR} ${JOB_NAME_OPT}   $BSUB_SCRIPT 2>&1"`
+JOB_RESULT=`/bin/sh -c "bsub -B -N ${ADVANCED_OPT} -app openfoam ${NCPU_OPT} ${OUT_OPT} ${ERR_OPT} ${CWD_DIR} ${JOB_NAME_OPT}   $BSUB_SCRIPT 2>&1"`
 
 export JOB_RESULT OUTPUT_FILE_LOCATION
 ${GUI_CONFDIR}/application/job-result.sh
