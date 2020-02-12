@@ -20,14 +20,14 @@
 # for example:  @/scratch/shared_job_directory/dockerPasswd.sh 
 
 
-JOBTMPDIR=$LS_EXECCWD # Assume the job's current working directory is shared for parallel jobs
-if [ "x$JOBTMPDIR" = "x" ] ; then
-    echo "Are you testing outside of an LSF job?"
-    JOBTMPDIR=/tmp/$USER
-    if [ ! -d "$JOBTMPDIR" ]; then
-        mkdir $JOBTMPDIR
-    fi
+JOBTMPDIR=MLDL_TOP # lsfadmin must have write permission on this directory
+if [ ! -d ${JOBTMPDIR}/tmp ]; then
+    mkdir ${JOBTMPDIR}/tmp 2>&1
 fi
+if [ ! -d ${JOBTMPDIR}/tmp/${USER} ]; then
+    mkdir ${JOBTMPDIR}/tmp/${USER} 2>&1
+fi
+JOBTMPDIR=${JOBTMPDIR}/tmp/${USER}
  
 UFILE=$JOBTMPDIR/.passwd.$LSB_JOBID.$LSB_JOBINDEX
 GFILE=$JOBTMPDIR/.group.$LSB_JOBID.$LSB_JOBINDEX
