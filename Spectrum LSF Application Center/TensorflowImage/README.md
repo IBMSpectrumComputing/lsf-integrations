@@ -144,6 +144,7 @@ Then, run these commands:
       chmod a+rx $SCRIPT
       sed -i -e 's/\#MLDL_TOP\#/\/opt\/share\/mldl/g' $SCRIPT
     done
+    sed -i -e 's/\#MLDL_TOP\#/\/opt\/share\/mldl/g' dockerPasswd.sh
     chmod a+rx *.sh
 
 7). classify_image.py changes are noted in classify_image.py.patch file
