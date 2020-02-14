@@ -77,7 +77,7 @@ Step 5: User will need to be able to access the tutorials files from the previou
 
     $ chgrp -R YourGroup JOB_REPOSITORY_TOP/tutorials
 
-Step 6: Add the tutorials directory to /opt/ibm/lsfsuite/ext/gui/conf/Repository.xml file below the “</Repository>” line:
+Step 6: Add the tutorials directory to /opt/ibm/lsfsuite/ext/gui/conf/Repository.xml file below the "/Repository>" line:
 
                 <ShareDirectory>
                         <Alias>OpenFOAM tutorials</Alias>
