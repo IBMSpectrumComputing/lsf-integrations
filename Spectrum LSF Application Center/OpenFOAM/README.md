@@ -7,9 +7,9 @@ This integration is based on a public docker image or buld your own OpenFOAM doc
  4) The above improvements allow for running some OpenFOAM commands in parallel and potentially across nodes
  5) Ability to run OpenFOAM on POWER processors
  
- Note, the steps below do not describe how to build a Docker image from the Dockerfile included.  However, this article describes the overall steps albeit for a non-OpenFOAM container image: 
+ The steps below describe how to build a custom OpenFOAM Docker image from the Dockerfile:
  
- [Running TensorFlow benchmark with Horovod across IBM Power servers in containers in an LSF cluster](https://community.ibm.com/community/user/imwuc/blogs/john-welch/2019/12/20/running-tensorflow-benchmark-with-horovod-across-i)
+ [Building an OpenFOAM ready container for an LSF cluster](https://community.ibm.com/imwuc/blogs/john-welch/2020/02/12/building-an-openfoam-ready-container-for-lsf)
 
 ## Prerequisites
 1). IBM Spectrum LSF 10.1 or above version is installed.
@@ -34,31 +34,64 @@ Step 3: Configure LSF Docker Application profile for openfoam 6 by adding the fo
                     options(--rm --net=host --ipc=host --entrypoint=  \
 		            --cap-add=SYS_PTRACE \
                             -v JOB_REPOSITORY_TOP:JOB_REPOSITORY_TOP \
-                            -v /opt/ibm:/opt/ibm \
 	                    @JOB_REPOSITORY_TOP/dockerPasswd.sh  \
                   ) starter(root) ]
+		     ) starter(root) ]
+        EXEC_DRIVER = context[user(lsfadmin)] \
+           starter[LSF_SERVERDIR/docker-starter.py] \
+           controller[LSF_SERVERDIR/docker-control.py] \
+           monitor[LSF_SERVERDIR/docker-monitor.py]
         End Application
-
 
  Notes: 
  
- 1).find a shared directory for all computer nodes, and replace JOB_REPOSITORY_TOP with the real path in above content       
+ 1). If you built a custom OpenFOAM container, change above "openfoam/openfoam6-paraview54" to "openfoam/openfoam:v1912".
  
- 2).edit OpenFOAM/dockerPasswd.sh, replace the <JOB_REPOSITORY_TOP> with real value in the following line:
+ 2). Find a shared directory for all computer nodes, and replace JOB_REPOSITORY_TOP with the real path in above content 
+ 
+ 3). Change LSF_SERVERDIR to your LSF SERVERDIR direction location.
+ 
+ 4). Edit OpenFOAM/dockerPasswd.sh, replace the <JOB_REPOSITORY_TOP> with real value in the following line:
  
     JOBTMPDIR=<JOB_REPOSITORY_TOP>
  
- 3).copy dockerPasswd.sh to  JOB_REPOSITORY_TOP/dockerPasswd.sh
+ 5). Copy dockerPasswd.sh to  JOB_REPOSITORY_TOP/dockerPasswd.sh
 	
  for more details, reference [LSF docker application configuration](https://www.ibm.com/support/knowledgecenter/en/SSWRJV_10.1.0/lsf_docker/lsf_docker_config.html). 
- 
- 4). assume LSF is installed under /opt/ibm,  if it is not, replace "/opt/ibm" in above openfoam application profile to the real
- LSF top directory.
-        
-Step 4: restart LSF:   
-        
-	lsfrestart
-        
-Step 5: logon LSF Application Center as administrator,  find and publish template "OpenFOAM". Then  Go to "System&Setting"-> "User Role& Permission", assign view and Control permission of OpenFOAM to "Normal User".
 
-Step 6: Submit OpenFOAM job from LSF Application Center as a normal user.  check the job result with 3D graphic.
+ 6). Restart the LSF mbatchd on the LSF Master by running either badmin mbdrestart or badmin reconfig. Then, verify a job submission with the OpenFOAM container is working. For example,
+
+    $  bsub -Is -app openfoam ls /opt/
+    Job <2742> is submitted to default queue <interactive>.
+    <<Waiting for dispatch ...>>
+    <<Starting on compute1>>
+    OpenFOAM-v1912 ThirdParty-v1912 ibm
+    $
+    
+Step 4: Copy the OpenFOAM tutorials out of a OpenFOAM container in to JOB_REPOSITORY_TOP directory.  Set OF_VER to either openfoam6 or OpenFOAM-v1912 depending on container image being used.   For example,
+
+    $ OF_VER=openfoam6
+    $ bsub -Is -app openfoam cp -pR /opt/$OF_VER/tutorials JOB_REPOSITORY_TOP
+
+Step 5: User will need to be able to access the tutorials files from the previous step and one method would be to assign an appropriate group to the tutorials directory.   For example
+
+    $ chgrp -R YourGroup JOB_REPOSITORY_TOP/tutorials
+
+Step 6: Add the tutorials directory to /opt/ibm/lsfsuite/ext/gui/conf/Repository.xml file below the “</Repository>” line:
+
+                <ShareDirectory>
+                        <Alias>OpenFOAM tutorials</Alias>
+                        <Path> JOB_REPOSITORY_TOP/tutorials</Path>
+                </ShareDirectory>
+
+Step 7:	Restart LSF Application Center
+
+# . /opt/ibm/lsfsuite/ext/profile.platform
+# pmcadmin stop
+# pmcadmin start
+# pmcadmin list
+
+        
+Step 8: Logon LSF Application Center as administrator,  find and publish template "OpenFOAM". Then  Go to "System&Setting"-> "User Role& Permission", assign view and Control permission of OpenFOAM to "Normal User".
+
+Step 8: Submit OpenFOAM job from LSF Application Center as a normal user.  Check the job result with 3D graphic.
