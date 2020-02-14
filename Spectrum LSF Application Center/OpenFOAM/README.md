@@ -35,7 +35,6 @@ Step 3: Configure LSF Docker Application profile for openfoam 6 by adding the fo
 		            --cap-add=SYS_PTRACE \
                             -v JOB_REPOSITORY_TOP:JOB_REPOSITORY_TOP \
 	                    @JOB_REPOSITORY_TOP/dockerPasswd.sh  \
-                  ) starter(root) ]
 		     ) starter(root) ]
         EXEC_DRIVER = context[user(lsfadmin)] \
            starter[LSF_SERVERDIR/docker-starter.py] \
@@ -86,10 +85,10 @@ Step 6: Add the tutorials directory to /opt/ibm/lsfsuite/ext/gui/conf/Repository
 
 Step 7:	Restart LSF Application Center
 
-# . /opt/ibm/lsfsuite/ext/profile.platform
-# pmcadmin stop
-# pmcadmin start
-# pmcadmin list
+    # . /opt/ibm/lsfsuite/ext/profile.platform
+    # pmcadmin stop
+    # pmcadmin start
+    # pmcadmin list
 
         
 Step 8: Logon LSF Application Center as administrator,  find and publish template "OpenFOAM". Then  Go to "System&Setting"-> "User Role& Permission", assign view and Control permission of OpenFOAM to "Normal User".
