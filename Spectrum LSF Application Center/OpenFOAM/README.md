@@ -1,11 +1,11 @@
 # OpenFOAM Template
 OpenFOAM directory include all files required for integrating openfoam 6 with IBM Spectrum LSF and IBM Spectrum LSF Application Center.
 This integration is based on a public docker image or buld your own OpenFOAM docker image, there is no need to install openfoam application. These are the benefits of building your own OpenFOAM docker image
- 1) OpenMPI is compiled with LSF.  This makes LSF OpenMPI aware.
+ 1) [Open MPI](https://www.open-mpi.org/)is compiled with LSF, which makes LSF Open MPI aware.
  2) Pstream is compiled
- 3) MPI Hello World is added to the container for testing OpenMPI
+ 3) MPI Hello World is added to the container for testing Open MPI
  4) The above improvements allow for running some OpenFOAM commands in parallel and potentially across nodes
- 5) Ability to run OpenFOAM on POWER processors
+ 5) Ability to run OpenFOAM on IBM POWER processors
  
  The steps below describe how to build a custom OpenFOAM Docker image from the Dockerfile:
  
