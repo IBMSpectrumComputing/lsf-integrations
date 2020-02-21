@@ -14,7 +14,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #**************************************************************************
-PVLOG=/tmp/pvlog.$$
+PVLOG=/tmp/pvlog.$USER.$$
 echo $0, $1 >> $PVLOG 
 id >> $PVLOG
 echo "DISPLAY $DISPLAY" >> $PVLOG
@@ -24,8 +24,7 @@ export LC_ALL=C
 
 if [ "x$1" = "x" ];then
    #start application without input data
-   export CDIR=/home/$USER/paraview 
-   mkdir -p $CDIR
+   export CDIR=$HOME
    DATA_OPTION=""
 else
    #take the input data file
@@ -40,37 +39,26 @@ fi
 
 PARAVIEW_CMD=paraview
 
-PARAVIEW_SCRIPT=$CDIR/paraview.script
+BSUB_SCRIPT=$CDIR/bsub.paraview
 exec 3>&1  # Link file descriptor #3 with stdout.
-exec > $PARAVIEW_SCRIPT  # stdout replaced with file "bsub.$JOBNAME".
+exec > $BSUB_SCRIPT  # stdout replaced with file "bsub.$JOBNAME".
 echo "#!/bin/bash"
 echo
-echo "source /opt/openfoam6/etc/bashrc"
+echo "if [ -f /opt/openfoam6/etc/bashrc ]; then"
+echo "   source /opt/openfoam6/etc/bashrc"
+echo "elif [ -f /opt/OpenFOAM-v1912/etc/bashrc ]; then"
+echo "   source /opt/OpenFOAM-v1912/etc/bashrc"
+echo "fi"
 echo
 echo "$PARAVIEW_CMD $DATA_OPTION"
 
 exec 1>&3 3>&-  # Restore stdout and close file descriptor #3.
 
-chmod a+x $PARAVIEW_SCRIPT
+chmod a+x $BSUB_SCRIPT
 
-cd $CDIR
-#assume dockerpasswd.sh is in the same directory with current script.
-CMD_PATH=`dirname $0`
-export LS_EXECCWD=$CDIR
-export LSB_JOBID=$$
-PASSWD_MAP=`$CMD_PATH/dockerPasswd.sh` 
+JOB_NAME="ParaView"
 
-if [ "x${job_repo}" != "x" ];then
-  JOB_REPO_MAP=" -v ${job_repo}:${job_repo} "
-else
-  JOB_REPO_MAP=""
-fi
+echo bsub -app openfoam -R "defined(ParaView)" -env DISPLAY=$DISPLAY -J $JOB_NAME -K -o paraview_output%J.txt -cwd $CDIR $BSUB_SCRIPT >> $PVLOG
 
-export USER_ID=$(id -u)
-export GROUP_ID=$(id -g)
-
-
-echo /bin/docker run --rm --entrypoint=   -e DISPLAY=$DISPLAY -e HOME=/home/$USER -w=/home/$USER -u $USER_ID:$GROUP_ID --net=host --ipc=host $PASSWD_MAP -v $CDIR:/home/$USER $JOB_REPO_MAP openfoam/openfoam6-paraview54 /home/$USER/paraview.script  >> $PVLOG
-
-/bin/docker run --rm --entrypoint=   -e DISPLAY=$DISPLAY -e HOME=/home/$USER -w=/home/$USER -u $USER_ID:$GROUP_ID --net=host --ipc=host $PASSWD_MAP -v $CDIR:/home/$USER $JOB_REPO_MAP openfoam/openfoam6-paraview54 /home/$USER/paraview.script  
-
+     bsub -app openfoam -R "defined(ParaView)" -env DISPLAY=$DISPLAY -J $JOB_NAME -K -o paraview_output%J.txt -cwd $CDIR $BSUB_SCRIPT
+     
