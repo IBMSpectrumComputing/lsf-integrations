@@ -283,7 +283,7 @@ function select_exehost() {
         
     # select a Linux host    
     elif [ "$platform" = "$platform_linux" ]; then
-        exe_host=`lsrun -R "type=X86_64 && defined(${app_name})" hostname | sed 's/\r$//' 2>error.log.tmp`
+        exe_host=`lsrun -R "(type=X86_64 || type==LINUXPPC64LE) && defined(${app_name})" hostname | sed 's/\r$//' 2>error.log.tmp`
         if [ x"${exe_host}" = "x" ]; then
             err=`cat error.log.tmp`
             if [ x"$err" != "x" ]; then
