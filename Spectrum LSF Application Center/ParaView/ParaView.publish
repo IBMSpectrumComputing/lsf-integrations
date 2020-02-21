@@ -1,0 +1,19 @@
+#!/bin/sh
+#  this script processes ParaView template post-publish tasks
+
+if [ -z "$JOB_REPOSITORY_TOP" ]; then
+    echo "JOB_REPOSITORY_TOP is not specified, cannot continue, exit."
+    exit 1
+fi
+
+TEMPLATE_PATH=`dirname $0`
+#replace  $JOB_REPOSITORY_TOP in template xml file
+for TEMPXML in $TEMPLATE_PATH/*.xml
+do
+      sed -i "s|#JOB_REPOSITORY_TOP#|$JOB_REPOSITORY_TOP|g" $TEMPXML
+done
+
+cp -f $TEMPLATE_PATH/startParaView $JOB_REPOSITORY_TOP/
+chmod a+x $JOB_REPOSITORY_TOP/startParaView
+
+echo "Post publishing is done."
