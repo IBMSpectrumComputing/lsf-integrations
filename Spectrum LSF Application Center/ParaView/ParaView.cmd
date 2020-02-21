@@ -15,6 +15,16 @@
 #  limitations under the License.
 #**************************************************************************
 
+#==========BEGIN MANDATORY-PARAMETERS(INTERNAL USE ONLY, DO NOT CHANGE)===============================
+#PUBLISH_NOTES The template allows user to run ParaView with OpenFOAM
+#MANDATORY  JOB_REPOSITORY_TOP(job top directory) JOB_REPOSITORY_TOP: full path to job repository top and should be same as value set for OpenFOAM template. The path needs to be accessible from LSF servers. For example: /nfs/openfoam
+
+if [ -z "$JOB_REPOSITORY_TOP" ]; then
+    echo "Required parameters have not been set."  1>&2
+    exit 1
+fi
+#==========END MANDATORY-PARAMETERS=================================
+
 #VNCGeomerty=1024x768   # Uncomment this option to overwrite the same value which is user defined in pmc.conf 
 
 ################### Log function ################################
@@ -28,6 +38,7 @@ LOG_LEVEL=2   # 0 - ERROR, 1 - WARN, 2 - INFO, 3 - DEBUG
 # Env variables section
 # Remote application name
 app_name="${app_name}"
+app_name=`echo $app_name | awk -F - '{print $1}'`
 # User who will connect to the remote server
 user_name="${user_name}"
 # The server which has the application installed
