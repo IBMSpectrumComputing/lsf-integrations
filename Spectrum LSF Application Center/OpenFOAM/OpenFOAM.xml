@@ -2,7 +2,7 @@
 
 <agent resources="resources" application="openfoam" type="OpenFOAM" category="Job Submission"> 
   <info>Submit a job: OpenFOAM</info>  
-  <lastmodified>2020-01-29 17:29:54</lastmodified>  
+  <lastmodified>2020-02-21 19:05:51</lastmodified>  
   <modifier>lsfadmin</modifier>  
   <action id="submit" label="submit" result="text/xml">OpenFOAM.cmd</action>  
   <repository> 
@@ -12,15 +12,15 @@
     </application>  
     <application id="cluster" state="expandEnable" info="Application Input" helpText="Asterisk (*) = required field."> 
       <option defaultValue="" id="CASE_DIR" label="Case Directory" required="true" hidden="false" type="simpleFile" editable="true" helpText="directory full path for the input case top directory. expect the case directory locate on server side." defaultFileType="folder"/>  
-      <option defaultValue="" id="MESH" label="Mesh" required="false" hidden="false" type="text" editable="true" helpText="read from case system file, cannot be changed"> 
+      <option defaultValue="" id="MESH" label="Mesh" required="false" hidden="true" type="text" editable="true" helpText="read from case system file, cannot be changed" unit=""> 
         <dependency> 
           <id>CASE_DIR</id>  
           <script>MESH_mesh.sh</script>  
-          <linkType>content</linkType>  
+          <linkType>content,visibility</linkType>  
           <enabled>true</enabled> 
         </dependency> 
       </option>  
-      <option defaultValue="simpleFoam" id="APP_CMD" label="App Command" required="false" hidden="false" type="list" editable="true" helpText="read from case system file:  decomposeParDict.  allow to switch to other command"> 
+      <option defaultValue="simpleFoam" id="APP_CMD" label="App Command" required="false" hidden="true" type="list" editable="true" helpText="read from case system file:  decomposeParDict.  allow to switch to other command" unit=""> 
         <dependency> 
           <id>CASE_DIR</id>  
           <script>APP_CMD_app.sh</script>  
@@ -80,6 +80,14 @@
         </dependency>  
         <option id="1" required="false" hidden="false" selected="true">1</option>  
         <option id="2" required="false" hidden="false">2</option> 
+      </option>  
+      <option defaultValue="yes" id="ALLRUN" label="Allrun" required="false" hidden="true" type="checkbox" editable="true" helpText="Run the Allrun command" labelPosition="left"> 
+        <dependency> 
+          <id>CASE_DIR</id>  
+          <script>ALLRUN_run.sh</script>  
+          <linkType>visibility</linkType>  
+          <enabled>true</enabled> 
+        </dependency> 
       </option> 
     </application>  
     <application id="result" state="expandEnable" optionFor="client" info="Download Result"> 
