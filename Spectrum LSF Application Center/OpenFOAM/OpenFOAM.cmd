@@ -78,8 +78,13 @@ MAKE_MESH=""
 if [ -f makeMesh ]; then
     MAKE_MESH="$OUTPUT_FILE_LOCATION/$CASE_NAME/makeMesh"
 fi
-  
-if [ -f system/decomposeParDict ]; then
+
+if [ -f Allrun ] && [ "$ALLRUN" == "yes" ]; then
+    MESH_CMD=""
+    DECOMPOSER_CMD=""
+    FOAM_CMD="./Allrun"
+    ADVANCED_OPT="-R \"span[hosts=1]\""  # default to using 1 host
+elif [ -f system/decomposeParDict ]; then
     MESH_CMD="$MESH"
     DECOMPOSER_CMD="decomposePar"
 
