@@ -17,7 +17,7 @@
 
 #this script control NHOST value is visible or not 
 
-if [ x$CASE_DIR = x -o ! -d $CASE_DIR -o ! -d $CASE_DIR/system -o ! -f $CASE_DIR/system/decomposeParDict ];then
+if [ -z "$CASE_DIR" ] || [ ! -d $CASE_DIR -o ! -d $CASE_DIR/system -o ! -f $CASE_DIR/system/decomposeParDict ];then
         echo "<field-control visible=\"false\" type=\"default\">"
         echo "<option value=\"1\" /> "
 
