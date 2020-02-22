@@ -18,7 +18,7 @@
 #this script control MESH value based on file CASE_DIR/system/*MeshDict from case directory selection
 
 echo "<field-control visible=\"true\" type=\"default\">"
-if [ x$CASE_DIR = x -o ! -d $CASE_DIR -o ! -d $CASE_DIR/system ];then
+if  [ -z "$CASE_DIR" ] || [ ! -d $CASE_DIR -o ! -d $CASE_DIR/system ];then
         #echo "<option value=\"blockMesh\" /> "
         echo "<option value=\"\" /> "
 
