@@ -20,7 +20,7 @@
 # for example:  @/scratch/shared_job_directory/dockerPasswd.sh 
 
 
-JOBTMPDIR=<JOB_REPOSITORY_TOP> # replace the value with real shared directory, AC admin must have write permission on this directory
+JOBTMPDIR=#JOB_REPOSITORY_TOP# # replace the value with real shared directory, AC admin must have write permission on this directory
 if [ ! -d ${JOBTMPDIR}/tmp ]; then
     mkdir ${JOBTMPDIR}/tmp 2>&1
 fi
