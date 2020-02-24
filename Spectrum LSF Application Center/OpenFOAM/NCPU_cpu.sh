@@ -17,12 +17,13 @@
 
 #this script control NCPU value based on file CASE_DIR/system/ from case directory selection
 
-if [ -z "$CASE_DIR" ] || [ ! -d $CASE_DIR -o ! -d $CASE_DIR/system -o ! -f $CASE_DIR/system/decomposeParDict ];then
+if [ -z "$CASE_DIR" ] || [ ! -d $CASE_DIR -o ! -d $CASE_DIR/system -o ! -f $CASE_DIR/system/decomposeParDict* ];then
         echo "<field-control visible=\"false\" type=\"default\">"
         echo "<option value=\"1\" /> "
 
 else
-        P_FILE="$CASE_DIR/system/decomposeParDict" 
+        #P_FILE="$CASE_DIR/system/decomposeParDict"
+        P_FILE=`ls $CASE_DIR/system/decomposeParDict* | head -n 1`
 	CPU=`grep "^numberOfSubdomains" $P_FILE | awk '{if ($1=="numberOfSubdomains") print $2}' | sed 's/;//g'`
         echo "<field-control visible=\"true\" type=\"default\">"
         echo "<option value=\"$CPU\" />"
