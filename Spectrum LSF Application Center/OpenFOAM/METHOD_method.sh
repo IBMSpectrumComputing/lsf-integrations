@@ -17,12 +17,13 @@
 
 #this script control METHOD value based on file CASE_DIR/system/decomposeParDict from case directory selection
 
-if [ -z "$CASE_DIR" ] || [ ! -d $CASE_DIR -o ! -d $CASE_DIR/system -o ! -f $CASE_DIR/system/decomposeParDict ];then
+if [ -z "$CASE_DIR" ] || [ ! -d $CASE_DIR -o ! -d $CASE_DIR/system -o ! -f $CASE_DIR/system/decomposeParDict* ];then
         echo "<field-control visible=\"false\" type=\"default\">"
         echo "<option value=\"simple\" /> "
 
 else
-        P_FILE="$CASE_DIR/system/decomposeParDict" 
+        #P_FILE="$CASE_DIR/system/decomposeParDict"
+	P_FILE=`ls $CASE_DIR/system/decomposeParDict* | head -n 1`
 	METHOD_CMD=`cat $P_FILE | grep "^method" | awk '{if ($1=="method") print $2}' | sed 's/;//g'`
         echo "<field-control visible=\"true\" type=\"default\">"
         echo "<option value=\"$METHOD_CMD\" />"
