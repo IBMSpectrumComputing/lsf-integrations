@@ -1,0 +1,17 @@
+wget https://raw.githubusercontent.com/IBMSpectrumComputing/lsf-integrations/master/Spectrum%20LSF%20Application%20Center/OpenFOAM/OpenFOAM.cmd
+wget https://raw.githubusercontent.com/IBMSpectrumComputing/lsf-integrations/master/Spectrum%20LSF%20Application%20Center/OpenFOAM/OpenFOAM.xml
+wget https://raw.githubusercontent.com/IBMSpectrumComputing/lsf-integrations/master/Spectrum%20LSF%20Application%20Center/OpenFOAM/OpenFOAM.json
+wget https://raw.githubusercontent.com/IBMSpectrumComputing/lsf-integrations/master/Spectrum%20LSF%20Application%20Center/OpenFOAM/OpenFOAM.publish
+wget https://raw.githubusercontent.com/IBMSpectrumComputing/lsf-integrations/master/Spectrum%20LSF%20Application%20Center/OpenFOAM/NCPU_cpu.sh
+wget https://raw.githubusercontent.com/IBMSpectrumComputing/lsf-integrations/master/Spectrum%20LSF%20Application%20Center/OpenFOAM/MESH_mesh.sh
+wget https://raw.githubusercontent.com/IBMSpectrumComputing/lsf-integrations/master/Spectrum%20LSF%20Application%20Center/OpenFOAM/APP_CMD_app.sh
+wget https://raw.githubusercontent.com/IBMSpectrumComputing/lsf-integrations/master/Spectrum%20LSF%20Application%20Center/OpenFOAM/NHOST_host.sh
+wget https://raw.githubusercontent.com/IBMSpectrumComputing/lsf-integrations/master/Spectrum%20LSF%20Application%20Center/OpenFOAM/METHOD_method.sh
+wget https://raw.githubusercontent.com/IBMSpectrumComputing/lsf-integrations/master/Spectrum%20LSF%20Application%20Center/OpenFOAM/ALLRUN_run.sh
+wget https://raw.githubusercontent.com/IBMSpectrumComputing/lsf-integrations/master/Spectrum%20LSF%20Application%20Center/OpenFOAM/dockerPasswd.sh
+wget https://raw.githubusercontent.com/IBMSpectrumComputing/lsf-integrations/master/Spectrum%20LSF%20Application%20Center/OpenFOAM/convertData
+wget https://raw.githubusercontent.com/IBMSpectrumComputing/lsf-integrations/master/Spectrum%20LSF%20Application%20Center/OpenFOAM/CFDfoundationLogoDark-600x600.png
+
+chmod a+x *.sh
+chmod a+x OpenFOAM.*
+chmod a+x convertData 
