@@ -2,7 +2,17 @@
 #  this script processes ParaView template post-publish tasks
 
 if [ -z "$JOB_REPOSITORY_TOP" ]; then
-    echo "JOB_REPOSITORY_TOP is not specified, cannot continue, exit."
+    echo "JOB_REPOSITORY_TOP is not specified. Exiting."
+    exit 1
+fi
+
+if [ ! -d "$JOB_REPOSITORY_TOP" ]; then
+    echo "JOB_REPOSITORY_TOP does not exit. Exiting."
+    exit 1
+fi
+
+if [ ! -w "$JOB_REPOSITORY_TOP" ]; then
+    echo "JOB_REPOSITORY_TOP needs to be writeable by $USER. Exiting."
     exit 1
 fi
 
@@ -13,7 +23,11 @@ do
       sed -i "s|#JOB_REPOSITORY_TOP#|$JOB_REPOSITORY_TOP|g" $TEMPXML
 done
 
-cp -f $TEMPLATE_PATH/startParaView $JOB_REPOSITORY_TOP/
-chmod a+x $JOB_REPOSITORY_TOP/startParaView
+if [ ! -d "$JOB_REPOSITORY_TOP/scripts" ]; then
+    mkdir $JOB_REPOSITORY_TOP/scripts
+fi
+
+cp -f $TEMPLATE_PATH/startParaView $JOB_REPOSITORY_TOP/scripts/
+chmod a+x $JOB_REPOSITORY_TOP/scripts/startParaView
 
 echo "Post publishing is done."
