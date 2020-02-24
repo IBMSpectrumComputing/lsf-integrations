@@ -19,6 +19,7 @@
 
 #==========BEGIN MANDATORY-PARAMETERS(INTERNAL USE ONLY, DO NOT CHANGE)===============================
 #PUBLISH_NOTES This template allows users to run OpenFOAM. It is required to follow the instructions at  <a href="https://github.com/IBMSpectrumComputing/lsf-integrations/tree/master/Spectrum%20LSF%20Application%20Center/OpenFOAM"> OpenFOAM README.md </a> prior to using this template. 
+#MANDATORY  JOB_REPOSITORY_TOP(job top directory) JOB_REPOSITORY_TOP: full path to job repository top. The path needs to be accessible from LSF servers. For example: /nfs/openfoam
 #MANDATORY  OF_VER(OpenFOAM Version) OF_VER: Support for openfoam6 or OpenFOAM-v1912.
 #MANDATORY  MPI_INTERFACE(Network interface for MPI traffic) MPI_INTERFACE: Use ifconfig to get the highest speed network interface available on your LSF servers.
 
