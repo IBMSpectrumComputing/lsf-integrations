@@ -19,14 +19,18 @@ These are the benefits of building your own OpenFOAM docker image
 
 3). LSF Compute Server support docker engine 1.12 or above version.
 
+4). With 10.2 Fix Pack 9, the OpenFOAM.publish script will run when publishing the OpenFOAM template.  The Steps below marked with a "*" are handled by the OpenFOAM.publish script.
+
 ## Deployment Steps
 Step 1: download all the files under this directory OpenFOAM/,   and copy over to IBM Spectrum LSF Application Center configuration 
         directory, for example:  /opt/ibm/lsfsuite/ext/gui/conf/application/draft/OpenFOAM, make sure files owner are administrator, 
         all files have excutable permission.
+	
+    $  wget_files
         
 Step 2: Prepare IBM Spectrum LSF to run jobs in Docker container by following [LSF docker integration instruction]( https://www.ibm.com/support/knowledgecenter/en/SSWRJV_10.1.0/lsf_docker/lsf_docker_prepare.html). make sure the selected computer server have Docker engine installed  and enabled
         
-Step 3: Configure LSF Docker Application profile for openfoam 6 by adding the following lines into end of lsb.applications:
+*Step 3: Configure LSF Docker Application profile for openfoam 6 by adding the following lines into end of lsb.applications:
         	
         Begin Application
         NAME         = openfoam
@@ -35,7 +39,7 @@ Step 3: Configure LSF Docker Application profile for openfoam 6 by adding the fo
                     options(--rm --net=host --ipc=host --entrypoint=  \
 		            --cap-add=SYS_PTRACE \
                             -v JOB_REPOSITORY_TOP:JOB_REPOSITORY_TOP \
-	                    @JOB_REPOSITORY_TOP/dockerPasswd.sh  \
+	                    @JOB_REPOSITORY_TOP/scripts/dockerPasswd.sh  \
 		     ) starter(root) ]
         EXEC_DRIVER = context[user(lsfadmin)] \
            starter[LSF_SERVERDIR/docker-starter.py] \
@@ -45,17 +49,17 @@ Step 3: Configure LSF Docker Application profile for openfoam 6 by adding the fo
 
  Notes: 
  
- 1). If you built a custom OpenFOAM container, change above "openfoam/openfoam6-paraview54" to "openfoam/openfoam:v1912".
+ *1). If you built a custom OpenFOAM container, change above "openfoam/openfoam6-paraview54" to "openfoam/openfoam:v1912".
  
- 2). Find a shared directory for all computer nodes, and replace JOB_REPOSITORY_TOP with the real path in above content 
+ *2). Find a shared directory for all computer nodes, and replace JOB_REPOSITORY_TOP with the real path in above content 
  
- 3). Change LSF_SERVERDIR to your LSF SERVERDIR direction location.
+ *3). Change LSF_SERVERDIR to your LSF SERVERDIR direction location.
  
- 4). Edit OpenFOAM/dockerPasswd.sh, replace the <JOB_REPOSITORY_TOP> with real value in the following line:
+ *4). Edit OpenFOAM/dockerPasswd.sh, replace the <JOB_REPOSITORY_TOP> with real value in the following line:
  
-    JOBTMPDIR=<JOB_REPOSITORY_TOP>
+    JOBTMPDIR=#JOB_REPOSITORY_TOP#
  
- 5). Copy dockerPasswd.sh to  JOB_REPOSITORY_TOP/dockerPasswd.sh
+ *5). Copy dockerPasswd.sh to  JOB_REPOSITORY_TOP/scripts/dockerPasswd.sh
 	
  for more details, reference [LSF docker application configuration](https://www.ibm.com/support/knowledgecenter/en/SSWRJV_10.1.0/lsf_docker/lsf_docker_config.html). 
 
@@ -77,7 +81,7 @@ Step 5: User will need to be able to access the tutorials files from the previou
 
     $ chgrp -R YourGroup JOB_REPOSITORY_TOP/tutorials
 
-Step 6: Add the tutorials directory to /opt/ibm/lsfsuite/ext/gui/conf/Repository.xml file below the "/Repository>" line:
+*Step 6: Add the tutorials directory to /opt/ibm/lsfsuite/ext/gui/conf/Repository.xml file below the "/Repository>" line:
 
                 <ShareDirectory>
                         <Alias>OpenFOAM tutorials</Alias>
