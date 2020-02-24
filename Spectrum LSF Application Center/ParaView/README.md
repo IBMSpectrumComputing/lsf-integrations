@@ -3,9 +3,9 @@ ParaView directory include all files required for integrating openfoam 6 Paravie
 This integration is based on public docker image: openfoam/openfoam6-paraview54, there is no need to install openfoam application.
 
 ## Prerequisites
-1). IBM Spectrum LSF 10.1.0.8 or above version is installed.
+1). IBM Spectrum LSF 10.1.0.9 or above version is installed.
 
-2). IBM Spectrum Application Center 10.2.0.8 or above version is installed.
+2). IBM Spectrum Application Center 10.2.0.9 or above version is installed.
 
 3). LSF Compute Server support docker engine 1.12 or above version.
 
@@ -16,10 +16,7 @@ Step 1: download all the files under this directory ParaView/,   and copy over t
         directory, for example:  /opt/ibm/lsfsuite/ext/gui/conf/application/draft/ParaView, make sure files owner are administrator, 
         all files have excutable permission.
         
-Step 2: copy ParaView/startParaView  to  JOB_REPOSITORY_TOP/startParaView, make sure it is executable.  JOB_REPOSITORY_TOP is the same
-        directory with template OpenFOAM,  it must be shared by all LSF servers.
-	
-Step 3: Configure LSF to define LSF Resource "ParaView" and assign the available Hosts to this resource.
+Step 2: Configure LSF to define LSF Resource "ParaView" and assign the available Hosts to this resource.
    
   1). define LSF resource "ParaView"-- add a line into $LSF_ENVDIR/lsf.shared inside "Begine Resource" and "End Resource":
 	
@@ -33,7 +30,7 @@ Step 3: Configure LSF to define LSF Resource "ParaView" and assign the available
   
         LSF_DISABLE_LSRUN=N 
 	
-Step 4: Prepare hosts to run TigerVnc.  For Application center host and all hosts selected in Step 3, run the following steps for RHEL 7:
+Step 3: Prepare hosts to run TigerVnc.  For Application center host and all hosts selected in Step 3, run the following steps for RHEL 7:
    
     yum -y install tigervnc*
     yum group install "Server with GUI"
@@ -44,16 +41,16 @@ Step 4: Prepare hosts to run TigerVnc.  For Application center host and all host
    for more details, refer to [Preparing Linux IBM Spectrum LSF Application Center servers to remotely launch](https://www.ibm.com/support/knowledgecenter/en/SSZRJV_10.2.0/admin_guide/remote_vncserver_config.html)
   
 
-Step 5: restart LSF:   
+Step 4: restart LSF:   
         
 	lsfrestart
         
-Step 6: logon LSF Application Center as administrator,  find and edit the template "ParaView", replace JOB_REPOSITORY_TOP with the real 
+Step 5: logon LSF Application Center as administrator,  find and edit the template "ParaView", replace JOB_REPOSITORY_TOP with the real 
         directory introduced in Step 2 for input: "Application Command" and "Application Command to open an input file",  save and 
         publish the template.  Go to "System&Setting"-> User "Role& Permission", assign view and control permission of template 
 	ParaView to "Normal User"
 
-Step 7: Test-- open a new tab in browser used in step6, type URL: https://<AC_SERVER>:6080/, accept this site. then run cases:
+Step 6: Test-- open a new tab in browser used in step6, type URL: https://<AC_SERVER>:6080/, accept this site. then run cases:
 
 Case 1:  logon Application Center as a normal user, go to "+ New Workload", click on "Paraview",  a new browser window
         should show up with Paraview console running inside.
