@@ -49,7 +49,7 @@ Step 2: Prepare IBM Spectrum LSF to run jobs in Docker container by following [L
 
  Notes: 
  
- *1). If you built a custom OpenFOAM container, change above "openfoam/openfoam6-paraview54" to "openfoam/openfoam:v1912".
+ *1). If you built a custom OpenFOAM container, change above "openfoam/openfoam6-paraview54" to "openfoam/openfoam:v1912" and remove "--entrypoint=".
  
  *2). Find a shared directory for all computer nodes, and replace JOB_REPOSITORY_TOP with the real path in above content 
  
