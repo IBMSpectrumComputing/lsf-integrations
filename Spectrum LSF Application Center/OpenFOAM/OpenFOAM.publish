@@ -47,8 +47,10 @@ sed -i "s|#JOB_REPOSITORY_TOP#|$JOB_REPOSITORY_TOP|g" $JOB_REPOSITORY_TOP/script
 
 if [ "$OF_VER" == "openfoam6" ]; then
     OF_CONTAINER="openfoam/openfoam6-paraview54"
+    OF_ENTRYPOINT="--entrypoint="
 else # assume using custom built docker container.  See https://community.ibm.com/community/user/imwuc/blogs/john-welch/2020/02/12/building-an-openfoam-ready-container-for-lsf
     OF_CONTAINER="openfoam/openfoam:v1912"
+    OF_ENTRYPOINT=""
 fi
 
 #configure lsb.applications to add openfoam
@@ -64,7 +66,7 @@ Begin Application
 NAME         = openfoam
 DESCRIPTION  = Enables running jobs in docker container openFoam 
 CONTAINER = docker[image($OF_CONTAINER) \\
-                options(--rm --net=host --ipc=host --entrypoint= \\
+                options(--rm --net=host --ipc=host $OF_ENTRYPOINT \\
                         --cap-add=SYS_PTRACE \\
                         -v $JOB_REPOSITORY_TOP:$JOB_REPOSITORY_TOP \\
                         @$JOB_REPOSITORY_TOP/scripts/dockerPasswd.sh \\
