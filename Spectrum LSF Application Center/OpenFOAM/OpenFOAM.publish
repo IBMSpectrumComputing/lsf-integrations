@@ -79,7 +79,7 @@ End Application
 
 EOF
 
-    echo "docker openfoam configuration has been added to lsb.applications. need to restart LSF to enable it"
+    echo "docker openfoam configuration has been added to lsb.applications. need to restart mbatchd to enable it"
     #badmin mbdrestart -f
 
     #sleep 15 # wait for mbatchd restart
