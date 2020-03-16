@@ -52,6 +52,17 @@ if [ "$isMultiFile" = "Y" ] ; then
 fi
 
 #------------------------basic option----------------------------------
+# Verify NUM_GPU is a positive integer
+if ! [[ "$NUM_GPU" =~ ^[0-9]+$ ]] || (( $NUM_GPU < 1)); then
+	echo "Number of GPUs must be a postive integer." 1>&2
+	exit 1
+fi
+
+# Determine if all GPUs explicitly go on a single host
+if [ $NUM_GPU == $GPU_PER_HOST ]; then
+   NUM_HOST="1"
+fi
+
 #
 # mpirun command command and benchmark command
 #
@@ -92,6 +103,16 @@ if [ -n "$NUM_BATCHES" ] ; then
 	OTHER_OPT="$OTHER_OPT --num_batches=$NUM_BATCHES"
 fi
 
+# add the optional USE_FP16 
+if [ -n "$USE_FP16" -a "$USE_FP16" == "yes" ] ; then
+	OTHER_OPT="$OTHER_OPT --use_fp16"
+fi
+
+# add the optional XLA 
+if [ -n "$XLA" -a "$XLA" == "yes" ] ; then
+	OTHER_OPT="$OTHER_OPT --xla"
+fi
+
 if [ -z "$COMMANDTORUN" ] ; then
 	echo "Job command was not specified " 1>&2
 	exit 1
@@ -122,21 +143,29 @@ fi
 
 ###-----------------------Requirements------------------------------
 
-# Calculate number CORES requested i.e. NUM_HOST * CORE_PER_HOST
-CORE_PER_HOST=$GPU_PER_HOST    		# setting core per host equal to gpu per host to align 1 mpi task for each gpu requested
-MIN_NUM_CPU=$((NUM_HOST*CORE_PER_HOST))
+# Set core request to same as number of gpus to align 1 mpi task for each GPU requested
+MIN_NUM_CPU=$NUM_GPU 				
 ADVANCED_OPT="$ADVANCED_OPT -n $MIN_NUM_CPU"
 
-# GPUs per host
-if [ -n "$GPU_PER_HOST" ]; then
-    ADVANCED_OPT="$ADVANCED_OPT -gpu \"num=$GPU_PER_HOST:mode=exclusive_process\""
-fi
-
-if [ "$NUM_HOST" == "1" ]; then
-    ADVANCED_OPT="$ADVANCED_OPT -R \"span[hosts=1]\""
-else
-    ADVANCED_OPT="$ADVANCED_OPT -R \"span[ptile=$CORE_PER_HOST]\" -R \"affinity[core(1)]\""
-fi
+# Determine GPU allocation method as per task or per host
+if [ "$GPU_PER_HOST" == "Undefined" ]; then # allocate GPUs per task.  Note, GPUs per task feature requires 10.1 FP9 or higher
+    ADVANCED_OPT="$ADVANCED_OPT -gpu \"num=1/task:mode=exclusive_process\""
+else # allocate GPUs per host
+    # NUM_GPU can not be less than GPU_PER_HOST
+    if [ $NUM_GPU -lt $GPU_PER_HOST ]; then 
+       #GPU_PER_HOST=$NUM_GPU
+       echo "Number of GPUs ($NUM_GPU) must be equal or greater than GPUs per host ($GPU_PER_HOST)." 1>&2
+       exit 1
+    fi
+    ADVANCED_OPT="$ADVANCED_OPT -gpu \"num=$GPU_PER_HOST:mode=exclusive_process\""  # num=$GPU_PER_HOST/host 
+    if [ "$NUM_HOST" == "1" ]; then
+        ADVANCED_OPT="$ADVANCED_OPT -R \"span[hosts=1]\""
+    else 
+        CORE_PER_HOST=$GPU_PER_HOST
+        ADVANCED_OPT="$ADVANCED_OPT -R \"span[ptile=$CORE_PER_HOST]\""
+    fi
+fi   # allocate GPUs per host 
+ADVANCED_OPT="$ADVANCED_OPT -R \"affinity[core(1)]\""
 
 if [ -n "${RUNHOST}" ]; then
 	RUNHOST=`formatMutilValue "${RUNHOST}"`
