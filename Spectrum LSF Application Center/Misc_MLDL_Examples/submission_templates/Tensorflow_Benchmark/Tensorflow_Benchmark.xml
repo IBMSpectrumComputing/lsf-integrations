@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<agent resources="resources" application="Tensorflow" type="MLDL" category="Job Submission"> 
+<agent resources="resources" application="Tensorflow" type="Tensorflow_Benchmark" category="Job Submission"> 
   <info>Submit a job: Tensorflow_Benchmark</info>  
-  <lastmodified>2020-01-08 17:29:05</lastmodified>  
+  <lastmodified>2020-03-16 17:59:03</lastmodified>  
   <modifier>lsfadmin</modifier>  
   <action id="submit" label="submit" result="text/xml">Tensorflow_Benchmark.cmd</action>  
   <repository> 
@@ -24,19 +24,23 @@
         <option id="1000" required="false" hidden="false">1000</option>  
         <option id="2000" required="false" hidden="false">2000</option>  
         <option id="5000" required="false" hidden="false">5000</option> 
-      </option> 
+      </option>  
+      <option defaultValue="yes" id="USE_FP16" label="Use FP16" required="false" hidden="false" type="checkbox" helpText="Use 16-bit floats for certain tensors instead of 32-bit floats." unit="" labelPosition="left"/>  
+      <option defaultValue="yes" id="XLA" label="XLA" required="false" hidden="false" type="checkbox" helpText="Whether to enable accelerated linear algebra compilation" unit="" labelPosition="left"/> 
     </application>  
     <application id="resource" state="expandEnable" info="Resource Options"> 
       <option defaultValue="Tensorflow Benchmark" id="JOB_NAME" label="Job Name" required="false" hidden="false" type="text" editable="true"/>  
-      <option defaultValue="2" id="NUM_HOST" label="Hosts" required="true" hidden="false" type="list" editable="true"> 
+      <option defaultValue="2" id="NUM_GPU" label="Number of GPUs" required="true" hidden="false" type="text" editable="true" helpText="Total number of GPUs"/>  
+      <option defaultValue="2" id="NUM_HOST" label="Hosts" required="true" hidden="true" type="list" editable="true"> 
         <option id="1" required="false" hidden="false">1</option>  
         <option id="2" required="false" hidden="false" selected="true">2</option>  
         <option id="3" required="false" hidden="false">3</option>  
         <option id="4" required="false" hidden="false">4</option>  
         <option id="5" required="false" hidden="false">5</option> 
       </option>  
-      <option defaultValue="1" id="GPU_PER_HOST" label="GPUs per host" required="true" hidden="false" type="list" editable="true"> 
-        <option id="1" required="false" hidden="false" selected="true">1</option>  
+      <option defaultValue="Undefined" id="GPU_PER_HOST" label="GPUs per host" required="true" hidden="false" type="list" editable="true" helpText="Undefined means the number of GPUs allocated per server may vary."> 
+        <option id="Undefined" required="false" hidden="false" selected="true">Undefined</option>  
+        <option id="1" required="false" hidden="false">1</option>  
         <option id="2" required="false" hidden="false">2</option>  
         <option id="3" required="false" hidden="false">3</option>  
         <option id="4" required="false" hidden="false">4</option> 
@@ -64,17 +68,17 @@
       <option defaultValue="stdout%J.txt" id="OUTPUT_FILE" label="Output file" required="false" hidden="false" type="simpleFile" editable="true">stdout%J.txt</option>  
       <option defaultValue="stderr%J.txt" id="ERROR_FILE" label="Error file" required="false" hidden="false" type="simpleFile" editable="true">stderr%J.txt</option> 
     </application>  
-    <application id="result" state="collapseEnable" optionFor="client" info="Download Result"> 
-      <option defaultValue="" id="RESULT_LABEL" required="false" hidden="false" type="label" editable="true" optionFor="client" helpText="This section of the form is only visible to users in IBM Spectrum LSF Application Center Desktop Client"/>  
-      <option defaultValue="" id="DOWNLOAD_MATCH_FILES" label="Download files that match" required="false" hidden="false" type="text" width="30" editable="true" optionFor="client" helpText="Use a wildcard character(*) to specify file names to match. Separate multiple expressions with a comma(,). For example: abc*123.jou, *xyz.dat"/>  
-      <option defaultValue="NONE" id="COMPRESSION" label="Compression" required="false" hidden="false" type="list" width="20" editable="true" optionFor="client"> 
-        <option id="NONE" required="false" hidden="false" selected="true">NONE</option>  
-        <option id="zip" required="false" hidden="false">zip</option>  
+    <application id="result" state="expandEnable" optionFor="client" info="Download Result"> 
+      <option defaultValue="no" id="AUTO_DOWNLOAD" label="Automatically download job results to a local directory" required="false" hidden="false" type="checkbox" editable="true" optionFor="client" helpText="Workload ends notification must be enabled for this feature to work." labelPosition="right"/>  
+      <option defaultValue="*.*" id="DOWNLOAD_MATCH" label="Download files that match" required="false" hidden="false" type="text" width="30" editable="true" optionFor="client" helpText="Define file names with shell's wildcard, multiple match expression can be used, and separated by comma(,). For example: abc*123.jou, *xyz.dat">*.*</option>  
+      <option defaultValue="zip" id="DOWNLOAD_FORMAT" label="Compression" required="false" hidden="false" type="list" width="20" editable="true" optionFor="client"> 
+        <option id="NONE" required="false" hidden="false">NONE</option>  
+        <option id="zip" required="false" hidden="false" selected="true">zip</option>  
         <option id="tar.gz" required="false" hidden="false">tar.gz</option>  
         <option id="tar.bz2" required="false" hidden="false">tar.bz2</option> 
       </option> 
     </application> 
   </repository>  
   <description/>  
-  <icon/> 
+  <icon>horovod_logo.png</icon> 
 </agent>
