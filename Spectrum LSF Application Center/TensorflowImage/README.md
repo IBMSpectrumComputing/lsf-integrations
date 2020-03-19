@@ -96,7 +96,7 @@ Note, /opt/share/mldl is an example and you can change to an appropriate shared 
 4). Download these Tensorflow Tutorial files:
 
     cd MLDL_TOP/scripts
-    wget https://raw.githubusercontent.com/tensorflow/models/master/tutorials/image/imagenet/classify_image.py
+    wget https://raw.githubusercontent.com/tensorflow/models/r1.13.0/tutorials/image/imagenet/classify_image.py
     wget https://raw.githubusercontent.com/tensorflow/tensorflow/r1.3/tensorflow/examples/image_retraining/label_image.py
     wget https://raw.githubusercontent.com/tensorflow/tensorflow/r1.7/tensorflow/examples/image_retraining/retrain.py
     wget https://raw.githubusercontent.com/normanheckscher/mnist-tensorboard-embeddings/master/mnist_with_summaries.py
