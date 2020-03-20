@@ -153,7 +153,7 @@ To
 8). Download the data file
 
     cd MLDL_TOP/data
-    https://raw.githubusercontent.com/hzy46/Char-RNN-TensorFlow/master/data/shakespeare.txt
+    wget https://raw.githubusercontent.com/hzy46/Char-RNN-TensorFlow/master/data/shakespeare.txt
    
 
 9). Make the file readable by all
