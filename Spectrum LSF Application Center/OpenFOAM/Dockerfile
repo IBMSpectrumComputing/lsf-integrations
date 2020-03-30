@@ -3,8 +3,9 @@ FROM ubuntu:bionic
 
 # Install any extra things we might need 
 # added items suggested on https://openfoam.org/download/source/software-for-compilation/
-RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && \
-    apt-get install -y \
+RUN /bin/bash -c 'export DEBIAN_FRONTEND=noninteractive && \
+        apt-get update && \
+        PACKAGES="apt-utils \
                 tzdata \
                 vim \
                 ssh \
@@ -16,8 +17,34 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && \
                 libboost-thread-dev libopenmpi-dev openmpi-bin gnuplot libreadline-dev libncurses-dev libxt-dev \
                 libqt5x11extras5-dev libxt-dev qt5-default qttools5-dev curl \
                 lsb-release tk8.6 debhelper chrpath tcl tcl8.5 flex gfortran dpatch libgfortran3 \
-                automake bison m4 autoconf tk autotools-dev graphviz net-tools iproute2 ; \
-		rm -rf /var/lib/apt/lists/*
+                automake bison m4 autoconf tk autotools-dev graphviz net-tools iproute2" && \
+        # apt-get with re-try (max 10) to account for possible network issues
+        for p in $PACKAGES;  do \
+                CMDLINE="apt-get install -y $p"; \
+                echo ""; \
+                echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"; \
+                echo "Running $CMDLINE"; \
+                echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"; \
+                echo ""; \
+                counter=1; \
+                while [ $counter -le 10 ];  do \
+                        $CMDLINE; \
+                        exitcode=$?; \
+                        if [[ "$exitcode" == '100' ]]; then \
+                                echo ""; echo ""; \ 
+                                echo "-------------> EXITCODE for $p is $exitcode...retrying"; \
+                                ((++counter)); \
+                                echo "New counter is $counter"; \ 
+                                echo ""; \
+                        else \
+                                echo ""; echo ""; \
+                                echo "---------------> Exit code for $p is $exitcode..moving on"; \
+                                echo ""; \ 
+                                break; \
+                        fi; \ 
+                done; \
+        done && \
+        rm -rf /var/lib/apt/lists/*'
 
 SHELL ["/bin/bash", "-c"]
 
