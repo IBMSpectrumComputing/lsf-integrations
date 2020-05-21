@@ -38,7 +38,7 @@ RUN wget https://sourceforge.net/projects/openfoam/files/$OF_VER/ThirdParty-$OF_
 RUN tar -zxf OpenFOAM-$OF_VER.tgz
 RUN tar -zxf ThirdParty-$OF_VER.tgz
 
-ARG OMPI_VER="4.0.2"
+ARG OMPI_VER="4.0.3"
 # Download openMPI
 WORKDIR /opt/ThirdParty-$OF_VER
 RUN wget https://www.open-mpi.org/software/ompi/v4.0/downloads/openmpi-$OMPI_VER.tar.gz 
