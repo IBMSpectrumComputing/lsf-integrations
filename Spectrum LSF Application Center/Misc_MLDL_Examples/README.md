@@ -52,7 +52,7 @@ For IBM Power
                             -v MLDL_TOP:MLDL_TOP \
                             -v /opt/ibm:/opt/ibm \
 	                    @MLDL_TOP/scripts/dockerPasswd.sh  \
-                  ) starter(root) ]
+                  ) ]
 	EXEC_DRIVER = context[user(lsfadmin)] \
     		starter[LSF_TOP/10.1/linux3.10-glibc2.17-ppc64le/etc/docker-starter.py] \
     		controller[LSF_TOP/10.1/linux3.10-glibc2.17-ppc64le/etc/docker-control.py] \
@@ -69,7 +69,7 @@ For X86_64 systems
                             -v MLDL_TOP:MLDL_TOP \
                             -v /opt/ibm:/opt/ibm \
 	                    @MLDL_TOP/scripts/dockerPasswd.sh  \
-                  ) starter(root) ]
+                  ) ]
 	EXEC_DRIVER = context[user(lsfadmin)] \
     		starter[LSF_TOP/10.1/linux3.10-glibc2.17-x86_64/etc/docker-starter.py] \
     		controller[LSF_TOP/10.1/linux3.10-glibc2.17-x86_64/etc/docker-control.py] \
