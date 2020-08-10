@@ -40,7 +40,7 @@ Step 2: Prepare IBM Spectrum LSF to run jobs in Docker container by following [L
 		            --cap-add=SYS_PTRACE \
                             -v JOB_REPOSITORY_TOP:JOB_REPOSITORY_TOP \
 	                    @JOB_REPOSITORY_TOP/scripts/dockerPasswd.sh  \
-		     ) starter(root) ]
+		     ) ]
         EXEC_DRIVER = context[user(lsfadmin)] \
            starter[LSF_SERVERDIR/docker-starter.py] \
            controller[LSF_SERVERDIR/docker-control.py] \
