@@ -70,7 +70,7 @@ CONTAINER = docker[image($OF_CONTAINER) \\
                         --cap-add=SYS_PTRACE \\
                         -v $JOB_REPOSITORY_TOP:$JOB_REPOSITORY_TOP \\
                         @$JOB_REPOSITORY_TOP/scripts/dockerPasswd.sh \\
-              ) starter(root) ]
+              ) ]
 EXEC_DRIVER = context[user($USER)] \\
     starter[$LSF_SERVERDIR/docker-starter.py] \\
     controller[$LSF_SERVERDIR/docker-control.py] \\
