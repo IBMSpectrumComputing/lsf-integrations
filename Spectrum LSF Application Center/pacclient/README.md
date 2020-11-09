@@ -21,7 +21,7 @@ pacclient is a python3 based client example for accessing IBM Spectrum LSF Appli
      Python 3.6.8
 
      $ ls
-     nls  pac_api.py  pacclient.py
+     nls  pac_api.py  pacclient.py cacert.pem
 
      $ ./pacclient.py help
      pacclient.py usage:
@@ -73,4 +73,20 @@ pacclient is a python3 based client example for accessing IBM Spectrum LSF Appli
      JOBID     STATUS    EXTERNAL_STATUS        JOB_NAME                 COMMAND
      45439     Running   -                      *938772910               sleep 200
 
+## Connect to Spectrum LSF Application Center with https enabled
+     
+     when IBM Spectrum LSF Application Center is running with https enabled, pacclient must connect to it with https url.  
+     it is required that public certificate file "cacert.pem" must stay in the same folder with pacclient.py. the default cacert.pem file
+     works with default https in IBM Spectrum LSF Application Center.
+     
+     if you have enabled https with your own certificate,  then you need to copy the public certificate over to file: "cacert.pem".
+     
+     https usage examples:
+     
+     $ ./pacclient.py ping -l https://ma1lsfv02:8443/
+     Web Services are ready on URL:https://ma1lsfv02:8443/platform/
+     
+     $ ./pacclient.py logon -l https://ma1lsfv02:8443/
+     You have logged on to PAC as: georgeg
 
+     
