@@ -8,13 +8,13 @@ pacclient is a python3 based client for accessing IBM Spectrum LSF Application C
      
 ## pacclient Examples
 
-$ python -V
+     $ python -V
      Python 3.7.3
 
-$ ls
+     $ ls
      nls  pac_api.py  pacclient.py
 
-$ ./pacclient.py help
+     $ ./pacclient.py help
      pacclient.py usage:
 
      ping      --- Check whether the web service is available
@@ -40,29 +40,27 @@ $ ./pacclient.py help
      flowdefaction --- Perform an action on a flow definition from IBM Spectrum LSF Process Manager.
      help      --- Display command usage
 
-$ ./pacclient.py logon -l http://ma1lsfv02:8080 -u georgeg -p xxxxxxx
-     
+     $ ./pacclient.py logon -l http://ma1lsfv02:8080 -u georgeg -p xxxxxxx
      You have logged on to PAC as: georgeg
 
-$ ./pacclient.py submit -a generic -p "COMMANDTORUN=sleep 200"
-     
+     $ ./pacclient.py submit -a generic -p "COMMANDTORUN=sleep 200"
      The job has been submitted successfully: job ID 45439
 
-$ ./pacclient.py job
+     $ ./pacclient.py job
      JOBID     STATUS    EXTERNAL_STATUS        JOB_NAME                 COMMAND
      45439     Running   -                      *938772910               sleep 200
 
-$ ./pacclient.py usercmd -c "bstop 45439"
+     $ ./pacclient.py usercmd -c "bstop 45439"
      Job <45439> is being stopped
 
-$ ./pacclient.py job
+     $ ./pacclient.py job
      JOBID     STATUS    EXTERNAL_STATUS        JOB_NAME                 COMMAND
      45439     Suspended -                      *938772910               sleep 200
 
-$ ./pacclient.py usercmd -c "bresume 45439"
+     $ ./pacclient.py usercmd -c "bresume 45439"
      Job <45439> is being resumed
 
-$ ./pacclient.py job
+     $ ./pacclient.py job
      JOBID     STATUS    EXTERNAL_STATUS        JOB_NAME                 COMMAND
      45439     Running   -                      *938772910               sleep 200
 
