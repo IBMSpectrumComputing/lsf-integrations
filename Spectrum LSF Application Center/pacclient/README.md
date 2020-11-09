@@ -41,9 +41,11 @@ $ ./pacclient.py help
      help      --- Display command usage
 
 $ ./pacclient.py logon -l http://ma1lsfv02:8080 -u georgeg -p xxxxxxx
+     
      You have logged on to PAC as: georgeg
 
 $ ./pacclient.py submit -a generic -p "COMMANDTORUN=sleep 200"
+     
      The job has been submitted successfully: job ID 45439
 
 $ ./pacclient.py job
