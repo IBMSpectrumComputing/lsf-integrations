@@ -1579,10 +1579,11 @@ def checkSSLHandshakeRequired(url):
 		httpsInURL = True;
 	
 	#Check if httplib version is 7 or above
-	if httplib2.__version__ >= '0.7.0':
-		newVersion = True
-	else:
-		newVersion = False
+	#if httplib2.__version__ >= '0.7.0':
+	#	newVersion = True
+	#else:
+	#	newVersion = False
+	newVersion = True
 		
 	# Create if the cacert.pem file exists under the current directory
 	if httpsInURL == True:
