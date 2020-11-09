@@ -2,7 +2,7 @@
 pacclient is a python3 based client example for accessing IBM Spectrum LSF Application Center and IBM Spectrum LSF.
 
 ## Prerequisites
-     1). python 3 (suggest 3.7 and above)
+     1). python 3 (suggest 3.7 or above)
      2). httplib2 
           $ pip install httplib2
      
