@@ -1839,7 +1839,7 @@ def getPseudoFlowInstances(flowid, flowname, username, flowstate):
 	url_flows = url + 'ws/flow/instances'
 	args = {"id":flowid, "flowname":flowname, "username":username, "state":flowstate}
 	first = True
-	for key, val in args.iteritems():
+	for key, val in args.items():
 		if not val:
 			continue
 		if first:
