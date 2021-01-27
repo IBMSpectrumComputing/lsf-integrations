@@ -17,6 +17,8 @@ from datetime import timedelta, datetime
 import csv
 from pac_api import *
 
+import logging
+
 def logon_usage():
 	print ( (_getmsg("logon_usage") + "\n") )
 	
@@ -1280,6 +1282,9 @@ def main_flowaction(argv):
 	print(message)
 
 def main(argv):
+	logging.basicConfig(filename='pacclient.log', level=logging.DEBUG)
+	logging.debug('Started')
+
 	try:
 		if ((len(argv) <= 0) | (argv[0] == 'help')):
 			main_usage()
