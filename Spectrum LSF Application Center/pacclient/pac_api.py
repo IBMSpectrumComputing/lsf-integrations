@@ -20,7 +20,8 @@ PACCONTEXT='platform'
 PACPASSFILE='.pacpass'
 ACCEPT_TYPE='text/plain,application/xml,text/xml,multipart/mixed'
 ERROR_STR='errMsg'
-NOTE_STR='note'
+#After fix this should be treated as TAG
+NOTE_STR='<' +'note' +'>'
 ERROR_TAG='<' + ERROR_STR + '>'
 ACTION_STR='actionMsg'
 ACTION_TAG='<' + ACTION_STR + '>'
@@ -753,7 +754,7 @@ def getJobListInfo(parameter):
 			if ERROR_TAG in content:
 				err=xdoc.find(ERROR_STR)
 				return 'error', err.text
-			elif NOTE_STR in content:
+			elif xdoc.find(NOTE_STR):
 				err=xdoc.find(NOTE_STR)
 				return 'error', err.text
 			else:
