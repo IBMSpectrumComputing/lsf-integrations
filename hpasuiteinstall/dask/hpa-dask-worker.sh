@@ -25,7 +25,7 @@ DASK_OK=0
 DASK_ERR=1
 
 # Change the directory to yours. E.g.: DASK_HOME=/opt/anaconda2
-DASK_HOME=$DASK_HOME
+DASK_HOME=@DASK_HOME@
 DASK_BIN_DIR=$DASK_HOME/bin
 DASK_SCHEDULER=`hostname`":8786"
 
