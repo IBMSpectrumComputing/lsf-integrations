@@ -20,7 +20,7 @@
 # Set environments, modify it to yours
 # IPYTHONDIR: A shared directory in LSF cluster is needed for this parameter. IPython stores its files-config, command history and extensions in the directory. 
 # Change the directory to yours. E.g.: IPYTHONDIR=/home/fengli/ipython_workdir/
-export IPYTHONDIR=$IPYTHONDIR
+export IPYTHONDIR=@IPYTHONDIR@
 # NUM_ENGINES: Define how many engines will be started on each host. The value is 2 by default
 export NUM_ENGINES=2
 # IPYTHON_PROFILE: Special the profile name of ipython will be used or set it as "default".

@@ -66,7 +66,7 @@ For example:
      host2  !        !        1    (DaskHost)
      End     Host
 
-Reconfigure LSF with the changes using the lsadmin reconfig command.
+Reconfigure LSF with the changes using the lsadmin reconfig and badmin reconfig commands.
 
 ## Verify job submission with the Dask plugin is working
 Refer to https://www.ibm.com/docs/en/scsfhpa/10.2.0?topic=in-using-dask-plug
