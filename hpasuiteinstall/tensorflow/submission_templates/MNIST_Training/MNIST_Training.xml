@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<agent resources="resources" application="Tensorflow" type="MLDL" category="Job Submission"> 
+  <info>Submit a job: MNIST_Training</info>  
+  <lastmodified>2017-11-28 16:29:47</lastmodified>  
+  <modifier>lsfadmin</modifier>  
+  <action id="submit" label="submit" result="text/xml">MNIST_Training.cmd</action>  
+  <repository> 
+    <application id="application" state="expandEnable" info="Basic Job Options"> 
+      <option defaultValue="" id="JOB_NAME" label="Job Name" required="false" hidden="false" type="text" editable="true"/>  
+      <option defaultValue="10000" id="NUM_STEPS" label="How many training steps" required="false" hidden="false" type="list" width="20" editable="true"> 
+        <option id="1000" required="false" hidden="false">1000</option>  
+        <option id="4000" required="false" hidden="false">4000</option>  
+        <option id="5000" required="false" hidden="false">5000</option>  
+        <option id="10000" required="false" hidden="false" selected="true">10000</option> 
+      </option>  
+      <option defaultValue="./mnist_data" id="DATA_DIR" label="Data Directory" required="false" hidden="false" type="simpleFile" width="20" editable="true" defaultFileType="folder">./mnist_data</option>  
+      <option defaultValue="yes" id="TENSORBOARD" label="Tensorboard" required="false" hidden="false" type="checkbox" editable="true" helpText="Start Tensorboard" labelPosition="left"/> 
+    </application>  
+    <application id="cluster" state="collapseEnable" info="Advanced"> 
+      <option defaultValue="" id="label1" required="false" hidden="false" type="label" editable="true" helpText="Requirements"/>  
+      <option defaultValue="rusage[mem=1638] span[hosts=1]" id="EXTRA_RES" label="Resource Requirement string" required="false" hidden="false" type="text" editable="true" helpText="Example: swp &gt; 15 &amp;&amp; maxmem &gt; 100">rusage[mem=1638] span[hosts=1]</option>  
+      <option defaultValue="" id="label5" required="false" hidden="false" type="label" editable="true" helpText="Additional Job Options"/>  
+      <option defaultValue="normal" id="QUEUE" label="Submit to this Queue" required="false" hidden="false" type="list" editable="true"> 
+        <action id="queues">$GUI_CONFDIR/application/options/queue.sh normal</action> 
+      </option>  
+      <option defaultValue="mnist_train" id="PRJ_NAME" label="Project" required="false" hidden="false" type="text" editable="true">mnist_train</option>  
+      <option defaultValue="-n 5 -We 8" id="EXTRA_PARAMS" label="Other bsub options" required="false" hidden="false" type="text" editable="true" helpText="Example: -m myhost.&lt;br/&gt;Not all bsub options are supported. The following bsub options are not supported: -I, -Ip, -Is, -IS, -ISP, -ISs.">-n 5</option> 
+    </application>  
+    <application id="file" state="collapseEnable" info="Data"> 
+      <option defaultValue="stdout%J.txt" id="OUTPUT_FILE" label="Output file" required="false" hidden="false" type="simpleFile" editable="true">stdout%J.txt</option>  
+      <option defaultValue="stderr%J.txt" id="ERROR_FILE" label="Error file" required="false" hidden="false" type="simpleFile" editable="true"/> 
+    </application>  
+    <application id="result" state="expandEnable" optionFor="client" info="Download Result"> 
+      <option defaultValue="" id="RESULT_LABEL" required="false" hidden="false" type="label" editable="true" optionFor="client" helpText="This section of the form is only visible to users in IBM Spectrum LSF Application Center Desktop Client"/>  
+      <option defaultValue="" id="DOWNLOAD_MATCH_FILES" label="Download files that match" required="false" hidden="false" type="text" width="30" editable="true" optionFor="client" helpText="Use a wildcard character(*) to specify file names to match. Separate multiple expressions with a comma(,). For example: abc*123.jou, *xyz.dat"/>  
+      <option defaultValue="NONE" id="COMPRESSION" label="Compression" required="true" hidden="false" type="list" width="20" editable="true" optionFor="client"> 
+        <option id="NONE" required="false" hidden="false" selected="true">NONE</option>  
+        <option id="zip" required="false" hidden="false">zip</option>  
+        <option id="tar.gz" required="false" hidden="false">tar.gz</option>  
+        <option id="tar.bz2" required="false" hidden="false">tar.bz2</option> 
+      </option> 
+    </application> 
+  </repository>  
+  <description/> 
+</agent>
