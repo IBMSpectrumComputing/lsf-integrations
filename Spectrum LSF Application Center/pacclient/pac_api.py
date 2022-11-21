@@ -1566,7 +1566,7 @@ def getHttp(url,x509Flag):
 
 	#If the file exists and SSL Handshake is required(httplib2 version is 0.7+)
 	if ( (len(pemFile) > 0) & (sslHandshakeRequiredFlag == True) ):
-		http = httplib2.Http(ca_certs=pemFile, disable_ssl_certificate_validation=True)
+		http = httplib2.Http(ca_certs=pemFile, disable_ssl_certificate_validation=False)
 	else:
 		http = httplib2.Http()
 	return http
