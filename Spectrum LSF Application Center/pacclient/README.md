@@ -7,7 +7,7 @@ pacclient is a python3 based client example for accessing IBM Spectrum LSF Appli
         $ yum install python3-pip 
         
      2). httplib2 
-        $ pip3 install httplib2
+        $ pip3 install httplib2==0.20.4
         
      3). configparser 
         $ pip3 install configparser
