@@ -81,9 +81,13 @@ pacclient is a python3 based client example for accessing IBM Spectrum LSF Appli
      
      if you have enabled https with your own certificate,  then you need to copy the public certificate over to file: "cacert.pem".
      
+     To disable client SSL verification, define environment variable: SSL_INSECURE=1
+     
      https usage examples:
      $ ls -l cacert.pem
      -rwxr-xr-x 1 root root 1193 Nov  9 17:16 cacert.pem
+     
+     $ export SSL_INSECURE=1
      
      $ ./pacclient.py ping -l https://ma1lsfv02:8443/
      Web Services are ready on URL:https://ma1lsfv02:8443/platform/
