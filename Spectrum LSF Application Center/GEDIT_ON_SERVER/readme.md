@@ -1,10 +1,13 @@
 #This is a sample application template for showing remote console per job.
 
 # Pre-condition
-1). vi pmc.conf, enable remote console per job
+1). vi pmc.conf, enable remote console per job by setting:
 VNCSession=Job
 
-2). prepare tigervnc on each LSF servers which will execute this demo application--gedit
+2). pmcadmin stop ; 
+    pmcadmin start
+    
+3). prepare tigervnc on each LSF servers which will execute this demo application--gedit
 reference doc:  https://www.ibm.com/docs/en/slac/10.2.0?topic=consoles-enabling-vnc
 
 # Deploy this application 
