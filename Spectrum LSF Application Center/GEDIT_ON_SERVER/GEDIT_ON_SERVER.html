@@ -1,0 +1,152 @@
+<div class="pageTitle">Submit a job: GEDIT_ON_SERVER</div><div id="messageArea">&nbsp;</div><form ng-controller="JobSubmitCtrl" enctype="multipart/form-data" method="post" name="jobForm" id="jobForm">
+<input type="hidden" id="appName" value="FLUENT"><input type="hidden" id="cmdName" value="GEDIT_ON_SERVER.cmd">
+<fieldset id="applicationSet" class="expanded">
+<legend id="applicationHead" class="sectionTitle" onmouseout="changeLegend('applicationHead', 'out');return false" onmouseover="changeLegend('applicationHead', 'over');return false"><span onclick="toggleFieldset('applicationSet', 'applicationArea');return false">Application Parameters</span></legend>
+<table id="applicationArea" style="border:0; width:100%;">
+<tr>
+<td class="formLabel">Job Name</td><td class="formValue"><input type="text" id="JOB_NAME" name="JOB_NAME" ng-model="JOB_NAME" ng-init="JOB_NAME=''"></td>
+</tr>
+<tr>
+<td class="formLabel">Version</td><td class="formValue"><select id="VERSION" name="VERSION"><option value="">&lt;Use Default&gt;</option><option value="3d" selected>3d</option><option value="3ddp">3ddp</option><option value="2d">2d</option><option value="2ddp">2ddp</option></select></td>
+</tr>
+<tr>
+<td class="formLabel">Console Support<font color="red">&nbsp;*</font></td><td class="formValue"><select id="CONSOLE_SUPPORT" name="CONSOLE_SUPPORT"><option value="">&lt;Use Default&gt;</option><option value="Yes" selected>Yes</option><option value="No">No</option></select></td>
+</tr>
+<tr>
+<td class="formLabel">Additional FLUENT Options</td><td class="formValue"><input type="text" id="OTHER_OPTS" name="OTHER_OPTS" ng-model="OTHER_OPTS" ng-init="OTHER_OPTS=''"></td>
+</tr>
+</table>
+</fieldset>
+<fieldset id="clusterSet" class="expanded">
+<legend id="clusterHead" class="sectionTitle" onmouseout="changeLegend('clusterHead', 'out');return false" onmouseover="changeLegend('clusterHead', 'over');return false"><span onclick="toggleFieldset('clusterSet', 'clusterArea');return false">Cluster Parameters</span></legend>
+<table id="clusterArea" style="border:0; width:100%;">
+<tr>
+<td class="formLabel">Queue</td><td class="formValue"><input id="cmdVal_QUEUE" type="hidden" value="$GUI_CONFDIR/application/options/queue.sh normal"><select id="QUEUE" name="QUEUE" ng-controller="ScriptCtrl"><option value="">&lt;Use Default&gt;</option><option ng-repeat="item in dynaOptions" ng-selected="{{item.selected == true}}" value="{{item.value}}">{{item.name}}</option></select></td>
+</tr>
+<tr>
+<td class="formLabel">Memory Architecture</td><td class="formValue"><select id="MEMARC" name="MEMARC"><option value="">&lt;Use Default&gt;</option><option value="Sequential">Sequential</option><option value="SMP" selected>SMP</option><option value="DMP">DMP</option></select></td>
+</tr>
+<tr>
+<td class="formLabel">CPUs</td><td class="formValue"><select id="NCPU" name="NCPU"><option value="">&lt;Use Default&gt;</option><option value="1">1</option><option value="2">2</option><option value="4" selected>4</option><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12">12</option><option value="16">16</option><option value="32">32</option></select></td>
+</tr>
+<tr>
+<td class="formLabel">MPI Type</td><td class="formValue"><select id="PAC_HOSTTYPE" name="PAC_HOSTTYPE"><option value="">&lt;Use Default&gt;</option><option value="intel" selected>intel</option><option value="hp">hp</option></select></td>
+</tr>
+<tr>
+<td class="formLabel">Additional Parameters</td><td class="formValue"><input type="text" id="EXTRA_PARAMS" name="EXTRA_PARAMS" ng-model="EXTRA_PARAMS" ng-init="EXTRA_PARAMS=''"></td>
+</tr>
+</table>
+</fieldset>
+<fieldset id="fileSet" class="expanded">
+<legend id="fileHead" class="sectionTitle" onmouseout="changeLegend('fileHead', 'out');return false" onmouseover="changeLegend('fileHead', 'over');return false"><span onclick="toggleFieldset('fileSet', 'fileArea');return false">Application Data Files</span></legend>
+<table id="fileArea" style="border:0; width:100%;">
+<tr>
+<td class="formLabel">FLUENT Journal File<font color="red">&nbsp;*</font></td><td class="formValue"><input type="text" id="show_FLUENT_JOURNAL" name="show_FLUENT_JOURNAL" value="" disabled required="required"><span class="btn-file">Browse...
+            <input type="file" id="FLUENT_JOURNAL" name="FLUENT_JOURNAL" multiple="true" required="required" onchange="angular.element(this).scope().showFile('FLUENT_JOURNAL', true)"></span><span id="openWithApp_FLUENT_JOURNAL" style="display:none"></span><span id="appsHideOptions_FLUENT_JOURNAL" style="display:none"></span>
+<p id="error_box_FLUENT_JOURNAL" style="display:none" class="&quot;alert alert-danger"></p>
+</td>
+</tr>
+<tr>
+<td class="formLabel">CAS Input File (.cas .dat)</td><td class="formValue"><input type="text" id="show_CAS_INPUT_FILE" name="show_CAS_INPUT_FILE" value="" disabled><span class="btn-file">Browse...
+            <input type="file" id="CAS_INPUT_FILE" name="CAS_INPUT_FILE" multiple="true" onchange="angular.element(this).scope().showFile('CAS_INPUT_FILE', true)"></span><span id="openWithApp_CAS_INPUT_FILE" style="display:none"></span><span id="appsHideOptions_CAS_INPUT_FILE" style="display:none"></span>
+<p id="error_box_CAS_INPUT_FILE" style="display:none" class="&quot;alert alert-danger"></p>
+</td>
+</tr>
+</table>
+</fieldset>
+<fieldset class="expanded" id="storeSet">
+<legend onmouseover="changeLegend('storeHead', 'over');return false" onmouseout="changeLegend('storeHead', 'out');return false" class="sectionTitle" id="storeHead"><span style="width:80%" onclick="toggleFieldset('storeSet', 'storeArea');return false">Download Result</span></legend>
+<table style="border:0; width:100%;" id="storeArea">
+<tr>
+<td class="formLabel">&nbsp;
+	                <a href="#" class="helpOut" onclick="return false;" onmouseout="helpOut(this);return false" onmouseover="helpOn(this);return false" title="Workload ends notification must be enabled for this feature to work.">?
+	                </a></td><td class="formValue"><input type="checkbox" id="AUTO_DOWNLOAD">Automatically download job results to a local directory</td>
+</tr>
+<tr>
+<td class="formLabel">Download files that match&nbsp;
+	                <a href="#" class="helpOut" onclick="return false;" onmouseout="helpOut(this);return false" onmouseover="helpOn(this);return false" title="Define file names with shell's wildcard, multiple match expression can be used, and separated by comma(,). For example: abc*123.jou, *xyz.dat">?
+	                </a></td><td class="formValue"><input type="text" id="DOWNLOAD_MATCH" name="DOWNLOAD_MATCH" ng-model="DOWNLOAD_MATCH" ng-init="DOWNLOAD_MATCH='*.*'"></td>
+</tr>
+<tr>
+<td class="formLabel">Compression</td><td class="formValue"><select id="DOWNLOAD_FORMAT" name="DOWNLOAD_FORMAT"><option value="NONE">NONE</option><option value="zip" selected>zip</option><option value="tar.gz">tar.gz</option><option value="tar.bz2">tar.bz2</option></select></td>
+</tr>
+</table>
+</fieldset>
+<fieldset class="expanded" id="alertSet">
+<legend onmouseover="changeLegend('alertHead', 'over');return false" onmouseout="changeLegend('alertHead', 'out');return false" class="sectionTitle" id="alertHead"><span style="width:80%" onclick="toggleFieldset('alertSet', 'alertArea');return false">Notification</span></legend>
+<table style="border:0; width:100%;" id="alertArea">
+<tr style="margin-bottom: 20px; display:block;">
+<td style="padding-left:60px;">
+            Specify when you want to be notified about your workload.
+          </td>
+</tr>
+<tr>
+<td style="padding-left:25px;font-weight: bold;"><input onclick="toggleAlert(this, 'alertItems');" name="rule_notify" id="rule_notify" type="checkbox">&nbsp;Notify me:</td>
+</tr>
+<tr id="alertItems">
+<td style="padding-left:60px;">
+<table style="boder:0; width:100%;">
+<tr>
+<td tabindex="0"><input id="rule_start" type="checkbox">&nbsp;When workload starts</td>
+</tr>
+<tr>
+<td tabindex="0"><input id="rule_end" type="checkbox">&nbsp;When workload ends</td>
+</tr>
+<tr>
+<td tabindex="0"><input id="rule_fail" type="checkbox">&nbsp;If workload exits</td>
+</tr>
+<tr>
+<td tabindex="0"><input id="rule_suspend" type="checkbox">&nbsp;If workload is suspended</td>
+</tr>
+<tr>
+<td tabindex="0"><input id="rule_download" type="checkbox">&nbsp;When workload's results are downloaded</td>
+</tr>
+<tr style="display:none">
+<td><input id="via_mobile" type="checkbox">&nbsp;Mobile</td>
+</tr>
+<tr style="display:none">
+<td><input id="via_desktop" type="checkbox">&nbsp;Desktop</td>
+</tr>
+<tr>
+<td style="padding-top: 15px; font-weight: bold;" tabindex="0">
+                  Notify Via:
+                </td>
+</tr>
+<tr>
+<td tooltip-placement="bottom" tooltip="Always enabled." class="channel-box-primary">
+<div style="width:100px; cursor: not-allowed;" class="icon-toggle-div" id="browserchannel" tabindex="0">
+<div class="inner">
+<span class="icon-browser expanded center"></span>&nbsp;<span class="center">Browser</span>
+</div>
+</div>
+</td><td class="channel-box-secondary">
+<div tooltip-placement="bottom" tooltip-html="emailtooltip" style="width:90px;" class="icon-toggle-div" id="emailchannel" tabindex="0">
+<div class="inner">
+<span class="icon-email expanded center"></span>&nbsp;<span class="center">Email</span>
+</div>
+</div>
+</td><td class="channel-box-secondary">
+<div style="width:140px;" class="icon-toggle-div" id="desktopchannel" tabindex="0">
+<div class="inner">
+<span class="icon-desktop-client expanded center"></span>&nbsp;<span class="center">Desktop Client</span>
+</div>
+</div>
+</td><td class="channel-box-secondary">
+<div style="width:90px;" class="icon-toggle-div" id="mobilechannel" tabindex="0">
+<div class="inner">
+<span class="icon-mobile expanded center"></span>&nbsp;<span class="center">Mobile</span>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</fieldset>
+<div class="btnArea">
+<input ng-click="submit()" value="Submit" class="btnStyle" type="submit" id="submitBtn">&nbsp;&nbsp;
+      <input onclick="window.location.reload();" value="Revert" class="btnStyle" type="reset" id="revertBtn">&nbsp;&nbsp;
+      <input onclick="window.close();" value="Close" class="btnStyle" type="button" id="closeBtn">
+</div>
+</form>

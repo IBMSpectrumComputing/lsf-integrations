@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<agent resources="resources" application="FLUENT" type="FLUENT" category="Job Submission"> 
+  <info>Submit a job: GEDIT_ON_SERVER</info>  
+  <lastmodified>2023-07-21 07:25:22</lastmodified>  
+  <modifier>georgeg</modifier>  
+  <action id="submit" label="submit" result="text/xml">GEDIT_ON_SERVER.cmd</action>  
+  <repository> 
+    <application id="application" state="expandEnable" info="Application Parameters" helpText="Asterisk (*) = required field."> 
+      <option defaultValue="" id="JOB_NAME" label="Job Name" required="false" hidden="false" type="text" editable="true"/>  
+      <option defaultValue="3d" id="VERSION" label="Version" required="false" hidden="false" type="list" editable="true"> 
+        <option id="3d" required="false" hidden="false" selected="true">3d</option>  
+        <option id="3ddp" required="false" hidden="false">3ddp</option>  
+        <option id="2d" required="false" hidden="false">2d</option>  
+        <option id="2ddp" required="false" hidden="false">2ddp</option> 
+      </option>  
+      <option defaultValue="Yes" id="CONSOLE_SUPPORT" label="Console Support" required="true" hidden="false" type="list" width="20" editable="true"> 
+        <option id="Yes" required="false" hidden="false" selected="true">Yes</option>  
+        <option id="No" required="false" hidden="false">No</option> 
+      </option>  
+      <option defaultValue="" id="OTHER_OPTS" label="Additional FLUENT Options" required="false" hidden="false" type="text" editable="true"/> 
+    </application>  
+    <application id="cluster" state="expandEnable" info="Cluster Parameters" helpText="Asterisk (*) = required field."> 
+      <option defaultValue="normal" id="QUEUE" label="Queue" required="false" hidden="false" type="list" editable="true"> 
+        <action id="queues">$GUI_CONFDIR/application/options/queue.sh normal</action> 
+      </option>  
+      <option defaultValue="SMP" id="MEMARC" label="Memory Architecture" required="false" hidden="false" type="list" editable="true"> 
+        <option id="Sequential" required="false" hidden="false">Sequential</option>  
+        <option id="SMP" required="false" hidden="false" selected="true">SMP</option>  
+        <option id="DMP" required="false" hidden="false">DMP</option> 
+      </option>  
+      <option defaultValue="4" id="NCPU" label="CPUs" required="false" hidden="false" type="list" editable="true"> 
+        <dependency> 
+          <id>MEMARC</id>  
+          <script>NCPU_ncpu.sh</script>  
+          <linkType>default,visibility</linkType>  
+          <enabled>true</enabled> 
+        </dependency>  
+        <option id="1" required="false" hidden="false">1</option>  
+        <option id="2" required="false" hidden="false">2</option>  
+        <option id="4" required="false" hidden="false" selected="true">4</option>  
+        <option id="6" required="false" hidden="false">6</option>  
+        <option id="8" required="false" hidden="false">8</option>  
+        <option id="10" required="false" hidden="false">10</option>  
+        <option id="12" required="false" hidden="false">12</option>  
+        <option id="16" required="false" hidden="false">16</option>  
+        <option id="32" required="false" hidden="false">32</option> 
+      </option>  
+      <option defaultValue="intel" id="PAC_HOSTTYPE" label="MPI Type" required="false" hidden="false" type="list" editable="true"> 
+        <option id="intel" required="false" hidden="false" selected="true">intel</option>  
+        <option id="hp" required="false" hidden="false">hp</option> 
+      </option>  
+      <option defaultValue="" id="EXTRA_PARAMS" label="Additional Parameters" required="false" hidden="false" type="text" editable="true"/> 
+    </application>  
+    <application id="file" state="expandEnable" info="Application Data Files" helpText="Asterisk (*) = required field."> 
+      <option defaultValue="" id="FLUENT_JOURNAL" label="FLUENT Journal File" required="true" hidden="false" type="combined" editable="true" style="simple" use_include="true" fromFileType="any"/>  
+      <option defaultValue="" id="CAS_INPUT_FILE" label="CAS Input File (.cas .dat)" required="false" hidden="false" type="combined" width="42" editable="true" style="simple" use_include="true" fromFileType="any"/> 
+    </application>  
+    <application id="result" state="expandEnable" optionFor="client" info="Download Result"> 
+      <option defaultValue="no" id="AUTO_DOWNLOAD" label="Automatically download job results to a local directory" required="false" hidden="false" type="checkbox" editable="true" optionFor="client" helpText="Workload ends notification must be enabled for this feature to work." labelPosition="right" disabled="false"/>  
+      <option defaultValue="*.*" id="DOWNLOAD_MATCH" label="Download files that match" required="false" hidden="false" type="text" width="30" editable="true" optionFor="client" helpText="Define file names with shell's wildcard, multiple match expression can be used, and separated by comma(,). For example: abc*123.jou, *xyz.dat">*.*</option>  
+      <option defaultValue="zip" id="DOWNLOAD_FORMAT" label="Compression" required="false" hidden="false" type="list" width="20" editable="true" optionFor="client"> 
+        <option id="NONE" required="false" hidden="false">NONE</option>  
+        <option id="zip" required="false" hidden="false" selected="true">zip</option>  
+        <option id="tar.gz" required="false" hidden="false">tar.gz</option>  
+        <option id="tar.bz2" required="false" hidden="false">tar.bz2</option> 
+      </option> 
+    </application> 
+  </repository>  
+  <description/>  
+  <icon>gedit.png</icon> 
+</agent>
