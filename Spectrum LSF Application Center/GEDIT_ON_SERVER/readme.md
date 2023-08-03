@@ -10,15 +10,19 @@ reference doc:  https://www.ibm.com/docs/en/slac/10.2.0?topic=consoles-enabling-
 # Deploy this application 
 
 1). download the whole directory including directory name(GEDIT_ON_SERVER) and files under
+
 2). copy the directory to /opt/ibm/lsfsuite/ext/gui/conf/application/published
+
 3). logon PAC from browser, click on "New Workload"
+
 4). submit job with GEDIT_ON_SERVER by specifying a input file
+
 5). after job is running. click on the console icon beside the job ID in the workload list
 
 
 ## Copyright
 
-(C) Copyright IBM Corporation 2016-2018
+(C) Copyright IBM Corporation 2016-2023
 
 U.S. Government Users Restricted Rights - Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
 
