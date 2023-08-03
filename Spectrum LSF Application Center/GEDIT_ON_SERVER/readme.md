@@ -18,7 +18,7 @@ reference doc:  https://www.ibm.com/docs/en/slac/10.2.0?topic=consoles-enabling-
 
 3). logon PAC from browser, click on "New Workload"
 
-4). submit job with GEDIT_ON_SERVER by specifying a input file
+4). submit job with GEDIT_ON_SERVER by specifying an input file
 
 5). after job is running. click on the console icon beside the job ID in the workload list
 
