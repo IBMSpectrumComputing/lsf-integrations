@@ -172,6 +172,9 @@ if [ "$CONSOLE_SUPPORT" = "YES" -a "$VNCSession" = "Job" ]; then
         cp -fp ${GUI_CONFDIR}/application/vnc/startVncSession_prejob.sh "${OUTPUT_FILE_LOCATION}/.spooler_action"
         LOG_DEBUG "Copy ${GUI_CONFDIR}/application/vnc/startVncSession_prejob.sh ${OUTPUT_FILE_LOCATION}/.spooler_action"
 
+        cp -fp ${GUI_CONFDIR}/application/vnc/vnc_common.sh "${OUTPUT_FILE_LOCATION}/.spooler_action"
+        LOG_DEBUG "Copy ${GUI_CONFDIR}/application/vnc/vnc_common.sh ${OUTPUT_FILE_LOCATION}/.spooler_action"
+
         LOG_DEBUG "${GUI_CONFDIR}/application/vnc/xstartup.template ${OUTPUT_FILE_LOCATION}/.spooler_action/xstartup.template"
         cp -fp ${GUI_CONFDIR}/application/vnc/xstartup.template "${OUTPUT_FILE_LOCATION}/.spooler_action/xstartup.template"
 
