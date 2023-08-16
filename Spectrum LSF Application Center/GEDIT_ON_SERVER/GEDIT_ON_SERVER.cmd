@@ -148,7 +148,10 @@ GRAPHIC_OPT="-g"
 CONSOLE_SUPPORT=`echo $CONSOLE_SUPPORT | tr a-z A-Z`
 if [ "$CONSOLE_SUPPORT" = "YES" -a "$VNCSession" = "User" ]; then
         LOG_DEBUG "Start VNC session<USER> by calling ${GUI_CONFDIR}/application/vnc/startvnc.sh $(dirname $OUTPUT_FILE_LOCATION) ${EXECUTIONUSER} ${VNC_WIDTH} ${VNC_HEIGHT}"
-        VNC_SID=`${GUI_CONFDIR}/application/vnc/startvnc.sh $(dirname $OUTPUT_FILE_LOCATION) ${EXECUTIONUSER} ${VNC_WIDTH} ${VNC_HEIGHT}`    
+        VNC_SID=`${GUI_CONFDIR}/application/vnc/startvnc.sh $(dirname $OUTPUT_FILE_LOCATION) ${EXECUTIONUSER} ${VNC_WIDTH} ${VNC_HEIGHT}`  
+        if [ "${VNCServer}" = "" ]; then
+            VNCServer=${HOSTNAME}
+        fi
         DISPLAY="${VNCServer}:${VNC_SID}.0"   
         GRAPHIC_OPT=""  
         export DISPLAY  VNC_SID
@@ -182,8 +185,8 @@ if [ "$CONSOLE_SUPPORT" = "YES" -a "$VNCSession" = "Job" ]; then
 else
 
         OS_VERSION=$(cat /etc/redhat-release | sed -ne 's/[[:alpha:]]+*\s*//gp'|awk '{print $1}' | awk -F. '{print $1}')
-        LOG_DEBUG "/bin/sh -c bsub -B -N ${JOB_NAME_OPT} ${CWD_OPT} ${SUB_QUEUE_OPT} ${RUNHOST_OPT} ${NCPU_OPT} ${LSF_RESREQ} ${OUTPUT_FILE_LOCATION_OPT} ${EXTRA_PARAMS} \"export DISPLAY=:${VNC_SID}.0 ; ${GEDIT_CMD} \" 2>&1"
-        JOB_RESULT=`/bin/sh -c "bsub -B -N ${JOB_NAME_OPT} ${CWD_OPT} ${SUB_QUEUE_OPT} ${RUNHOST_OPT} ${NCPU_OPT} ${LSF_RESREQ} ${OUTPUT_FILE_LOCATION_OPT} ${EXTRA_PARAMS} \"export DISPLAY=:${VNC_SID}.0 ; ${GEDIT_CMD} \" 2>&1" `
+        LOG_DEBUG "/bin/sh -c bsub -B -N ${JOB_NAME_OPT} ${CWD_OPT} ${SUB_QUEUE_OPT} ${RUNHOST_OPT} ${NCPU_OPT} ${LSF_RESREQ} ${OUTPUT_FILE_LOCATION_OPT} ${EXTRA_PARAMS} \" ${GEDIT_CMD} \" 2>&1"
+        JOB_RESULT=`/bin/sh -c "bsub -B -N ${JOB_NAME_OPT} ${CWD_OPT} ${SUB_QUEUE_OPT} ${RUNHOST_OPT} ${NCPU_OPT} ${LSF_RESREQ} ${OUTPUT_FILE_LOCATION_OPT} ${EXTRA_PARAMS} \" ${GEDIT_CMD} \" 2>&1" `
 fi
 
 export JOB_RESULT OUTPUT_FILE_LOCATION
