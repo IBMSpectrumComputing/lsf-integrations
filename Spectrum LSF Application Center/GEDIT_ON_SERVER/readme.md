@@ -16,11 +16,13 @@ reference doc:  https://www.ibm.com/docs/en/slac/10.2.0?topic=consoles-enabling-
 
 2). copy the directory to /opt/ibm/lsfsuite/ext/gui/conf/application/published
 
-3). logon PAC from browser, click on "New Workload"
+3). chmod a+x /opt/ibm/lsfsuite/ext/gui/conf/application/published/GEDIT_ON_SERVER.cmd
 
-4). submit job with GEDIT_ON_SERVER by specifying an input file
+4). logon PAC from browser, click on "New Workload"
 
-5). after job is running. click on the console icon beside the job ID in the workload list
+5). submit job with GEDIT_ON_SERVER by specifying an input file
+
+6). after job is running. click on the console icon beside the job ID in the workload list
 
 
 ## Copyright
