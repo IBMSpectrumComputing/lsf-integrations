@@ -1,6 +1,6 @@
 # LSF Predictor-Assisted Memory Validation
 
-## What this is
+## Introduction
 
 This add-on uses your existing **LSF Cognitive Predictor** model to catch unreasonable
 memory requests at job submission time. When a user submits a job, this feature
