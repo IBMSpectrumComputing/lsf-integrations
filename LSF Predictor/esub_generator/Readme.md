@@ -78,13 +78,15 @@ Before setting this up, confirm you have all of the following:
 2. (Recommended) Copy LSF predictor certificate file and your profile's ground-truth CSV to current host
    so the wizard can find it:
    ```bash
-  scp georgeg@fp14-rh9x-3:/opt/test/lsf_cognitive_v1/config/https/cacert_lsf.pem .
-  scp georgeg@fp14-rh9x-3:/opt/test/lsf_cognitive_v1/work/predictions/sampledat/sampledat.csv .
+   
+      scp georgeg@fp14-rh9x-3:/opt/test/lsf_cognitive_v1/config/https/cacert_lsf.pem .
+      scp georgeg@fp14-rh9x-3:/opt/test/lsf_cognitive_v1/work/predictions/sampledat/sampledat.csv .
+
    ```
 
 3. Run the wizard:
    ```bash
-   sh setup_esub_predictor_memcheck.sh
+      sh setup_esub_predictor_memcheck.sh
    ```
 
 4. Follow the interactive prompts. You will be asked for:
