@@ -80,7 +80,7 @@ Before setting this up, confirm you have all of the following:
    ```bash
    
       scp georgeg@fp14-rh9x-3:/opt/test/lsf_cognitive_v1/config/https/cacert_lsf.pem .
-      scp georgeg@fp14-rh9x-3:/opt/test/lsf_cognitive_v1/work/predictions/sampledat/sampledat.csv .
+      scp georgeg@fp14-rh9x-3:/opt/test/lsf_cognitive_v1/work/predictions/demo1/demo1.csv .
 
    ```
 
