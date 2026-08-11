@@ -45,10 +45,11 @@ def main_logon(argv):
 	if len(url) == 0:	
 		url=input( _getmsg("logon_url_prompt") )
 	url,context = parseUrl(url);
-	p = re.compile('^(http|https)://[\w\W]+:\d+[/]{0,1}$')
-	if (len(url) == 0) | (p.match(url.lower()) == None):
-		print ( _getmsg("logon_null_url") )
-		return
+	#Commented this validation since Apache proxy url will not contain any port number. And IBM HTTP Server will have portnumber in URL.
+	#p = re.compile('^(http|https)://[\w\W]+:\d+[/]{0,1}$')
+	#if (len(url) == 0) | (p.match(url.lower()) == None):
+	#	print ( _getmsg("logon_null_url") )
+	#	return
 	url = url + context
 	url = removeQuote(url)
 	x509Flag, key, cert = checkX509PEMCert(url)
