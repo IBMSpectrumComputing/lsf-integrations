@@ -11,7 +11,7 @@ from configparser import NoSectionError
 import getpass
 import socket
 import re
-import urllib3
+import urllib.parse
 import calendar
 from datetime import timedelta, datetime
 import csv
@@ -202,9 +202,9 @@ def main_job(argv):
 		elif ((opt == '-s') | (opt == "--status")) :                
 			jobStatus = arg  
 		elif ((opt == '-n') | (opt == "--name")) :                
-			jobName = urllib3.quote(arg)
+			jobName = urllib.parse.quote(arg)
 		elif ((opt == '-g') | (opt == "--group")) :
-			group=urllib3.quote(arg)
+			group=urllib.parse.quote(arg)
 		elif ((opt == '-p') | (opt == '--past')) :
 			past=arg
 	if len(args) > 0:
